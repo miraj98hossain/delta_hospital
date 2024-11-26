@@ -1,5 +1,9 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
+
+import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:flutter/material.dart';
+
+import '../management_dashboard.dart';
 
 class ManagementDashboardView extends StatefulWidget {
   const ManagementDashboardView({super.key});
@@ -14,7 +18,37 @@ class _ManagementDashboardViewState extends State<ManagementDashboardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: Container(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 15,
+        ),
+        child: GridView(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 175,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 15,
+          ),
+          children: [
+            MngDashWidget(
+              lable: "Director\nPortal",
+              image: ImageConstant.directorPortal,
+              onTap: () {},
+            ),
+            MngDashWidget(
+              lable: "Financial\nDashboard",
+              image: ImageConstant.financialDashboard,
+              onTap: () {},
+            ),
+            MngDashWidget(
+              lable: "Share Holder\nPortal",
+              image: ImageConstant.shareHolder,
+              onTap: () {},
+            )
+          ],
+        ),
+      ),
     );
   }
 }
