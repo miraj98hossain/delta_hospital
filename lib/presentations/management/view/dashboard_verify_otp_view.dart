@@ -3,18 +3,15 @@ import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import 'dashboard_verify_otp_page.dart';
-
-class DashboardLoginView extends StatefulWidget {
-  const DashboardLoginView({super.key});
+class DashboardVerifyOtpView extends StatefulWidget {
+  const DashboardVerifyOtpView({super.key});
 
   @override
-  State<DashboardLoginView> createState() => _DashboardLoginViewState();
+  State<DashboardVerifyOtpView> createState() => _DashboardVerifyOtpViewState();
 }
 
-class _DashboardLoginViewState extends State<DashboardLoginView> {
+class _DashboardVerifyOtpViewState extends State<DashboardVerifyOtpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +42,14 @@ class _DashboardLoginViewState extends State<DashboardLoginView> {
                         height: 20,
                       ),
                       Text(
-                        "Login",
+                        "Verification",
                         style: lightTextTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.w700,
                           color: appTheme.primary,
                         ),
                       ),
                       Text(
-                        "Please Login to Continue",
+                        "An OTP has sent to you phone",
                         style: lightTextTheme.bodySmall!.copyWith(
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
@@ -64,7 +61,7 @@ class _DashboardLoginViewState extends State<DashboardLoginView> {
                       Image.asset(
                         height: 150,
                         width: 150,
-                        ImageConstant.loginImage,
+                        ImageConstant.verifyOtp,
                       ),
                     ],
                   ),
@@ -72,19 +69,21 @@ class _DashboardLoginViewState extends State<DashboardLoginView> {
                 const SizedBox(
                   height: 45,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  child: const CommonTextFieldWidget(
-                    hintText: "UserName",
+                Text(
+                  "OTP",
+                  style: lightTextTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 36,
+                    color: appTheme.primary,
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: const CommonTextFieldWidget(
-                    hintText: "Password",
+                    hintText: "Enter OTP Here",
                   ),
                 ),
                 const SizedBox(
@@ -93,11 +92,9 @@ class _DashboardLoginViewState extends State<DashboardLoginView> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed(DashboardVerifyOtpPage.routeName);
-                    },
+                    onPressed: () {},
                     child: Text(
-                      "Sign In",
+                      "VERIFY",
                       style: lightTextTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: appTheme.white,

@@ -21,4 +21,5 @@ class ImageConstant {
   static String financialDashboard = '$_imagePath/financialDashboard.png';
   static String shareHolder = '$_imagePath/shareHolder.png';
   static String loginImage = '$_imagePath/loginImage.png';
+  static String verifyOtp = '$_imagePath/verifyOtp.png';
 }
