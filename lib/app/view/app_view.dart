@@ -11,7 +11,7 @@ class AppView extends StatelessWidget {
       title: 'Delta Hospital',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      darkTheme: AppTheme.lightTheme,
       themeMode: ThemeMode.light,
       routerConfig: AppNavigation.router,
     );

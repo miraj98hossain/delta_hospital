@@ -9,5 +9,6 @@ class PrimaryColors {
   Color get black => const Color.fromRGBO(2, 22, 5, 1);
   Color get white => const Color(0XFFFFFFFF);
   Color get lightCyan => const Color.fromRGBO(212, 229, 240, 1);
+  Color get skyBlue => const Color.fromRGBO(204, 229, 236, 1);
   Color get darkPurple => const Color.fromRGBO(59, 57, 99, 1);
 }

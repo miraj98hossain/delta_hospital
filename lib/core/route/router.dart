@@ -1,4 +1,5 @@
 import 'package:delta_hospital/presentations/home/home.dart';
+import 'package:delta_hospital/presentations/management/dashboard_login.dart';
 import 'package:delta_hospital/presentations/management/management_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,14 @@ class AppNavigation {
         name: ManagementDashboardPage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const ManagementDashboardPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: DashboardLoginPage.routePath,
+        name: DashboardLoginPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const DashboardLoginPage(),
           state: state,
         ),
       ),

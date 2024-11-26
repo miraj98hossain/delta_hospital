@@ -16,26 +16,31 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        backgroundColor: ColorSchemes.colorSchemeLight.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         overlayColor: Colors.black,
       ),
     ),
   );
-  static final ThemeData darkTheme = ThemeData(
-    useMaterial3: true,
-    textTheme: darkTextTheme,
-    primaryColor: ColorSchemes.colorSchemeDark.surface,
-    scaffoldBackgroundColor: ColorSchemes.colorSchemeDark.surface,
-    brightness: Brightness.dark,
-    colorScheme: ColorSchemes.colorSchemeDark,
-    switchTheme: const SwitchThemeData(
-      trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        overlayColor: Colors.black,
-      ),
-    ),
-  );
+  // static final ThemeData darkTheme = ThemeData(
+  //   useMaterial3: true,
+  //   textTheme: darkTextTheme,
+  //   primaryColor: ColorSchemes.colorSchemeDark.surface,
+  //   scaffoldBackgroundColor: ColorSchemes.colorSchemeDark.surface,
+  //   brightness: Brightness.dark,
+  //   colorScheme: ColorSchemes.colorSchemeDark,
+  //   switchTheme: const SwitchThemeData(
+  //     trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
+  //   ),
+  //   elevatedButtonTheme: ElevatedButtonThemeData(
+  //     style: ElevatedButton.styleFrom(
+  //       backgroundColor: ColorSchemes.colorSchemeDark.surface,
+  //       overlayColor: Colors.black,
+  //     ),
+  //   ),
+  // );
 }
 
 PrimaryColors get appTheme => PrimaryColors();
