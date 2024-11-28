@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../dashboard_login.dart';
+import '../../dashboard_login.dart';
 
 class DashboardLoginPage extends StatelessWidget {
   const DashboardLoginPage({super.key});

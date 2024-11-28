@@ -5,7 +5,7 @@ import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'dashboard_verify_otp_page.dart';
+import '../otp/dashboard_verify_otp_page.dart';
 
 class DashboardLoginView extends StatefulWidget {
   const DashboardLoginView({super.key});

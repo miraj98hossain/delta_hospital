@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../management_dashboard.dart';
+import '../../management_dashboard.dart';
 
 class ManagementDashboardPage extends StatelessWidget {
   const ManagementDashboardPage({super.key});

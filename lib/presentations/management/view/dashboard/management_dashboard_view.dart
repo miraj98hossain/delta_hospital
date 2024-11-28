@@ -5,7 +5,7 @@ import 'package:delta_hospital/presentations/management/dashboard_login.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../management_dashboard.dart';
+import '../../management_dashboard.dart';
 
 class ManagementDashboardView extends StatefulWidget {
   const ManagementDashboardView({super.key});

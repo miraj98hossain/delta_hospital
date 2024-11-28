@@ -1,6 +1,7 @@
 import 'package:delta_hospital/presentations/home/home.dart';
 import 'package:delta_hospital/presentations/management/dashboard_login.dart';
 import 'package:delta_hospital/presentations/management/dashboard_verify_otp.dart';
+import 'package:delta_hospital/presentations/management/director.dart';
 import 'package:delta_hospital/presentations/management/management_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -44,6 +45,14 @@ class AppNavigation {
             name: DashboardVerifyOtpPage.routeName,
             pageBuilder: (context, state) => getPage(
               child: const DashboardVerifyOtpPage(),
+              state: state,
+            ),
+          ),
+          GoRoute(
+            path: DirectorPage.routePath,
+            name: DirectorPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const DirectorPage(),
               state: state,
             ),
           ),

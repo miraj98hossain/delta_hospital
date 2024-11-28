@@ -2,7 +2,9 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/presentations/management/director.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DashboardVerifyOtpView extends StatefulWidget {
   const DashboardVerifyOtpView({super.key});
@@ -92,7 +94,9 @@ class _DashboardVerifyOtpViewState extends State<DashboardVerifyOtpView> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(DirectorPage.routeName);
+                    },
                     child: Text(
                       "VERIFY",
                       style: lightTextTheme.bodySmall!.copyWith(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../dashboard_verify_otp.dart';
+import '../../dashboard_verify_otp.dart';
 
 class DashboardVerifyOtpPage extends StatelessWidget {
   const DashboardVerifyOtpPage({super.key});
