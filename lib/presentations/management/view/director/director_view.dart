@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../director.dart';
 import '../director_portal/director_portal_page.dart';
+import '../director_portfolio/director_portfolio_page.dart';
 
 class DirectorView extends StatefulWidget {
   const DirectorView({super.key});
@@ -97,7 +98,9 @@ class _DirectorViewState extends State<DirectorView> {
             ),
             DirectorModule(
               lable: "Portfolio",
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(DirectorPortfolioPage.routeName);
+              },
             ),
           ],
         ),
