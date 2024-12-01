@@ -4,6 +4,7 @@ import 'package:delta_hospital/presentations/management/dashboard_verify_otp.dar
 import 'package:delta_hospital/presentations/management/director.dart';
 import 'package:delta_hospital/presentations/management/director_portal.dart';
 import 'package:delta_hospital/presentations/management/management_dashboard.dart';
+import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
 import 'package:delta_hospital/presentations/management/view/director_portfolio/director_portfolio_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -67,13 +68,22 @@ class AppNavigation {
                 ),
               ),
               GoRoute(
-                path: DirectorPortfolioPage.routePath,
-                name: DirectorPortfolioPage.routeName,
-                pageBuilder: (context, state) => getPage(
-                  child: const DirectorPortfolioPage(),
-                  state: state,
-                ),
-              ),
+                  path: DirectorPortfolioPage.routePath,
+                  name: DirectorPortfolioPage.routeName,
+                  pageBuilder: (context, state) => getPage(
+                        child: const DirectorPortfolioPage(),
+                        state: state,
+                      ),
+                  routes: [
+                    GoRoute(
+                      path: DirectorNoticePage.routePath,
+                      name: DirectorNoticePage.routeName,
+                      pageBuilder: (context, state) => getPage(
+                        child: const DirectorNoticePage(),
+                        state: state,
+                      ),
+                    ),
+                  ]),
             ],
           ),
         ],

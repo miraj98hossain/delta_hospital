@@ -1,6 +1,8 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DirectorportfolioView extends StatefulWidget {
   const DirectorportfolioView({super.key});
@@ -58,10 +60,33 @@ class _DirectorportfolioViewState extends State<DirectorportfolioView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.arrow_back_sharp,
-                      size: 20,
-                      color: appTheme.primary,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.arrow_back_sharp,
+                          size: 20,
+                          color: appTheme.primary,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(DirectorNoticePage.routeName);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: appTheme.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.bookmark_add_rounded,
+                              color: appTheme.primary,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
