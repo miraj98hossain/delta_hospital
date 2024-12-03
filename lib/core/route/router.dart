@@ -6,6 +6,7 @@ import 'package:delta_hospital/presentations/management/director_portal.dart';
 import 'package:delta_hospital/presentations/management/management_dashboard.dart';
 import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
 import 'package:delta_hospital/presentations/management/view/director_portfolio/director_portfolio_page.dart';
+import 'package:delta_hospital/presentations/management/view/financial_dashboard/financial_dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,6 +49,14 @@ class AppNavigation {
             name: DashboardVerifyOtpPage.routeName,
             pageBuilder: (context, state) => getPage(
               child: const DashboardVerifyOtpPage(),
+              state: state,
+            ),
+          ),
+          GoRoute(
+            path: FinancialDashboardPage.routePath,
+            name: FinancialDashboardPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const FinancialDashboardPage(),
               state: state,
             ),
           ),

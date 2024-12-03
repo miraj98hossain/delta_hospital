@@ -29,23 +29,28 @@ class _DirectorViewState extends State<DirectorView> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_sharp,
-                  color: appTheme.white,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Management",
-                  style: lightTextTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.arrow_back_sharp,
                     color: appTheme.white,
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Management",
+                    style: lightTextTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: appTheme.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 15,

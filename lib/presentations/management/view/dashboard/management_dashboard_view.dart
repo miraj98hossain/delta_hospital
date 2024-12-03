@@ -2,6 +2,7 @@ import 'package:delta_hospital/app/widgets/common_appbar.dart';
 
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/presentations/management/dashboard_login.dart';
+import 'package:delta_hospital/presentations/management/financial_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,7 +44,9 @@ class _ManagementDashboardViewState extends State<ManagementDashboardView> {
             MngDashWidget(
               lable: "Financial\nDashboard",
               image: ImageConstant.financialDashboard,
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(FinancialDashboardPage.routeName);
+              },
             ),
             MngDashWidget(
               lable: "Share Holder\nPortal",

@@ -1,6 +1,5 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DirectorNoticeView extends StatefulWidget {

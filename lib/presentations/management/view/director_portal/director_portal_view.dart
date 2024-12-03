@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DirectorPortalView extends StatefulWidget {
   const DirectorPortalView({super.key});
@@ -24,24 +25,29 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.arrow_back_sharp,
-                  color: appTheme.white,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Director Portal",
-                  style: lightTextTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back_sharp,
                     color: appTheme.white,
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Director Portal",
+                    style: lightTextTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: appTheme.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 10,
