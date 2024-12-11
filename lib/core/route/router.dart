@@ -7,6 +7,7 @@ import 'package:delta_hospital/presentations/management/management_dashboard.dar
 import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
 import 'package:delta_hospital/presentations/management/view/director_portfolio/director_portfolio_page.dart';
 import 'package:delta_hospital/presentations/management/view/financial_dashboard/financial_dashboard_page.dart';
+import 'package:delta_hospital/presentations/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,7 @@ class AppNavigation {
 
   static final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: HomePage.routePath,
+    initialLocation: SplashPage.routePath,
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
@@ -25,6 +26,14 @@ class AppNavigation {
         name: HomePage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const HomePage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: SplashPage.routePath,
+        name: SplashPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const SplashPage(),
           state: state,
         ),
       ),
