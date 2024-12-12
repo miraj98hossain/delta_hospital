@@ -1,4 +1,5 @@
 import 'package:delta_hospital/features/auth/app_registration.dart';
+import 'package:delta_hospital/features/auth/app_otp_verification.dart';
 import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/management/dashboard_login.dart';
@@ -53,6 +54,14 @@ class AppNavigation {
         name: AppRegistrationPage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const AppRegistrationPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: AppOtpVerificationPage.routePath,
+        name: AppOtpVerificationPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const AppOtpVerificationPage(),
           state: state,
         ),
       ),
