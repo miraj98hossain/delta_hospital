@@ -1,3 +1,4 @@
+import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/management/dashboard_login.dart';
 import 'package:delta_hospital/features/management/dashboard_verify_otp.dart';
@@ -35,6 +36,14 @@ class AppNavigation {
         name: OnBoardingPage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const OnBoardingPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: AppLoginPage.routePath,
+        name: AppLoginPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const AppLoginPage(),
           state: state,
         ),
       ),
