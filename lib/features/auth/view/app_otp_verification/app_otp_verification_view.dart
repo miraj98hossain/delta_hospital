@@ -1,7 +1,9 @@
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppOtpVerificationView extends StatefulWidget {
   const AppOtpVerificationView({super.key});
@@ -92,7 +94,7 @@ class _AppOtpVerificationViewState extends State<AppOtpVerificationView> {
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ElevatedButton(
                     onPressed: () {
-                      // context.pushNamed(DirectorPage.routeName);
+                      context.pushNamed(HomePage.routeName);
                     },
                     child: Text(
                       "VERIFY",
