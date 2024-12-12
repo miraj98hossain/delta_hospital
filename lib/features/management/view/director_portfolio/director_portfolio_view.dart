@@ -1,6 +1,6 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
+import 'package:delta_hospital/features/management/view/director_notice/director_notice_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

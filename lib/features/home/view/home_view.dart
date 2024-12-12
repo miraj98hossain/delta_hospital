@@ -1,6 +1,6 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/presentations/management/view/dashboard/management_dashboard_page.dart';
+import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

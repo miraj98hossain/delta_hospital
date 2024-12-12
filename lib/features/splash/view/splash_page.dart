@@ -1,4 +1,4 @@
-import 'package:delta_hospital/presentations/splash/splash.dart';
+import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {

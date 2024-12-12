@@ -1,5 +1,5 @@
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/presentations/home/home.dart';
+import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,7 +14,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3))
-        .then((value) => context.pushNamed(HomePage.routeName));
+        .then((value) => context.pushNamed(OnBoardingPage.routeName));
     super.initState();
   }
 

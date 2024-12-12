@@ -1,4 +1,4 @@
-import 'package:delta_hospital/presentations/home/view/home_view.dart';
+import 'package:delta_hospital/features/home/view/home_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

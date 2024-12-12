@@ -1,13 +1,14 @@
-import 'package:delta_hospital/presentations/home/home.dart';
-import 'package:delta_hospital/presentations/management/dashboard_login.dart';
-import 'package:delta_hospital/presentations/management/dashboard_verify_otp.dart';
-import 'package:delta_hospital/presentations/management/director.dart';
-import 'package:delta_hospital/presentations/management/director_portal.dart';
-import 'package:delta_hospital/presentations/management/management_dashboard.dart';
-import 'package:delta_hospital/presentations/management/view/director_notice/director_notice_page.dart';
-import 'package:delta_hospital/presentations/management/view/director_portfolio/director_portfolio_page.dart';
-import 'package:delta_hospital/presentations/management/view/financial_dashboard/financial_dashboard_page.dart';
-import 'package:delta_hospital/presentations/splash/splash.dart';
+import 'package:delta_hospital/features/home/home.dart';
+import 'package:delta_hospital/features/management/dashboard_login.dart';
+import 'package:delta_hospital/features/management/dashboard_verify_otp.dart';
+import 'package:delta_hospital/features/management/director.dart';
+import 'package:delta_hospital/features/management/director_portal.dart';
+import 'package:delta_hospital/features/management/management_dashboard.dart';
+import 'package:delta_hospital/features/management/view/director_notice/director_notice_page.dart';
+import 'package:delta_hospital/features/management/view/director_portfolio/director_portfolio_page.dart';
+import 'package:delta_hospital/features/management/view/financial_dashboard/financial_dashboard_page.dart';
+import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
+import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,18 +23,26 @@ class AppNavigation {
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
-        path: HomePage.routePath,
-        name: HomePage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const HomePage(),
-          state: state,
-        ),
-      ),
-      GoRoute(
         path: SplashPage.routePath,
         name: SplashPage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const SplashPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: OnBoardingPage.routePath,
+        name: OnBoardingPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const OnBoardingPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: HomePage.routePath,
+        name: HomePage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const HomePage(),
           state: state,
         ),
       ),

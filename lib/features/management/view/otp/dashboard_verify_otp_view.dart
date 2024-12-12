@@ -2,7 +2,7 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/presentations/management/director.dart';
+import 'package:delta_hospital/features/management/director.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
