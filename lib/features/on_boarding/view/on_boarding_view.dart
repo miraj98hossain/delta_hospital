@@ -1,5 +1,6 @@
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/auth/app_registration.dart';
 import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -92,7 +93,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                       width: MediaQuery.of(context).size.width * 0.85,
                       child: ElevatedButton(
                         onPressed: () {
-                          // context.pushNamed(DashboardVerifyOtpPage.routeName);
+                          context.pushNamed(AppRegistrationPage.routeName);
                         },
                         child: Text(
                           "Sign Up",

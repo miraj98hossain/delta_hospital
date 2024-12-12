@@ -1,18 +1,17 @@
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class AppLoginView extends StatefulWidget {
-  const AppLoginView({super.key});
+class AppRegistrationView extends StatefulWidget {
+  const AppRegistrationView({super.key});
 
   @override
-  State<AppLoginView> createState() => _AppLoginViewState();
+  State<AppRegistrationView> createState() => _AppRegistrationViewState();
 }
 
-class _AppLoginViewState extends State<AppLoginView> {
+class _AppRegistrationViewState extends State<AppRegistrationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +42,14 @@ class _AppLoginViewState extends State<AppLoginView> {
                         height: MediaQuery.of(context).viewPadding.top,
                       ),
                       Text(
-                        "Sign In",
+                        "Sign Up",
                         style: lightTextTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.w700,
                           color: appTheme.primary,
                         ),
                       ),
                       Text(
-                        "Please Sign In To Continue",
+                        "Please Sign Up To Continue",
                         style: lightTextTheme.bodySmall!.copyWith(
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
@@ -69,6 +68,15 @@ class _AppLoginViewState extends State<AppLoginView> {
                 ),
                 const SizedBox(
                   height: 45,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: const CommonTextFieldWidget(
+                    hintText: "Full Name",
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
@@ -92,10 +100,10 @@ class _AppLoginViewState extends State<AppLoginView> {
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.pushNamed(HomePage.routeName);
+                      // context.pushNamed(HomePage.routeName);
                     },
                     child: Text(
-                      "Sign In",
+                      "Sign Up",
                       style: lightTextTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: appTheme.white,
