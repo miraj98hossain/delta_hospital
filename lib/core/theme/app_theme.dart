@@ -14,6 +14,7 @@ class AppTheme {
     switchTheme: const SwitchThemeData(
       trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
     ),
+    expansionTileTheme: const ExpansionTileThemeData(shape: Border()),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorSchemes.colorSchemeLight.surface,

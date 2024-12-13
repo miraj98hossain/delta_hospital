@@ -4,7 +4,9 @@ import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/widgets/common_text_field_widget.dart';
 
@@ -115,7 +117,10 @@ class _DoctorListViewState extends State<DoctorListView> {
                           Expanded(
                             child: CommonElevatedButton(
                               lable: "Book Appointment",
-                              onPressed: () {},
+                              onPressed: () {
+                                context
+                                    .pushNamed(BookAppointmentPage.routeName);
+                              },
                             ),
                           ),
                           const SizedBox(
