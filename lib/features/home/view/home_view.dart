@@ -4,6 +4,7 @@ import 'package:delta_hospital/features/management/view/dashboard/management_das
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../book_appointment/view/doctor_list/doctor_list_page.dart';
 import '../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -36,6 +37,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Doctor List",
               icon: ImageConstant.doctor,
+              onTap: () {
+                context.pushNamed(DoctorListPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Items Booking",
