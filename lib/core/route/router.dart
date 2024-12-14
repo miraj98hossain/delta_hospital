@@ -3,6 +3,7 @@ import 'package:delta_hospital/features/auth/app_otp_verification.dart';
 import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart';
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
+import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/management/dashboard_login.dart';
 import 'package:delta_hospital/features/management/dashboard_verify_otp.dart';
@@ -88,6 +89,14 @@ class AppNavigation {
               name: BookAppointmentPage.routeName,
               pageBuilder: (context, state) => getPage(
                 child: const BookAppointmentPage(),
+                state: state,
+              ),
+            ),
+            GoRoute(
+              path: PatientInfoPage.routePath,
+              name: PatientInfoPage.routeName,
+              pageBuilder: (context, state) => getPage(
+                child: const PatientInfoPage(),
                 state: state,
               ),
             ),

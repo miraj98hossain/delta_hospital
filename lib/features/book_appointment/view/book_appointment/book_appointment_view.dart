@@ -1,7 +1,9 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../app/widgets/common_drop_down.dart';
 import '../../book_appointment.dart';
 import 'widgets/week_schedule_widget.dart';
@@ -306,7 +308,9 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                   CommonElevatedButton(
                     lable: "Book Appointment",
                     backgroundColor: appTheme.secondary,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(PatientInfoPage.routeName);
+                    },
                   ),
                 ],
               )
