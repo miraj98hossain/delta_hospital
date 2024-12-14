@@ -18,6 +18,8 @@ import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/book_appointment/appointment_info.dart';
+
 class AppNavigation {
   AppNavigation._();
 
@@ -97,6 +99,14 @@ class AppNavigation {
               name: PatientInfoPage.routeName,
               pageBuilder: (context, state) => getPage(
                 child: const PatientInfoPage(),
+                state: state,
+              ),
+            ),
+            GoRoute(
+              path: AppointmentInfoPage.routePath,
+              name: AppointmentInfoPage.routeName,
+              pageBuilder: (context, state) => getPage(
+                child: const AppointmentInfoPage(),
                 state: state,
               ),
             ),

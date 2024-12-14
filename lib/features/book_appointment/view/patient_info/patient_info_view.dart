@@ -1,7 +1,9 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/appointment_info.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/widgets/common_text_field_widget.dart';
 
@@ -93,7 +95,9 @@ class _PatientInfoViewState extends State<PatientInfoView> {
                 child: CommonElevatedButton(
                   lable: "Proceed",
                   backgroundColor: appTheme.secondary,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(AppointmentInfoPage.routeName);
+                  },
                 ),
               ),
             ],
