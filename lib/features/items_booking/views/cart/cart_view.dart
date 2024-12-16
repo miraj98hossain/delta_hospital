@@ -75,6 +75,7 @@ class _CartViewState extends State<CartView> {
                         width: 10,
                       ),
                       InkWell(
+                        borderRadius: BorderRadius.circular(8),
                         onTap: () {},
                         child: Container(
                           height: 40,
