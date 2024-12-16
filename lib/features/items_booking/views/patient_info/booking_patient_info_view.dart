@@ -2,10 +2,9 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/features/book_appointment/appointment_info.dart';
+import 'package:delta_hospital/features/items_booking/views/booking_info/booking_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../app/widgets/common_text_field_widget.dart';
 
 class BookingPatientInfoView extends StatefulWidget {
@@ -105,7 +104,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                   lable: "Proceed",
                   backgroundColor: appTheme.secondary,
                   onPressed: () {
-                    context.pushNamed(AppointmentInfoPage.routeName);
+                    context.pushNamed(BookingInfoPage.routeName);
                   },
                 ),
               ),
