@@ -4,7 +4,7 @@ import 'package:delta_hospital/features/management/view/dashboard/management_das
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../book_appointment/view/doctor_list/doctor_list_page.dart';
+import '../../book_appointment/views/doctor_list/doctor_list_page.dart';
 import '../../items_booking/views/item_list/item_list_page.dart';
 import '../home.dart';
 
