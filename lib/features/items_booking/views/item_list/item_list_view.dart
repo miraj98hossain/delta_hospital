@@ -3,7 +3,9 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemListView extends StatefulWidget {
   const ItemListView({super.key});
@@ -44,18 +46,23 @@ class _ItemListViewState extends State<ItemListView> {
                 const SizedBox(
                   width: 10,
                 ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: appTheme.secondary,
+                InkWell(
+                  onTap: () {
+                    context.pushNamed(CartPage.routeName);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: appTheme.secondary,
+                    ),
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: appTheme.white,
+                    ),
                   ),
-                  child: Icon(
-                    Icons.shopping_cart,
-                    color: appTheme.white,
-                  ),
-                )
+                ),
               ],
             ),
             const SizedBox(
@@ -90,10 +97,7 @@ class _ItemListViewState extends State<ItemListView> {
                           ),
                           CommonElevatedButton(
                             lable: "Add",
-                            onPressed: () {
-                              // context
-                              //     .pushNamed(BookAppointmentPage.routeName);
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       )
