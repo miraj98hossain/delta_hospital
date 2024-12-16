@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
+import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,6 +35,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Make Appointment",
               icon: ImageConstant.calander,
+              onTap: () {
+                context.pushNamed(DoctorListPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Doctor List",
@@ -52,6 +56,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "My Appointments",
               icon: ImageConstant.appointments,
+              onTap: () {
+                context.pushNamed(MyAppointmentPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Patients Portal",

@@ -17,6 +17,7 @@ import 'package:delta_hospital/features/management/management_dashboard.dart';
 import 'package:delta_hospital/features/management/view/director_notice/director_notice_page.dart';
 import 'package:delta_hospital/features/management/view/director_portfolio/director_portfolio_page.dart';
 import 'package:delta_hospital/features/management/view/financial_dashboard/financial_dashboard_page.dart';
+import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
 import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -218,6 +219,14 @@ class AppNavigation {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: MyAppointmentPage.routePath,
+        name: MyAppointmentPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const MyAppointmentPage(),
+          state: state,
+        ),
       ),
     ],
   );
