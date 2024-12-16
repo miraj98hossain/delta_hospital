@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../book_appointment/view/doctor_list/doctor_list_page.dart';
+import '../../items_booking/views/item_list/item_list_page.dart';
 import '../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -44,6 +45,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Items Booking",
               icon: ImageConstant.itemBooking,
+              onTap: () {
+                context.pushNamed(ItemListPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "My Appointments",

@@ -27,28 +27,28 @@ class CommonTextFieldWidget extends StatelessWidget {
         fillColor: appTheme.white,
         filled: true,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0), // Circular border
+          borderRadius: BorderRadius.circular(10.0), // Circular border
           borderSide: BorderSide(
             color: appTheme.primary,
           ),
           // No border side
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0), // Circular border
+          borderRadius: BorderRadius.circular(10.0), // Circular border
           borderSide: BorderSide(
             color: appTheme.primary,
           ),
           // No border side
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0), // Circular border
+          borderRadius: BorderRadius.circular(10.0), // Circular border
           borderSide: BorderSide(
             color: appTheme.primary,
           ),
           // No border side
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0), // Circular border
+          borderRadius: BorderRadius.circular(10.0), // Circular border
           borderSide: BorderSide(
             color: appTheme.primary,
           ),

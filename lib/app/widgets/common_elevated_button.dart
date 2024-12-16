@@ -17,7 +17,7 @@ class CommonElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom().copyWith(
         backgroundColor: WidgetStatePropertyAll(backgroundColor),
         padding: const WidgetStatePropertyAll(
-          EdgeInsets.all(8),
+          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         ),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
