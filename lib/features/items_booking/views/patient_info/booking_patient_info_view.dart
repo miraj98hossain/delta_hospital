@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/book_appointment/appointment_info.dart';
@@ -7,14 +8,14 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/widgets/common_text_field_widget.dart';
 
-class PatientInfoView extends StatefulWidget {
-  const PatientInfoView({super.key});
+class BookingPatientInfoView extends StatefulWidget {
+  const BookingPatientInfoView({super.key});
 
   @override
-  State<PatientInfoView> createState() => _PatientInfoViewState();
+  State<BookingPatientInfoView> createState() => _BookingPatientInfoViewState();
 }
 
-class _PatientInfoViewState extends State<PatientInfoView> {
+class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +28,14 @@ class _PatientInfoViewState extends State<PatientInfoView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
+              CommonDropdownButton(
+                hintText: "Select Patient",
+                onChanged: (value) {},
+                items: List.generate(20, (index) => index),
+              ),
               const SizedBox(
                 height: 10,
               ),

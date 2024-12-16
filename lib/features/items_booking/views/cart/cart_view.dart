@@ -1,6 +1,8 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/features/items_booking/patient_info.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_theme.dart';
 
@@ -185,7 +187,9 @@ class _CartViewState extends State<CartView> {
                 child: CommonElevatedButton(
                   lable: "Proceed",
                   backgroundColor: appTheme.secondary,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(BookingPatientInfoPage.routeName);
+                  },
                 ),
               ),
             ],

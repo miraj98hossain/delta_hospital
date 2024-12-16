@@ -7,6 +7,7 @@ import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/items_booking/cart.dart';
 import 'package:delta_hospital/features/items_booking/item_list.dart';
+import 'package:delta_hospital/features/items_booking/views/patient_info/booking_patient_info_page.dart';
 import 'package:delta_hospital/features/management/dashboard_login.dart';
 import 'package:delta_hospital/features/management/dashboard_verify_otp.dart';
 import 'package:delta_hospital/features/management/director.dart';
@@ -115,22 +116,31 @@ class AppNavigation {
         ],
       ),
       GoRoute(
-          path: ItemListPage.routePath,
-          name: ItemListPage.routeName,
-          pageBuilder: (context, state) => getPage(
-                child: const ItemListPage(),
-                state: state,
-              ),
-          routes: [
-            GoRoute(
-              path: CartPage.routePath,
-              name: CartPage.routeName,
-              pageBuilder: (context, state) => getPage(
-                child: const CartPage(),
-                state: state,
-              ),
+        path: ItemListPage.routePath,
+        name: ItemListPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const ItemListPage(),
+          state: state,
+        ),
+        routes: [
+          GoRoute(
+            path: CartPage.routePath,
+            name: CartPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const CartPage(),
+              state: state,
             ),
-          ]),
+          ),
+          GoRoute(
+            path: BookingPatientInfoPage.routePath,
+            name: BookingPatientInfoPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const BookingPatientInfoPage(),
+              state: state,
+            ),
+          ),
+        ],
+      ),
       GoRoute(
         path: ManagementDashboardPage.routePath,
         name: ManagementDashboardPage.routeName,
