@@ -1,11 +1,16 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+
+import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
 import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'bloc/item_type_bloc.dart';
 
 class ItemListView extends StatefulWidget {
   const ItemListView({super.key});
@@ -15,6 +20,12 @@ class ItemListView extends StatefulWidget {
 }
 
 class _ItemListViewState extends State<ItemListView> {
+  @override
+  void initState() {
+    context.read<ItemTypeBloc>().add(GetItemTypeEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +48,21 @@ class _ItemListViewState extends State<ItemListView> {
             Row(
               children: [
                 Expanded(
-                  child: CommonDropdownButton(
-                    hintText: "Select Item Type",
-                    onChanged: (value) {},
-                    items: List.generate(20, (index) => index),
+                  child: BlocBuilder<ItemTypeBloc, ItemTypeState>(
+                    builder: (context, state) {
+                      return CommonDropdownButton<ItemType>(
+                        hintText: "Select Item Type",
+                        onChanged: (value) {
+                          if (value != null) {
+                            context
+                                .read<VariableStateCubit<ItemType>>()
+                                .update(value);
+                          }
+                        },
+                        items:
+                            state is ItemTypeSuccess ? state.itemTypeList : [],
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(
