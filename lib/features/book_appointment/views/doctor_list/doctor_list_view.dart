@@ -1,13 +1,15 @@
-import 'dart:math';
-
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
+import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/department_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/cubit/variable_state_cubit.dart';
 import '../../../../app/widgets/common_text_field_widget.dart';
 
 class DoctorListView extends StatefulWidget {
@@ -18,6 +20,12 @@ class DoctorListView extends StatefulWidget {
 }
 
 class _DoctorListViewState extends State<DoctorListView> {
+  @override
+  void initState() {
+    context.read<DepartmentBloc>().add(GetDepartmentEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,10 +48,26 @@ class _DoctorListViewState extends State<DoctorListView> {
             Row(
               children: [
                 Expanded(
-                  child: CommonDropdownButton(
-                    hintText: "Select Department",
-                    onChanged: (value) {},
-                    items: List.generate(20, (index) => index),
+                  child: BlocBuilder<DepartmentBloc, DepartmentState>(
+                    builder: (context, state) {
+                      return CommonDropdownButton<Department>(
+                        hintText: "Select Department",
+                        onChanged: (value) {
+                          if (value != null) {
+                            context
+                                .read<VariableStateCubit<Department>>()
+                                .update(value);
+                          }
+                        },
+                        items: state is DepartmentSuccess ? state.deptList : [],
+                        validator: (value) {
+                          if (value == null) {
+                            return "Select Department";
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(
