@@ -4,12 +4,13 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-
 import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
 import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
+import 'package:delta_hospital/features/items_booking/views/item_list/bloc/item_list_grid_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../app/widgets/common_loading.dart';
 import 'bloc/item_type_bloc.dart';
 
 class ItemListView extends StatefulWidget {
@@ -20,10 +21,31 @@ class ItemListView extends StatefulWidget {
 }
 
 class _ItemListViewState extends State<ItemListView> {
+  final _itemsScrollController = ScrollController();
+  late TextEditingController _searchController;
   @override
   void initState() {
     context.read<ItemTypeBloc>().add(GetItemTypeEvent());
+    context.read<ItemGridBloc>().add(GetItemGridEvent());
+    _itemsScrollController.addListener(() {
+      if (_itemsScrollController.position.pixels ==
+          _itemsScrollController.position.maxScrollExtent) {
+        context.read<ItemGridBloc>().add(GetItemGridEvent(
+              searchValue: _searchController.text,
+              itemTypeNo:
+                  context.read<VariableStateCubit<ItemType>>().state?.id,
+            ));
+      }
+    });
+    _searchController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _itemsScrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,8 +61,19 @@ class _ItemListViewState extends State<ItemListView> {
             const SizedBox(
               height: 10,
             ),
-            const CommonTextFieldWidget(
+            CommonTextFieldWidget(
+              controller: _searchController,
               hintText: "Search",
+              onChanged: (value) {
+                var itemTypeNo =
+                    context.read<VariableStateCubit<ItemType>>().state?.id;
+                context.read<ItemGridBloc>().add(
+                      GetItemGridEvent(
+                        searchValue: value,
+                        itemTypeNo: itemTypeNo,
+                      ),
+                    );
+              },
             ),
             const SizedBox(
               height: 10,
@@ -57,6 +90,12 @@ class _ItemListViewState extends State<ItemListView> {
                             context
                                 .read<VariableStateCubit<ItemType>>()
                                 .update(value);
+                            context.read<ItemGridBloc>().add(
+                                  GetItemGridEvent(
+                                    searchValue: _searchController.text,
+                                    itemTypeNo: value.id,
+                                  ),
+                                );
                           }
                         },
                         items:
@@ -90,42 +129,87 @@ class _ItemListViewState extends State<ItemListView> {
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-                child: ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
-              ),
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.grey.shade200,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Drain Fluid For Bilirubin",
-                              style: lightTextTheme.bodyMedium!.copyWith(),
+            Expanded(child: BlocBuilder<ItemGridBloc, ItemGridState>(
+              builder: (context, state) {
+                if (state.isLoading && state.itemGridList.data == null) {
+                  return const CommonLoading();
+                }
+                if (state.itemGridList.data != null) {
+                  return CustomScrollView(
+                    controller: _itemsScrollController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverList.separated(
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        ),
+                        itemCount: state.itemGridList.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          var item = state.itemGridList.data?[index];
+
+                          return Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey.shade200,
                             ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item?.itemName ?? "",
+                                            style: lightTextTheme.bodyMedium!
+                                                .copyWith(),
+                                          ),
+                                          Text(
+                                            item?.itemTypeName ?? "",
+                                            style: lightTextTheme.bodySmall!
+                                                .copyWith(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            item?.itemTypeNo.toString() ?? "",
+                                            style: lightTextTheme.bodySmall!
+                                                .copyWith(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    CommonElevatedButton(
+                                      lable: "Add",
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      if (state.isLoading)
+                        const SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 64,
+                            child: CommonLoading(),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CommonElevatedButton(
-                            lable: "Add",
-                            onPressed: () {},
-                          ),
-                        ],
-                      )
+                        ),
                     ],
-                  ),
-                );
+                  );
+                }
+                return Container();
               },
             ))
           ],
@@ -134,3 +218,55 @@ class _ItemListViewState extends State<ItemListView> {
     );
   }
 }
+// ListView.separated(
+//                     separatorBuilder: (context, index) => const SizedBox(
+//                       height: 10,
+//                     ),
+//                     itemCount: state.itemGridList.data?.length ?? 0,
+//                     itemBuilder: (context, index) {
+//                       var item = state.itemGridList.data?[index];
+//                       return Container(
+//                         padding: const EdgeInsets.all(8),
+//                         decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(8),
+//                           color: Colors.grey.shade200,
+//                         ),
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Row(
+//                               children: [
+//                                 Expanded(
+//                                   child: Column(
+//                                     crossAxisAlignment:
+//                                         CrossAxisAlignment.start,
+//                                     children: [
+//                                       Text(
+//                                         item?.itemName ?? "",
+//                                         style: lightTextTheme.bodyMedium!
+//                                             .copyWith(),
+//                                       ),
+//                                       Text(
+//                                         item?.itemTypeName ?? "",
+//                                         style:
+//                                             lightTextTheme.bodySmall!.copyWith(
+//                                           color: Colors.grey,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                                 const SizedBox(
+//                                   height: 10,
+//                                 ),
+//                                 CommonElevatedButton(
+//                                   lable: "Add",
+//                                   onPressed: () {},
+//                                 ),
+//                               ],
+//                             )
+//                           ],
+//                         ),
+//                       );
+//                     },
+//                   );
