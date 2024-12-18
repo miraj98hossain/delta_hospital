@@ -4,7 +4,9 @@ import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/department_bloc.dart';
+import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/specialization_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +25,7 @@ class _DoctorListViewState extends State<DoctorListView> {
   @override
   void initState() {
     context.read<DepartmentBloc>().add(GetDepartmentEvent());
+    context.read<SpecializationBloc>().add(GetSpecializationEvent());
     super.initState();
   }
 
@@ -60,12 +63,6 @@ class _DoctorListViewState extends State<DoctorListView> {
                           }
                         },
                         items: state is DepartmentSuccess ? state.deptList : [],
-                        validator: (value) {
-                          if (value == null) {
-                            return "Select Department";
-                          }
-                          return null;
-                        },
                       );
                     },
                   ),
@@ -74,10 +71,22 @@ class _DoctorListViewState extends State<DoctorListView> {
                   width: 10,
                 ),
                 Expanded(
-                  child: CommonDropdownButton(
-                    hintText: "Select Speciality",
-                    onChanged: (value) {},
-                    items: List.generate(20, (index) => index),
+                  child: BlocBuilder<SpecializationBloc, SpecializationState>(
+                    builder: (context, state) {
+                      return CommonDropdownButton<Specialization>(
+                        hintText: "Select Specialization",
+                        onChanged: (value) {
+                          if (value != null) {
+                            context
+                                .read<VariableStateCubit<Specialization>>()
+                                .update(value);
+                          }
+                        },
+                        items: state is SpecializationSuccess
+                            ? state.specList
+                            : [],
+                      );
+                    },
                   ),
                 ),
               ],

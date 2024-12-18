@@ -138,6 +138,10 @@ class Specialization {
         "ssUploadedOn": ssUploadedOn,
         "idNotEqual": idNotEqual,
       };
+  @override
+  String toString() {
+    return specializationName ?? "";
+  }
 }
 
 class Obj {
