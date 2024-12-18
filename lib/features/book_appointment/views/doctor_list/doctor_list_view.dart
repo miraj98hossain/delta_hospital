@@ -6,6 +6,7 @@ import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/department_bloc.dart';
+import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/online_doctor_grid_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/specialization_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class _DoctorListViewState extends State<DoctorListView> {
   void initState() {
     context.read<DepartmentBloc>().add(GetDepartmentEvent());
     context.read<SpecializationBloc>().add(GetSpecializationEvent());
+    context.read<OnlineDoctorGridBloc>().add(GetOnlineDoctorGridEvent());
     super.initState();
   }
 
@@ -95,81 +97,88 @@ class _DoctorListViewState extends State<DoctorListView> {
               height: 10,
             ),
             Expanded(
-                child: ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
-              ),
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade200,
+                child: BlocBuilder<OnlineDoctorGridBloc, OnlineDoctorGridState>(
+              builder: (context, state) {
+                return ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  itemCount: state is OnlineDoctorGridSuccess
+                      ? state.doctorGridList.data?.length ?? 0
+                      : 0,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade200,
+                      ),
+                      child: Column(
                         children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: appTheme.primary,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: appTheme.primary,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Dr. John Doe",
+                                      style:
+                                          lightTextTheme.bodyMedium!.copyWith(),
+                                    ),
+                                    Text(
+                                      "Kidney Specialist",
+                                      style: lightTextTheme.bodySmall!.copyWith(
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                           const SizedBox(
-                            width: 10,
+                            height: 10,
                           ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Dr. John Doe",
-                                  style: lightTextTheme.bodyMedium!.copyWith(),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CommonElevatedButton(
+                                  lable: "Book Appointment",
+                                  onPressed: () {
+                                    context.pushNamed(
+                                        BookAppointmentPage.routeName);
+                                  },
                                 ),
-                                Text(
-                                  "Kidney Specialist",
-                                  style: lightTextTheme.bodySmall!.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: CommonElevatedButton(
+                                  backgroundColor: appTheme.secondary,
+                                  lable: "View Profile",
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CommonElevatedButton(
-                              lable: "Book Appointment",
-                              onPressed: () {
-                                context
-                                    .pushNamed(BookAppointmentPage.routeName);
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: CommonElevatedButton(
-                              backgroundColor: appTheme.secondary,
-                              lable: "View Profile",
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             ))
