@@ -37,7 +37,7 @@ class AppConfigImplTest extends AppConfig {
 
   // Create a singleton
   static final AppConfigImplTest _instance = AppConfigImplTest._(
-    baseUrl: 'https://ego.rflgroupbd.com:8077',
+    baseUrl: 'http://116.68.192.145:9091/',
   );
   static AppConfigImplTest get instance => _instance;
 }
