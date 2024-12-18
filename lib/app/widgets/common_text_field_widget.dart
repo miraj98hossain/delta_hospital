@@ -7,10 +7,12 @@ class CommonTextFieldWidget extends StatelessWidget {
     required this.hintText,
     this.controller,
     this.focusNode,
+    this.onChanged,
   });
   final String hintText;
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final void Function(String value)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -23,6 +25,7 @@ class CommonTextFieldWidget extends StatelessWidget {
         fontSize: 12,
         color: Colors.grey,
       ),
+      onChanged: onChanged,
       decoration: InputDecoration(
         fillColor: appTheme.white,
         filled: true,
