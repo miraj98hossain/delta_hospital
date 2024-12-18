@@ -45,7 +45,14 @@ class CommonDropdownButton<T> extends StatelessWidget {
           (e) {
             return DropdownMenuItem(
               value: e,
-              child: Text(e.toString()),
+              child: Text(
+                e.toString(),
+                style: lightTextTheme.bodySmall!.copyWith(
+                  overflow: TextOverflow.ellipsis,
+                  color: appTheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             );
           },
         ).toList(),
