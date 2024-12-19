@@ -1,21 +1,33 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
+import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/widgets/common_drop_down.dart';
 import '../../book_appointment.dart';
 import 'widgets/week_schedule_widget.dart';
 
 class BookAppointmentView extends StatefulWidget {
-  const BookAppointmentView({super.key});
-
+  const BookAppointmentView({super.key, required this.doctor});
+  final Doctor doctor;
   @override
   State<BookAppointmentView> createState() => _BookAppointmentViewState();
 }
 
 class _BookAppointmentViewState extends State<BookAppointmentView> {
+  @override
+  void initState() {
+    context
+        .read<PatientTypeBloc>()
+        .add(GetPatientTypeEvent(doctorNo: widget.doctor.doctorNo ?? 0));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +70,11 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Dr. John Doe",
+                                widget.doctor.doctorName ?? "",
                                 style: lightTextTheme.bodyMedium!.copyWith(),
                               ),
                               Text(
-                                "Kidney Specialist",
+                                widget.doctor.docDegree ?? "",
                                 style: lightTextTheme.bodySmall!.copyWith(
                                   color: Colors.grey,
                                 ),
@@ -91,10 +103,16 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
               Row(
                 children: [
                   Expanded(
-                    child: CommonDropdownButton(
-                      hintText: "Patient Type",
-                      onChanged: (value) {},
-                      items: List.generate(20, (index) => index),
+                    child: BlocBuilder<PatientTypeBloc, PatientTypeState>(
+                      builder: (context, state) {
+                        return CommonDropdownButton<PatientType>(
+                          hintText: "Patient Type",
+                          onChanged: (value) {},
+                          items: state is PatientTypeSuccess
+                              ? state.patTypeList
+                              : [],
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
