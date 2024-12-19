@@ -1,3 +1,4 @@
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
@@ -15,5 +16,11 @@ abstract class BookAptRepository {
   });
   Future<List<PatientType>> getPatientType({
     required int doctorNo,
+  });
+  Future<List<ConsultationType>> getConsultationType({
+    required int doctorNo,
+    required String patTypeNo,
+    int? hospitalNumber,
+    required String appointmentDate,
   });
 }

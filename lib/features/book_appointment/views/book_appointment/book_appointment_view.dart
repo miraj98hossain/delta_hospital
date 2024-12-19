@@ -1,9 +1,13 @@
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
+import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/consultation_type_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +30,18 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
         .read<PatientTypeBloc>()
         .add(GetPatientTypeEvent(doctorNo: widget.doctor.doctorNo ?? 0));
     super.initState();
+  }
+
+  void _getConsultationType() {
+    var selectedDate = context.read<VariableStateCubit<DateTime>>().state!;
+    var patType = context.read<VariableStateCubit<PatientType>>().state!;
+
+    context.read<ConsultationTypeBloc>().add(GetConsultationTypeEvent(
+          doctorNo: widget.doctor.doctorNo ?? 0,
+          patTypeNo: patType.patientTypeNo ?? "",
+          hospitalNumber: null, // add hospital number later
+          appointmentDate: selectedDate.toFormatedString('yyyy-MM-dd'),
+        ));
   }
 
   @override
@@ -107,7 +123,14 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                       builder: (context, state) {
                         return CommonDropdownButton<PatientType>(
                           hintText: "Patient Type",
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            if (value != null) {
+                              context
+                                  .read<VariableStateCubit<PatientType>>()
+                                  .update(value);
+                              _getConsultationType();
+                            }
+                          },
                           items: state is PatientTypeSuccess
                               ? state.patTypeList
                               : [],
@@ -119,10 +142,17 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                     width: 10,
                   ),
                   Expanded(
-                    child: CommonDropdownButton(
-                      hintText: "Consultation Type",
-                      onChanged: (value) {},
-                      items: List.generate(20, (index) => index),
+                    child: BlocBuilder<ConsultationTypeBloc,
+                        ConsultationTypeState>(
+                      builder: (context, state) {
+                        return CommonDropdownButton<ConsultationType>(
+                          hintText: "Consultation Type",
+                          onChanged: (value) {},
+                          items: state is ConsultationTypeSuccess
+                              ? state.colsuntationTypeList
+                              : [],
+                        );
+                      },
                     ),
                   ),
                 ],

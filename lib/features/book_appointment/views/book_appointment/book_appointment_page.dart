@@ -1,5 +1,8 @@
 import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/consultation_type_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,8 +23,17 @@ class BookAppointmentPage extends StatelessWidget {
           create: (context) => PatientTypeBloc(getService()),
         ),
         BlocProvider(
+          create: (context) => ConsultationTypeBloc(getService()),
+        ),
+        BlocProvider(
           create: (context) =>
               VariableStateCubit<DateTime>()..update(DateTime.now()),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<PatientType>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<ConsultationType>(),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<List<DateTime>>()
