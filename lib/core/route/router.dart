@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/book_appointment/appointment_info.dart';
+import '../../features/book_appointment/data/models/doctor_grid_list_response.dart';
 
 class AppNavigation {
   AppNavigation._();
@@ -94,10 +95,16 @@ class AppNavigation {
           GoRoute(
             path: BookAppointmentPage.routePath,
             name: BookAppointmentPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const BookAppointmentPage(),
-              state: state,
-            ),
+            pageBuilder: (context, state) {
+              var map = state.extra as Map<String, dynamic>;
+              var doctor = map['doctor'] as Doctor;
+              return getPage(
+                child: BookAppointmentPage(
+                  doctor: doctor,
+                ),
+                state: state,
+              );
+            },
           ),
           GoRoute(
             path: PatientInfoPage.routePath,

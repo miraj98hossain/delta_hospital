@@ -17,6 +17,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/cubit/variable_state_cubit.dart';
 import '../../../../app/widgets/common_loading.dart';
 import '../../../../app/widgets/common_text_field_widget.dart';
+import '../../data/models/doctor_grid_list_response.dart';
 
 class DoctorListView extends StatefulWidget {
   const DoctorListView({super.key});
@@ -142,36 +143,6 @@ class _DoctorListViewState extends State<DoctorListView> {
             const SizedBox(
               height: 10,
             ),
-            // BlocBuilder<OnlineDoctorGridBloc, OnlineDoctorGridState>(
-            //   builder: (context, state) {
-            //     return Row(
-            //       children: [
-            //         Container(
-            //           height: 40,
-            //           decoration: BoxDecoration(
-            //             color: appTheme.white,
-            //             borderRadius: BorderRadius.circular(10),
-            //           ),
-            //           child: Row(
-            //             children: [
-            //               Text(state is OnlineDoctorGridSuccess
-            //                   ? state.doctorGridList.data?.length.toString() ??
-            //                       "0"
-            //                   : "0"),
-            //               const Text("/"),
-            //               Text(state is OnlineDoctorGridSuccess
-            //                   ? state.doctorGridList.recordsTotal ?? "0"
-            //                   : "0"),
-            //             ],
-            //           ),
-            //         )
-            //       ],
-            //     );
-            //   },
-            // ),
-            const SizedBox(
-              height: 10,
-            ),
             Expanded(
               child: BlocBuilder<OnlineDoctorGridBloc, OnlineDoctorGridState>(
                 builder: (context, state) {
@@ -257,7 +228,10 @@ class _DoctorListViewState extends State<DoctorListView> {
                                           lable: "Book Appointment",
                                           onPressed: () {
                                             context.pushNamed(
-                                                BookAppointmentPage.routeName);
+                                                BookAppointmentPage.routeName,
+                                                extra: {
+                                                  "doctor": doctor,
+                                                });
                                           },
                                         ),
                                       ),
