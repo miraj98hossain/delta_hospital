@@ -3,6 +3,7 @@ import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class BookAptRemoteDataSource {
@@ -14,6 +15,9 @@ abstract class BookAptRemoteDataSource {
     int? departmentNo,
     List<int>? specializationNos,
     String searchValue = '',
+  });
+  Future<PatientTypeResponse> getPatientType({
+    required int doctorNo,
   });
 }
 
@@ -67,6 +71,21 @@ class BookAptRemoteDataSourceImpl
     return await decodeResponse(
       response,
       decoder: DoctorGridListResponse.fromJson,
+    );
+  }
+
+  @override
+  Future<PatientTypeResponse> getPatientType({required int doctorNo}) async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/findPatTypeList?doctorNo=$doctorNo'));
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(
+      response,
+      decoder: PatientTypeResponse.fromJson,
     );
   }
 }
