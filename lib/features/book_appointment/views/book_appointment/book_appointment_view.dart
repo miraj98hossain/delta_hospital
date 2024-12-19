@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
@@ -9,11 +11,13 @@ import 'package:delta_hospital/features/book_appointment/data/models/patient_typ
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/consultation_type_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
+import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/slot_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/widgets/common_drop_down.dart';
 import '../../book_appointment.dart';
+import '../../data/models/available_slot_response.dart';
 import 'widgets/week_schedule_widget.dart';
 
 class BookAppointmentView extends StatefulWidget {
@@ -29,6 +33,7 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
     context
         .read<PatientTypeBloc>()
         .add(GetPatientTypeEvent(doctorNo: widget.doctor.doctorNo ?? 0));
+    _getAvailableSlot();
     super.initState();
   }
 
@@ -42,6 +47,16 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
           hospitalNumber: null, // add hospital number later
           appointmentDate: selectedDate.toFormatedString('yyyy-MM-dd'),
         ));
+  }
+
+  void _getAvailableSlot() {
+    var selectedDate = context.read<VariableStateCubit<DateTime>>().state!;
+    context.read<SlotBloc>().add(
+          GetSlotEvent(
+            doctorNo: widget.doctor.doctorNo ?? 0,
+            appointmentDate: selectedDate.toFormatedString('yyyy-MM-dd'),
+          ),
+        );
   }
 
   @override
@@ -178,177 +193,142 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
               const SizedBox(
                 height: 10,
               ),
-              const ScheduleWidget(),
+              ScheduleWidget(
+                getConsultationType: _getConsultationType,
+                getAvailableSlot: _getAvailableSlot,
+              ),
               const SizedBox(
                 height: 10,
               ),
-              const WeekSchedule(),
+              WeekSchedule(
+                getConsultationType: _getConsultationType,
+                getAvailableSlot: _getAvailableSlot,
+              ),
               const SizedBox(
                 height: 10,
               ),
-              Card(
-                clipBehavior: Clip.antiAlias,
-                color: appTheme.white,
-                child: ExpansionTile(
-                  title: Text(
-                    "Morning",
-                    style: lightTextTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  childrenPadding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                  ),
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Available Slots",
+              BlocBuilder<SlotBloc, SlotState>(
+                builder: (context, state) {
+                  if (state is SlotLoading) {
+                    return const CommonLoading();
+                  }
+                  if (state is SlotSuccess) {
+                    var groupedSlot =
+                        groupBy(state.availableSlotList, (slot) => slot.shift);
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        List<Slot> slotList =
+                            groupedSlot.values.elementAt(index);
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          color: appTheme.white,
+                          child: ExpansionTile(
+                            title: Text(
+                              groupedSlot.keys.elementAt(index) ?? "",
                               style: lightTextTheme.bodyMedium!.copyWith(
-                                color: appTheme.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: appTheme.primary,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                "20",
-                                style: lightTextTheme.bodyMedium!.copyWith(
-                                  color: appTheme.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Divider(
-                          thickness: 1,
-                          color: appTheme.lightCyan,
-                          indent: 0,
-                          endIndent: 0,
-                          height: 1,
-                        ),
-                        const SizedBox(height: 5),
-                        SizedBox(
-                          height: 200,
-                          child: GridView.builder(
-                            itemCount: 50,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              mainAxisExtent:
-                                  MediaQuery.of(context).size.height * 0.05,
+                            childrenPadding: const EdgeInsets.symmetric(
+                              horizontal: 10,
                             ),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: appTheme.lightCyan,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              );
-                            },
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Available Slots",
+                                        style:
+                                            lightTextTheme.bodyMedium!.copyWith(
+                                          color: appTheme.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: appTheme.primary,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          slotList.length.toString(),
+                                          style: lightTextTheme.bodyMedium!
+                                              .copyWith(
+                                            color: appTheme.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Divider(
+                                    thickness: 1,
+                                    color: appTheme.lightCyan,
+                                    indent: 0,
+                                    endIndent: 0,
+                                    height: 1,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  SizedBox(
+                                    height: 200,
+                                    child: GridView.builder(
+                                      itemCount: slotList.length,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 4,
+                                        mainAxisExtent:
+                                            MediaQuery.of(context).size.height *
+                                                0.053,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: appTheme.lightCyan,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              DateTime.parse(slotList[index]
+                                                          .startTime ??
+                                                      "")
+                                                  .toLocal()
+                                                  .toFormatedString("hh:mm a"),
+                                              style: lightTextTheme.bodySmall!
+                                                  .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Card(
-                clipBehavior: Clip.antiAlias,
-                color: appTheme.white,
-                child: ExpansionTile(
-                  title: Text(
-                    "Evening",
-                    style: lightTextTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  childrenPadding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                  ),
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Available Slots",
-                              style: lightTextTheme.bodyMedium!.copyWith(
-                                color: appTheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: appTheme.primary,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                "20",
-                                style: lightTextTheme.bodyMedium!.copyWith(
-                                  color: appTheme.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Divider(
-                          thickness: 1,
-                          color: appTheme.lightCyan,
-                          indent: 0,
-                          endIndent: 0,
-                          height: 1,
-                        ),
-                        const SizedBox(height: 5),
-                        SizedBox(
-                          height: 200,
-                          child: GridView.builder(
-                            itemCount: 50,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              mainAxisExtent:
-                                  MediaQuery.of(context).size.height * 0.05,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: appTheme.lightCyan,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                      itemCount: groupedSlot.length,
+                    );
+                  }
+                  return Container();
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

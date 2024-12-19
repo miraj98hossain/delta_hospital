@@ -4,6 +4,7 @@ import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/consultation_type_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
+import 'package:delta_hospital/features/book_appointment/views/book_appointment/bloc/slot_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,6 +25,9 @@ class BookAppointmentPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ConsultationTypeBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => SlotBloc(getService()),
         ),
         BlocProvider(
           create: (context) =>

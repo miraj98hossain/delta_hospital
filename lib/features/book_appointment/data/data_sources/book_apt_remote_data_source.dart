@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
@@ -25,6 +28,10 @@ abstract class BookAptRemoteDataSource {
     required String patTypeNo,
     int? hospitalNumber,
     required String appointmentDate,
+  });
+  Future<AvailableSlotResponse> getAvailableSlot({
+    required int doctorNo,
+    required String appointDate,
   });
 }
 
@@ -113,6 +120,26 @@ class BookAptRemoteDataSourceImpl
     return await decodeResponse(
       response,
       decoder: ConsultationTypeResponse.fromJson,
+    );
+  }
+
+  @override
+  Future<AvailableSlotResponse> getAvailableSlot(
+      {required int doctorNo, required String appointDate}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/getAvailableSlot'));
+    request.body =
+        json.encode({"doctorNo": "$doctorNo", "appointDate": appointDate});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(
+      response,
+      decoder: AvailableSlotResponse.fromJson,
     );
   }
 }

@@ -7,8 +7,11 @@ import 'package:delta_hospital/core/extentions/extentations.dart';
 class ScheduleWidget extends StatelessWidget {
   const ScheduleWidget({
     super.key,
+    required this.getConsultationType,
+    required this.getAvailableSlot,
   });
-
+  final void Function() getConsultationType;
+  final void Function() getAvailableSlot;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,6 +92,8 @@ class ScheduleWidget extends StatelessWidget {
                                 ),
                               ),
                             );
+                        getConsultationType();
+                        getAvailableSlot();
                       }
                     },
                     icon: Icon(

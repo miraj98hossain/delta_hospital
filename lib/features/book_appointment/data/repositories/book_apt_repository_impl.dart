@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/data/data_sources/local_data_source.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/features/book_appointment/data/data_sources/book_apt_remote_data_source.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
@@ -74,6 +75,17 @@ class BookAptRepositoryImpl implements BookAptRepository {
       hospitalNumber: hospitalNumber,
       appointmentDate: appointmentDate,
     );
+    if (response.success != true) {
+      throw ApiDataException(response.message!);
+    }
+    return response.items ?? [];
+  }
+
+  @override
+  Future<List<Slot>> getAvailableSlot(
+      {required int doctorNo, required String appointDate}) async {
+    var response = await remoteDataSource.getAvailableSlot(
+        doctorNo: doctorNo, appointDate: appointDate);
     if (response.success != true) {
       throw ApiDataException(response.message!);
     }

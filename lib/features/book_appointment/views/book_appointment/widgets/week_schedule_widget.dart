@@ -7,8 +7,11 @@ import 'week_day_widget.dart';
 class WeekSchedule extends StatelessWidget {
   const WeekSchedule({
     super.key,
+    required this.getConsultationType,
+    required this.getAvailableSlot,
   });
-
+  final void Function() getConsultationType;
+  final void Function() getAvailableSlot;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,6 +33,8 @@ class WeekSchedule extends StatelessWidget {
                 onTap: () {
                   if (date == null) return;
                   context.read<VariableStateCubit<DateTime>>().update(date);
+                  getConsultationType();
+                  getAvailableSlot();
                 },
               );
             },

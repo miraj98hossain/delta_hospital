@@ -1,3 +1,4 @@
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
@@ -22,5 +23,9 @@ abstract class BookAptRepository {
     required String patTypeNo,
     int? hospitalNumber,
     required String appointmentDate,
+  });
+  Future<List<Slot>> getAvailableSlot({
+    required int doctorNo,
+    required String appointDate,
   });
 }
