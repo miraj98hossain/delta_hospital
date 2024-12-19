@@ -33,6 +33,9 @@ class DoctorListPage extends StatelessWidget {
         BlocProvider(
           create: (context) => VariableStateCubit<Specialization>(),
         ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<int>()..update(10),
+        ),
       ],
       child: const DoctorListView(),
     );

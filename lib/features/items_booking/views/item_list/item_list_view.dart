@@ -129,89 +129,91 @@ class _ItemListViewState extends State<ItemListView> {
             const SizedBox(
               height: 10,
             ),
-            Expanded(child: BlocBuilder<ItemGridBloc, ItemGridState>(
-              builder: (context, state) {
-                if (state.isLoading && state.itemGridList.data == null) {
-                  return const CommonLoading();
-                }
-                if (state.itemGridList.data != null) {
-                  return CustomScrollView(
-                    controller: _itemsScrollController,
-                    physics: const BouncingScrollPhysics(),
-                    slivers: [
-                      SliverList.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
-                        ),
-                        itemCount: state.itemGridList.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          var item = state.itemGridList.data?[index];
-
-                          return Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey.shade200,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item?.itemName ?? "",
-                                            style: lightTextTheme.bodyMedium!
-                                                .copyWith(),
-                                          ),
-                                          Text(
-                                            item?.itemTypeName ?? "",
-                                            style: lightTextTheme.bodySmall!
-                                                .copyWith(
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          Text(
-                                            item?.itemTypeNo.toString() ?? "",
-                                            style: lightTextTheme.bodySmall!
-                                                .copyWith(
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    CommonElevatedButton(
-                                      lable: "Add",
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      if (state.isLoading)
-                        const SliverToBoxAdapter(
-                          child: SizedBox(
-                            height: 64,
-                            child: CommonLoading(),
+            Expanded(
+              child: BlocBuilder<ItemGridBloc, ItemGridState>(
+                builder: (context, state) {
+                  if (state.isLoading && state.itemGridList.data == null) {
+                    return const CommonLoading();
+                  }
+                  if (state.itemGridList.data != null) {
+                    return CustomScrollView(
+                      controller: _itemsScrollController,
+                      physics: const BouncingScrollPhysics(),
+                      slivers: [
+                        SliverList.separated(
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 10,
                           ),
+                          itemCount: state.itemGridList.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            var item = state.itemGridList.data?[index];
+
+                            return Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.grey.shade200,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              item?.itemName ?? "",
+                                              style: lightTextTheme.bodyMedium!
+                                                  .copyWith(),
+                                            ),
+                                            Text(
+                                              item?.itemTypeName ?? "",
+                                              style: lightTextTheme.bodySmall!
+                                                  .copyWith(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            Text(
+                                              item?.itemTypeNo.toString() ?? "",
+                                              style: lightTextTheme.bodySmall!
+                                                  .copyWith(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      CommonElevatedButton(
+                                        lable: "Add",
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                    ],
-                  );
-                }
-                return Container();
-              },
-            ))
+                        if (state.isLoading)
+                          const SliverToBoxAdapter(
+                            child: SizedBox(
+                              height: 64,
+                              child: CommonLoading(),
+                            ),
+                          ),
+                      ],
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            )
           ],
         ),
       ),

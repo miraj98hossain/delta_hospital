@@ -6,39 +6,83 @@ import '../../../domain/repositories/book_apt_repository.dart';
 @immutable
 sealed class OnlineDoctorGridEvent {}
 
-final class GetOnlineDoctorGridEvent extends OnlineDoctorGridEvent {}
+final class GetOnlineDoctorGridEvent extends OnlineDoctorGridEvent {
+  final int length;
+  final int? departmentNo;
+  final int? specializationNo;
+  final String searchValue;
 
-@immutable
-sealed class OnlineDoctorGridState {}
-
-final class OnlineDoctorGridInitial extends OnlineDoctorGridState {}
-
-final class OnlineDoctorGridLoading extends OnlineDoctorGridState {}
-
-final class OnlineDoctorGridSuccess extends OnlineDoctorGridState {
-  final DoctorGridList doctorGridList;
-
-  OnlineDoctorGridSuccess({required this.doctorGridList});
+  GetOnlineDoctorGridEvent({
+    this.length = 10,
+    this.departmentNo,
+    this.specializationNo,
+    this.searchValue = '',
+  });
 }
 
-final class OnlineDoctorGridError extends OnlineDoctorGridState {
-  final Object error;
+class OnlineDoctorGridState {
+  final bool isInitial;
+  final bool isLoading;
+  final bool isError;
+  final String errorMessage;
+  final DoctorGridList doctorGridList;
 
-  OnlineDoctorGridError({required this.error});
+  const OnlineDoctorGridState({
+    this.isInitial = false,
+    this.isLoading = false,
+    this.isError = false,
+    this.errorMessage = '',
+    required this.doctorGridList,
+  });
+
+  OnlineDoctorGridState copyWith({
+    bool? isInitial,
+    bool? isLoading,
+    bool? isError,
+    String? errorMessage,
+    DoctorGridList? doctorGridList,
+  }) {
+    return OnlineDoctorGridState(
+      isInitial: isInitial ?? this.isInitial,
+      isLoading: isLoading ?? this.isLoading,
+      isError: isError ?? this.isError,
+      errorMessage: errorMessage ?? this.errorMessage,
+      doctorGridList: doctorGridList ?? this.doctorGridList,
+    );
+  }
 }
 
 class OnlineDoctorGridBloc
     extends Bloc<OnlineDoctorGridEvent, OnlineDoctorGridState> {
   final BookAptRepository _bookAptRepository;
+
   OnlineDoctorGridBloc(this._bookAptRepository)
-      : super(OnlineDoctorGridInitial()) {
+      : super(OnlineDoctorGridState(
+            isInitial: true, doctorGridList: DoctorGridList())) {
     on<GetOnlineDoctorGridEvent>((event, emit) async {
-      emit(OnlineDoctorGridLoading());
+      emit(state.copyWith(
+          isInitial: false, isLoading: true, isError: false, errorMessage: ''));
       try {
-        var response = await _bookAptRepository.getDoctorGridList();
-        emit(OnlineDoctorGridSuccess(doctorGridList: response));
+        var response = await _bookAptRepository.getDoctorGridList(
+          length: event.length,
+          departmentNo: event.departmentNo,
+          specializationNos:
+              event.specializationNo != null ? [event.specializationNo!] : null,
+          searchValue: event.searchValue,
+        );
+
+        await Future.delayed(const Duration(seconds: 1), () {
+          emit(state.copyWith(
+            isLoading: false,
+            doctorGridList: response,
+          ));
+        });
       } catch (e) {
-        emit(OnlineDoctorGridError(error: e));
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
       }
     });
   }
