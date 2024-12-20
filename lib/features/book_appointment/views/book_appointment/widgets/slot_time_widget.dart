@@ -92,7 +92,7 @@ class SlotTime extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        margin: EdgeInsets.all(1),
+        margin: const EdgeInsets.all(1),
         decoration: _getDecoration(),
         child: Center(
           child: Text(

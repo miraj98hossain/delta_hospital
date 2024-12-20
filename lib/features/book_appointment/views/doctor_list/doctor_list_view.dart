@@ -18,7 +18,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/cubit/variable_state_cubit.dart';
 import '../../../../app/widgets/common_loading.dart';
 import '../../../../app/widgets/common_text_field_widget.dart';
-import '../../data/models/doctor_grid_list_response.dart';
 
 class DoctorListView extends StatefulWidget {
   const DoctorListView({super.key});
