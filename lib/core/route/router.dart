@@ -4,6 +4,7 @@ import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart'
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
+import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/items_booking/cart.dart';
 import 'package:delta_hospital/features/items_booking/item_list.dart';
@@ -92,6 +93,20 @@ class AppNavigation {
           state: state,
         ),
         routes: [
+          GoRoute(
+            path: DoctorInfoPage.routePath,
+            name: DoctorInfoPage.routeName,
+            pageBuilder: (context, state) {
+              var map = state.extra as Map<String, dynamic>;
+              var doctor = map['doctor'] as Doctor;
+              return getPage(
+                child: DoctorInfoPage(
+                  doctor: doctor,
+                ),
+                state: state,
+              );
+            },
+          ),
           GoRoute(
             path: BookAppointmentPage.routePath,
             name: BookAppointmentPage.routeName,

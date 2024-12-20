@@ -7,6 +7,7 @@ import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/department_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/online_doctor_grid_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_list/bloc/specialization_bloc.dart';
@@ -242,7 +243,13 @@ class _DoctorListViewState extends State<DoctorListView> {
                                         child: CommonElevatedButton(
                                           backgroundColor: appTheme.secondary,
                                           lable: "View Profile",
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            context.pushNamed(
+                                                DoctorInfoPage.routeName,
+                                                extra: {
+                                                  "doctor": doctor,
+                                                });
+                                          },
                                         ),
                                       ),
                                     ],
