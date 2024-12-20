@@ -4,6 +4,8 @@ import 'package:delta_hospital/features/book_appointment/data/data_sources/book_
 import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_info_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_schedule_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
@@ -109,5 +111,29 @@ class BookAptRepositoryImpl implements BookAptRepository {
           response.message ?? "Error Occured While Fetching");
     }
     return response.model ?? SlotStatus();
+  }
+
+  @override
+  Future<DoctorInfo> getDoctorInfo({
+    required int doctorNo,
+  }) async {
+    var response = await remoteDataSource.getDoctorInfo(doctorNo: doctorNo);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.obj ?? DoctorInfo();
+  }
+
+  @override
+  Future<List<DoctorSchedule>> getDoctorSchedule(
+      {required int doctorNo, required String scheduleDate}) async {
+    var response = await remoteDataSource.getDoctorSchedule(
+        doctorNo: doctorNo, scheduleDate: scheduleDate);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.items ?? [];
   }
 }

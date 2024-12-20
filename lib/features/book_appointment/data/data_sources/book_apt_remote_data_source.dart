@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_info_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_schedule_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
@@ -36,6 +37,13 @@ abstract class BookAptRemoteDataSource {
   });
   Future<SlotStatusResponse> checkSlotStatus({
     required int slotNo,
+  });
+  Future<DoctorInfoResponse> getDoctorInfo({
+    required int doctorNo,
+  });
+  Future<DoctorScheduleResponse> getDoctorSchedule({
+    required int doctorNo,
+    required String scheduleDate,
   });
 }
 
@@ -159,5 +167,38 @@ class BookAptRemoteDataSourceImpl
 
     http.StreamedResponse response = await request.send();
     return await decodeResponse(response, decoder: SlotStatusResponse.fromJson);
+  }
+
+  @override
+  Future<DoctorInfoResponse> getDoctorInfo({required int doctorNo}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/getDoctorInfo'));
+    request.body = json.encode({"doctorNo": "$doctorNo"});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, decoder: DoctorInfoResponse.fromJson);
+  }
+
+  @override
+  Future<DoctorScheduleResponse> getDoctorSchedule(
+      {required int doctorNo, required String scheduleDate}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/getDoctorSchedule'));
+    request.body =
+        json.encode({"doctorNo": "$doctorNo", "scheduleDate": scheduleDate});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: DoctorScheduleResponse.fromJson);
   }
 }
