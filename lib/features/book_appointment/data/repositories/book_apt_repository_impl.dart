@@ -7,7 +7,10 @@ import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
+
 import 'package:delta_hospital/features/book_appointment/domain/repositories/book_apt_repository.dart';
+
+import '../models/slot_status_response.dart';
 
 class BookAptRepositoryImpl implements BookAptRepository {
   final BookAptRemoteDataSource remoteDataSource;
@@ -20,7 +23,8 @@ class BookAptRepositoryImpl implements BookAptRepository {
   Future<List<Department>> getOnlineDepartmentList() async {
     var response = await remoteDataSource.getOnlineDepartmentList();
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
   }
@@ -29,7 +33,8 @@ class BookAptRepositoryImpl implements BookAptRepository {
   Future<List<Specialization>> getOnlineSpecializationtList() async {
     var response = await remoteDataSource.getOnlineSpecializationtList();
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
   }
@@ -48,7 +53,8 @@ class BookAptRepositoryImpl implements BookAptRepository {
         specializationNos: specializationNos,
         searchValue: searchValue);
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.obj ?? DoctorGridList();
   }
@@ -57,7 +63,8 @@ class BookAptRepositoryImpl implements BookAptRepository {
   Future<List<PatientType>> getPatientType({required int doctorNo}) async {
     var response = await remoteDataSource.getPatientType(doctorNo: doctorNo);
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
   }
@@ -76,7 +83,8 @@ class BookAptRepositoryImpl implements BookAptRepository {
       appointmentDate: appointmentDate,
     );
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
   }
@@ -87,8 +95,19 @@ class BookAptRepositoryImpl implements BookAptRepository {
     var response = await remoteDataSource.getAvailableSlot(
         doctorNo: doctorNo, appointDate: appointDate);
     if (response.success != true) {
-      throw ApiDataException(response.message!);
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
+  }
+
+  @override
+  Future<SlotStatus> checkSlotStatus({required int slotNo}) async {
+    var response = await remoteDataSource.checkSlotStatus(slotNo: slotNo);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.model ?? SlotStatus();
   }
 }

@@ -4,6 +4,7 @@ import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/slot_status_response.dart';
 
 abstract class BookAptRepository {
   Future<List<Department>> getOnlineDepartmentList();
@@ -27,5 +28,8 @@ abstract class BookAptRepository {
   Future<List<Slot>> getAvailableSlot({
     required int doctorNo,
     required String appointDate,
+  });
+  Future<SlotStatus> checkSlotStatus({
+    required int slotNo,
   });
 }

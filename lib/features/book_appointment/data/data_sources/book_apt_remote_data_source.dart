@@ -8,6 +8,7 @@ import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid
 import 'package:delta_hospital/features/book_appointment/data/models/online_department_list.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/slot_status_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class BookAptRemoteDataSource {
@@ -32,6 +33,9 @@ abstract class BookAptRemoteDataSource {
   Future<AvailableSlotResponse> getAvailableSlot({
     required int doctorNo,
     required String appointDate,
+  });
+  Future<SlotStatusResponse> checkSlotStatus({
+    required int slotNo,
   });
 }
 
@@ -141,5 +145,19 @@ class BookAptRemoteDataSourceImpl
       response,
       decoder: AvailableSlotResponse.fromJson,
     );
+  }
+
+  @override
+  Future<SlotStatusResponse> checkSlotStatus({required int slotNo}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/checkSlotStatus'));
+    request.body = json.encode({"slotNo": "$slotNo"});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    return await decodeResponse(response, decoder: SlotStatusResponse.fromJson);
   }
 }
