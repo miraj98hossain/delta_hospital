@@ -15,10 +15,12 @@ import 'package:delta_hospital/features/book_appointment/views/book_appointment/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../app/widgets/app_snack_bar.dart';
 import '../../../../app/widgets/common_drop_down.dart';
+import '../../../../dependency_injector/di_container.dart';
 import '../../book_appointment.dart';
 import '../../data/models/available_slot_response.dart';
-import 'widgets/week_schedule_widget.dart';
+import '../../domain/repositories/book_apt_repository.dart';
 
 class BookAppointmentView extends StatefulWidget {
   const BookAppointmentView({super.key, required this.doctor});
@@ -39,8 +41,9 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
 
   void _getConsultationType() {
     var selectedDate = context.read<VariableStateCubit<DateTime>>().state!;
-    var patType = context.read<VariableStateCubit<PatientType>>().state!;
+    var patType = context.read<VariableStateCubit<PatientType>>().state;
 
+    if (patType == null) return;
     context.read<ConsultationTypeBloc>().add(GetConsultationTypeEvent(
           doctorNo: widget.doctor.doctorNo ?? 0,
           patTypeNo: patType.patientTypeNo ?? "",
@@ -285,32 +288,44 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 4,
+                                        crossAxisSpacing: 4,
+                                        mainAxisSpacing: 3,
                                         mainAxisExtent:
                                             MediaQuery.of(context).size.height *
-                                                0.053,
+                                                0.04,
                                       ),
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          margin: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: appTheme.lightCyan,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              DateTime.parse(slotList[index]
-                                                          .startTime ??
-                                                      "")
-                                                  .toLocal()
-                                                  .toFormatedString("hh:mm a"),
-                                              style: lightTextTheme.bodySmall!
-                                                  .copyWith(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
+                                        Slot slot = slotList[index];
+                                        return SlotTime(
+                                          slot: slot,
+                                          isSlected: context
+                                                  .watch<
+                                                      VariableStateCubit<
+                                                          Slot>>()
+                                                  .state ==
+                                              slot,
+                                          onSelected: (slot) async {
+                                            var result = await getService<
+                                                    BookAptRepository>()
+                                                .checkSlotStatus(
+                                              slotNo: slot.slotNo!,
+                                            );
+                                            if (context.mounted) {
+                                              if (result.actionFlag == "1") {
+                                                context
+                                                    .read<
+                                                        VariableStateCubit<
+                                                            Slot>>()
+                                                    .update(slot);
+                                              } else {
+                                                AppSnackBar.showSnackBar(
+                                                  context: context,
+                                                  message: result.status ?? "",
+                                                  type: SnackBarType.error,
+                                                );
+                                              }
+                                            }
+                                          },
                                         );
                                       },
                                     ),

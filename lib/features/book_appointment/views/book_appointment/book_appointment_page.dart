@@ -1,4 +1,5 @@
 import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
@@ -38,6 +39,9 @@ class BookAppointmentPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<ConsultationType>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<Slot>(),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<List<DateTime>>()
