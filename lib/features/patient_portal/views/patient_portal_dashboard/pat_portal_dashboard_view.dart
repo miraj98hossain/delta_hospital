@@ -1,6 +1,8 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'widgets/pat_dash_widget.dart';
 
 class PatPortalDashboardView extends StatefulWidget {
@@ -32,7 +34,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                     lable: "Self Portal",
                     image: ImageConstant.directorPortal,
                     onTap: () {
-                      // context.pushNamed(DashboardLoginPage.routeName);
+                      context.pushNamed(PatPortalLoginPage.routeName);
                     },
                   ),
                 ),
@@ -44,7 +46,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                     lable: "Family Portal",
                     image: ImageConstant.directorPortal,
                     onTap: () {
-                      // context.pushNamed(DashboardLoginPage.routeName);
+                      // context.pushNamed(PatPortalLoginPage.routeName);
                     },
                   ),
                 ),
