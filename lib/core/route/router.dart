@@ -20,6 +20,7 @@ import 'package:delta_hospital/features/management/view/director_portfolio/direc
 import 'package:delta_hospital/features/management/view/financial_dashboard/financial_dashboard_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
+import 'package:delta_hospital/features/patient_portal/patient_portal_dashboard.dart';
 import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -247,6 +248,14 @@ class AppNavigation {
         name: MyAppointmentPage.routeName,
         pageBuilder: (context, state) => getPage(
           child: const MyAppointmentPage(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: PatPortalDashboardPage.routePath,
+        name: PatPortalDashboardPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const PatPortalDashboardPage(),
           state: state,
         ),
       ),

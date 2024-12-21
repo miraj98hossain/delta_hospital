@@ -2,9 +2,9 @@ import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/patient_portal_dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../book_appointment/views/doctor_list/doctor_list_page.dart';
 import '../../items_booking/views/item_list/item_list_page.dart';
 import '../home.dart';
@@ -63,6 +63,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Patients Portal",
               icon: ImageConstant.patientPortal,
+              onTap: () {
+                context.pushNamed(PatPortalDashboardPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Career",
