@@ -36,15 +36,18 @@ class PatDashWidget extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 100,
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: appTheme.lightCyan,
-                image: DecorationImage(
-                  image: AssetImage(image),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                height: 50,
+                width: 50,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                borderRadius: BorderRadius.circular(12),
               ),
             )
           ],

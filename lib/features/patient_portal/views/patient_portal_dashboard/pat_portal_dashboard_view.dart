@@ -32,7 +32,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                 Expanded(
                   child: PatDashWidget(
                     lable: "Self Portal",
-                    image: ImageConstant.directorPortal,
+                    image: ImageConstant.selfPortal,
                     onTap: () {
                       context.pushNamed(PatPortalLoginPage.routeName);
                     },
@@ -44,7 +44,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                 Expanded(
                   child: PatDashWidget(
                     lable: "Family Portal",
-                    image: ImageConstant.directorPortal,
+                    image: ImageConstant.familyPortal,
                     onTap: () {
                       // context.pushNamed(PatPortalLoginPage.routeName);
                     },

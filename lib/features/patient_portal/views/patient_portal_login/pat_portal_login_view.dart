@@ -1,7 +1,9 @@
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/patient_portal.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PatPortalLoginView extends StatefulWidget {
   const PatPortalLoginView({super.key});
@@ -89,7 +91,9 @@ class _PatPortalLoginViewState extends State<PatPortalLoginView> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(PatientPortalPage.routeName);
+                    },
                     child: Text(
                       "Login",
                       style: lightTextTheme.bodySmall!.copyWith(

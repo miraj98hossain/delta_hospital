@@ -23,4 +23,10 @@ class ImageConstant {
   static String loginImage = '$_imagePath/loginImage.png';
   static String verifyOtp = '$_imagePath/verifyOtp.png';
   static String user = '$_imagePath/user.png';
+  static String familyPortal = '$_imagePath/family.png';
+  static String selfPortal = '$_imagePath/self.png';
+  static String invoice = '$_imagePath/invoice.png';
+  static String medicalRecord = '$_imagePath/medical-record.png';
+  static String prescription = '$_imagePath/prescription.png';
+  static String stickyNotes = '$_imagePath/sticky-notes.png';
 }

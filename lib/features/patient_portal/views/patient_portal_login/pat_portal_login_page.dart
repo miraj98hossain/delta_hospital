@@ -1,5 +1,6 @@
-import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../patient_portal_login.dart';
 
 class PatPortalLoginPage extends StatelessWidget {
   const PatPortalLoginPage({super.key});
