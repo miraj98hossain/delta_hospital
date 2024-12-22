@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/views/family_list/family_list_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,7 +47,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                     lable: "Family Portal",
                     image: ImageConstant.familyPortal,
                     onTap: () {
-                      // context.pushNamed(PatPortalLoginPage.routeName);
+                      context.pushNamed(FamilyListPage.routeName);
                     },
                   ),
                 ),
