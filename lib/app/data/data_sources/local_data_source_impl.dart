@@ -1,5 +1,6 @@
-import 'package:delta_hospital/app/data/data_sources/local_data_source.dart';
 import 'package:sembast/sembast.dart';
+
+abstract class LocalDataSource {}
 
 class LocalDataSourceImpl implements LocalDataSource {
   final Database _database;

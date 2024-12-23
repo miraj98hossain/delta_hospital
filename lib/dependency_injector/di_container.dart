@@ -1,4 +1,3 @@
-import 'package:delta_hospital/app/data/data_sources/local_data_source.dart';
 import 'package:delta_hospital/app/data/data_sources/local_data_source_impl.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/sembast.dart';
