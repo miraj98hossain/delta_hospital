@@ -8,15 +8,20 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.controller,
     this.focusNode,
     this.onChanged,
+    this.keyboardType = TextInputType.text,
+    this.validator,
   });
   final String hintText;
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final void Function(String value)? onChanged;
+  final TextInputType? keyboardType;
+  final String? Function(String? value)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
       focusNode: focusNode,
       autofocus: false,
       autocorrect: false,
@@ -63,6 +68,7 @@ class CommonTextFieldWidget extends StatelessWidget {
           color: Colors.grey,
         ),
       ),
+      validator: validator,
     );
   }
 }

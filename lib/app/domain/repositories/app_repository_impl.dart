@@ -55,6 +55,10 @@ class AppRepositoryImpl implements AppRepository {
 
     var response =
         await appRemoteDataSource.getUserDetails(token: auth.accessToken!);
+    if (response.success != true) {
+      throw CustomException(response.message);
+    }
+    await saveHisUser(userDetails: response.obj!);
     return response.obj ?? UserDetails();
   }
 
