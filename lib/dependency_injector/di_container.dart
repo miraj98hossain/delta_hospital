@@ -1,4 +1,7 @@
-import 'package:delta_hospital/app/data/data_sources/local_data_source_impl.dart';
+import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
+import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
+import 'package:delta_hospital/app/data/repositories/app_repository.dart';
+import 'package:delta_hospital/app/domain/repositories/app_repository_impl.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/sembast.dart';
 import 'package:delta_hospital/features/book_appointment/data/data_sources/book_apt_remote_data_source.dart';
@@ -31,8 +34,21 @@ abstract class DIContainer {
     }
 
     final db = await SembastDatabase.instance.database;
-    getIt.registerLazySingleton<LocalDataSource>(
-      () => LocalDataSourceImpl(database: db),
+    getIt.registerLazySingleton<AppLocalDataSource>(
+      () => AppLocalDataSourceImpl(database: db),
+    );
+
+    // app remote
+    getIt.registerLazySingleton<AppRemoteDataSource>(
+      () => AppRemoteDataSourceImpl(
+        appConfig: getIt<AppConfig>(),
+      ),
+    );
+    getIt.registerLazySingleton<AppRepository>(
+      () => AppRepositoryImpl(
+        appRemoteDataSource: getIt<AppRemoteDataSource>(),
+        appLocalDataSource: getIt<AppLocalDataSource>(),
+      ),
     );
     //book appointment
     getIt.registerLazySingleton<BookAptRemoteDataSource>(
@@ -44,7 +60,7 @@ abstract class DIContainer {
     getIt.registerLazySingleton<BookAptRepository>(
       () => BookAptRepositoryImpl(
         remoteDataSource: getIt<BookAptRemoteDataSource>(),
-        localDataSource: getIt<LocalDataSource>(),
+        localDataSource: getIt<AppLocalDataSource>(),
       ),
     );
     //items booking
@@ -57,7 +73,7 @@ abstract class DIContainer {
     getIt.registerLazySingleton<ItemsBookingRepository>(
       () => ItemsBookingRepositoryImpl(
         remoteDataSource: getIt<ItemsBookingRemoteDataSource>(),
-        localDataSource: getIt<LocalDataSource>(),
+        localDataSource: getIt<AppLocalDataSource>(),
       ),
     );
   }

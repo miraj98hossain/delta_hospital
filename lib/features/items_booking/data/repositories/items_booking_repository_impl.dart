@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/data/data_sources/local_data_source_impl.dart';
+import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
@@ -7,7 +7,7 @@ import 'package:delta_hospital/features/items_booking/domain/repositories/items_
 
 class ItemsBookingRepositoryImpl implements ItemsBookingRepository {
   final ItemsBookingRemoteDataSource remoteDataSource;
-  final LocalDataSource localDataSource;
+  final AppLocalDataSource localDataSource;
 
   ItemsBookingRepositoryImpl({
     required this.remoteDataSource,
