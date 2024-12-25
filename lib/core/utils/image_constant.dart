@@ -17,6 +17,7 @@ class ImageConstant {
   static String payment = '$_imagePath/payment.png';
   static String managementIcon = '$_imagePath/managementIcon.png';
   static String doctor = '$_imagePath/doctor.png';
+  static String doctorPortal = "$_imagePath/doctorPortal.png";
   static String directorPortal = '$_imagePath/directorPortal.png';
   static String financialDashboard = '$_imagePath/financialDashboard.png';
   static String shareHolder = '$_imagePath/shareHolder.png';
@@ -29,4 +30,6 @@ class ImageConstant {
   static String medicalRecord = '$_imagePath/medical-record.png';
   static String prescription = '$_imagePath/prescription.png';
   static String stickyNotes = '$_imagePath/sticky-notes.png';
+  static String doctorVisit = '$_imagePath/doctor-visit.png';
+  static String hospital = '$_imagePath/hospital.png';
 }
