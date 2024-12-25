@@ -30,7 +30,7 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                 Expanded(
                   child: PatDashWidget(
                     lable: "OPD Portal",
-                    image: ImageConstant.selfPortal,
+                    image: ImageConstant.doctorVisit,
                     onTap: () {},
                   ),
                 ),
@@ -40,7 +40,7 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                 Expanded(
                   child: PatDashWidget(
                     lable: "IPD Portal",
-                    image: ImageConstant.familyPortal,
+                    image: ImageConstant.hospital,
                     onTap: () {},
                   ),
                 ),

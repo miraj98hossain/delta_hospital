@@ -73,7 +73,8 @@ class _HomeViewState extends State<HomeView> {
               lable: "Doctor Portal",
               icon: ImageConstant.doctorPortal,
               onTap: () {
-                context.pushNamed(DoctorLoginPage.routeName);
+                context.pushNamed(DoctorDashPage.routeName);
+                // context.pushNamed(DoctorLoginPage.routeName);
               },
             ),
             ModuleWidget(
