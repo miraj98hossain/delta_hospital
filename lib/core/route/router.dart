@@ -6,6 +6,7 @@ import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_ipd_portal.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_login.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/items_booking/cart.dart';
@@ -314,14 +315,14 @@ class AppNavigation {
               state: state,
             ),
           ),
-          // GoRoute(
-          //   path: PatientPortalPage.routePath,
-          //   name: PatientPortalPage.routeName,
-          //   pageBuilder: (context, state) => getPage(
-          //     child: const PatientPortalPage(),
-          //     state: state,
-          //   ),
-          // ),
+          GoRoute(
+            path: DoctorIpdPortalPage.routePath,
+            name: DoctorIpdPortalPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const DoctorIpdPortalPage(),
+              state: state,
+            ),
+          ),
           // GoRoute(
           //   path: FamilyListPage.routePath,
           //   name: FamilyListPage.routeName,

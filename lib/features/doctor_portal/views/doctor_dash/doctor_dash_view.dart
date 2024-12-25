@@ -4,6 +4,7 @@ import 'package:delta_hospital/features/patient_portal/views/patient_portal_dash
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../doctor_ipd_portal.dart';
 import '../../doctor_opd_portal.dart';
 
 class DoctorDashView extends StatefulWidget {
@@ -64,7 +65,9 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                   child: PatDashWidget(
                     lable: "IPD Portal",
                     image: ImageConstant.hospital,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(DoctorIpdPortalPage.routeName);
+                    },
                   ),
                 ),
               ],
