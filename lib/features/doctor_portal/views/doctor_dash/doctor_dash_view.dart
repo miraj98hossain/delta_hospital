@@ -22,8 +22,26 @@ class _DoctorDashViewState extends State<DoctorDashView> {
         ),
         child: Column(
           children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Miraj Hossain Shawon"),
+                  Text("Kidney Specialist"),
+                ],
+              ),
+            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
             Row(
               children: [
