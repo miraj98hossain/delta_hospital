@@ -5,6 +5,7 @@ import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/items_booking/cart.dart';
 import 'package:delta_hospital/features/items_booking/item_list.dart';
@@ -285,6 +286,40 @@ class AppNavigation {
               state: state,
             ),
           ),
+        ],
+      ),
+      GoRoute(
+        path: DoctorDashPage.routePath,
+        name: DoctorDashPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const DoctorDashPage(),
+          state: state,
+        ),
+        routes: [
+          // GoRoute(
+          //   path: PatPortalLoginPage.routePath,
+          //   name: PatPortalLoginPage.routeName,
+          //   pageBuilder: (context, state) => getPage(
+          //     child: const PatPortalLoginPage(),
+          //     state: state,
+          //   ),
+          // ),
+          // GoRoute(
+          //   path: PatientPortalPage.routePath,
+          //   name: PatientPortalPage.routeName,
+          //   pageBuilder: (context, state) => getPage(
+          //     child: const PatientPortalPage(),
+          //     state: state,
+          //   ),
+          // ),
+          // GoRoute(
+          //   path: FamilyListPage.routePath,
+          //   name: FamilyListPage.routeName,
+          //   pageBuilder: (context, state) => getPage(
+          //     child: const FamilyListPage(),
+          //     state: state,
+          //   ),
+          // ),
         ],
       ),
     ],
