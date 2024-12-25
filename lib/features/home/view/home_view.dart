@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_login.dart';
 import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';
@@ -70,9 +71,9 @@ class _HomeViewState extends State<HomeView> {
             ),
             ModuleWidget(
               lable: "Doctor Portal",
-              icon: ImageConstant.patientPortal,
+              icon: ImageConstant.doctorPortal,
               onTap: () {
-                context.pushNamed(DoctorDashPage.routeName);
+                context.pushNamed(DoctorLoginPage.routeName);
               },
             ),
             ModuleWidget(
