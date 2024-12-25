@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/book_appointment/appointment_info.dart';
 import '../../features/book_appointment/data/models/doctor_grid_list_response.dart';
+import '../../features/doctor_portal/doctor_opd_portal.dart';
 
 class AppNavigation {
   AppNavigation._();
@@ -305,14 +306,14 @@ class AppNavigation {
           state: state,
         ),
         routes: [
-          // GoRoute(
-          //   path: PatPortalLoginPage.routePath,
-          //   name: PatPortalLoginPage.routeName,
-          //   pageBuilder: (context, state) => getPage(
-          //     child: const PatPortalLoginPage(),
-          //     state: state,
-          //   ),
-          // ),
+          GoRoute(
+            path: DoctorOpdPortalPage.routePath,
+            name: DoctorOpdPortalPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const DoctorOpdPortalPage(),
+              state: state,
+            ),
+          ),
           // GoRoute(
           //   path: PatientPortalPage.routePath,
           //   name: PatientPortalPage.routeName,

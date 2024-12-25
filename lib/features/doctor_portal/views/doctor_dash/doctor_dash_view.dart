@@ -2,6 +2,9 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/widgets/pat_dash_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../doctor_opd_portal.dart';
 
 class DoctorDashView extends StatefulWidget {
   const DoctorDashView({super.key});
@@ -49,7 +52,9 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                   child: PatDashWidget(
                     lable: "OPD Portal",
                     image: ImageConstant.doctorVisit,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(DoctorOpdPortalPage.routeName);
+                    },
                   ),
                 ),
                 const SizedBox(
