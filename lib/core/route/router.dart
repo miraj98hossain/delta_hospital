@@ -6,6 +6,7 @@ import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_login.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/items_booking/cart.dart';
 import 'package:delta_hospital/features/items_booking/item_list.dart';
@@ -287,6 +288,14 @@ class AppNavigation {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: DoctorLoginPage.routePath,
+        name: DoctorLoginPage.routeName,
+        pageBuilder: (context, state) => getPage(
+          child: const DoctorLoginPage(),
+          state: state,
+        ),
       ),
       GoRoute(
         path: DoctorDashPage.routePath,
