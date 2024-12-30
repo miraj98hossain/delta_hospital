@@ -10,6 +10,7 @@ import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../pat_medical_record.dart';
 import '../../patient_portal_dashboard.dart';
 
 class PatientPortalView extends StatefulWidget {
@@ -134,7 +135,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                   PatPortalGridWidget(
                     lable: "Medical Record",
                     image: ImageConstant.medicalRecord,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(PatMedicalRecordPage.routeName);
+                    },
                   ),
                   PatPortalGridWidget(
                     lable: "Prescription",
