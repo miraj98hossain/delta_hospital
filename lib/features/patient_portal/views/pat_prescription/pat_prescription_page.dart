@@ -1,4 +1,7 @@
+import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/patient_portal/views/pat_prescription/bloc/prescription_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../pat_prescription.dart';
 
@@ -8,6 +11,9 @@ class PatPrescriptionPage extends StatelessWidget {
   static const routePath = 'pat-prescription-page';
   @override
   Widget build(BuildContext context) {
-    return const PatPrescriptionView();
+    return BlocProvider(
+      create: (context) => PrescriptionBloc(getService()),
+      child: const PatPrescriptionView(),
+    );
   }
 }
