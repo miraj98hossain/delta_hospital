@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/cubit/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/core/route/router.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';

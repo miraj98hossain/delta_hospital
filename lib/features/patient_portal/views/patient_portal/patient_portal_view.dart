@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
-import 'package:delta_hospital/app/cubit/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';

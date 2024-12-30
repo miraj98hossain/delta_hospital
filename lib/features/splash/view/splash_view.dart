@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/cubit/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
 import 'package:flutter/material.dart';
