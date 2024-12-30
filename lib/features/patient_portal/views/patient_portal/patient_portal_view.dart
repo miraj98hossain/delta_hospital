@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/pat_prescription.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -138,7 +139,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                   PatPortalGridWidget(
                     lable: "Prescription",
                     image: ImageConstant.prescription,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(PatPrescriptionPage.routeName);
+                    },
                   ),
                   PatPortalGridWidget(
                     lable: "Invoice",
