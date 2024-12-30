@@ -1,14 +1,14 @@
 import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../patient_portal_dashboard.dart';
 
 class PatientPortalView extends StatefulWidget {
@@ -19,6 +19,12 @@ class PatientPortalView extends StatefulWidget {
 }
 
 class _PatientPortalViewState extends State<PatientPortalView> {
+  @override
+  void initState() {
+    context.read<HisPatientInfoBloc>().add(GetHisPatientInfoEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,59 +52,69 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Patient Name"),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Miraj Hossain Shawon"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Hospital Id"),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("123456789"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Age"),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("23"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Gender"),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("M"),
-                      ],
-                    ),
-                  ],
+                child: BlocBuilder<HisPatientInfoBloc, HisPatientInfoState>(
+                  builder: (context, state) {
+                    if (state is HisPatientInfoLoading) {
+                      return const CommonLoading();
+                    }
+                    if (state is HisPatientInfoSuccess) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Patient Name"),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(state.hisPatientInfo.patientName ?? ""),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Hospital Id"),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(state.hisPatientInfo.hospitalNumber ?? ""),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Age"),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(state.hisPatientInfo.age ?? ""),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Gender"),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(state.hisPatientInfo.genderData ?? ""),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
                 ),
               ),
               SizedBox(

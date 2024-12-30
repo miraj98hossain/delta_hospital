@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../patient_portal.dart';
@@ -10,8 +11,15 @@ class PatientPortalPage extends StatelessWidget {
   static const routePath = 'patient-portal-page';
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HisLoginBloc(getService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HisLoginBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => HisPatientInfoBloc(getService()),
+        ),
+      ],
       child: const PatientPortalView(),
     );
   }
