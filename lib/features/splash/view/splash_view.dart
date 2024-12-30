@@ -1,6 +1,8 @@
+import 'package:delta_hospital/app/cubit/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashView extends StatefulWidget {
@@ -13,6 +15,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
+    context.read<LoggedHisUserCubit>().checkLoggedUser();
     Future.delayed(const Duration(seconds: 3))
         .then((value) => context.pushNamed(OnBoardingPage.routeName));
     super.initState();

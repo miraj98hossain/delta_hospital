@@ -47,10 +47,12 @@ class _PatPortalLoginViewState extends State<PatPortalLoginView> {
       body: BlocListener<HisLoginBloc, HisLoginState>(
         listener: (context, state) {
           if (state is HisLoginSuccess) {
+            _userNameController.clear();
+            _passwordController.clear();
             context
                 .read<LoggedHisUserCubit>()
                 .setLoggedUser(userDetails: state.userDetails);
-            context.pushNamed(PatientPortalPage.routeName);
+            context.pushReplacementNamed(PatientPortalPage.routeName);
           }
         },
         child: Column(

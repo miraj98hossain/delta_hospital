@@ -47,9 +47,9 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
       body: BlocListener<HisLoginBloc, HisLoginState>(
         listener: (context, state) {
           if (state is HisLoginSuccess) {
-            context
-                .read<LoggedHisUserCubit>()
-                .setLoggedUser(userDetails: state.userDetails);
+            // context
+            //     .read<LoggedHisUserCubit>()
+            //     .setLoggedUser(userDetails: state.userDetails);
             context.pushNamed(DoctorDashPage.routeName);
           }
         },

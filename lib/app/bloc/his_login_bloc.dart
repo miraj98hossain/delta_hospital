@@ -16,6 +16,8 @@ final class HisLogin extends HisLoginEvent {
   });
 }
 
+final class HisLogout extends HisLoginEvent {}
+
 @immutable
 sealed class HisLoginState {}
 
@@ -45,6 +47,15 @@ class HisLoginBloc extends Bloc<HisLoginEvent, HisLoginState> {
             userName: event.username, password: event.password);
         var userDetails = await appRepository.getUserDetails();
         emit(HisLoginSuccess(userDetails: userDetails));
+      } catch (e) {
+        emit(HisLoginError(error: e));
+      }
+    });
+    on<HisLogout>((event, emit) async {
+      emit(HisLoginLoading());
+      try {
+        await appRepository.clearHisUser();
+        emit(HisLoginInitial());
       } catch (e) {
         emit(HisLoginError(error: e));
       }

@@ -17,4 +17,8 @@ class LoggedHisUserCubit extends Cubit<UserDetails?> {
   void setLoggedUser({required UserDetails userDetails}) async {
     emit(userDetails);
   }
+
+  void resetState() async {
+    emit(null);
+  }
 }
