@@ -24,6 +24,7 @@ import 'package:delta_hospital/features/management/view/financial_dashboard/fina
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/on_boarding/on_boarding.dart';
 import 'package:delta_hospital/features/patient_portal/family_list.dart';
+import 'package:delta_hospital/features/patient_portal/pat_notes.dart';
 import 'package:delta_hospital/features/patient_portal/patient_portal.dart';
 import 'package:delta_hospital/features/patient_portal/patient_portal_dashboard.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/pat_medical_record_page.dart';
@@ -296,6 +297,14 @@ class AppNavigation {
                   name: PatMedicalRecordPage.routeName,
                   pageBuilder: (context, state) => getPage(
                     child: const PatMedicalRecordPage(),
+                    state: state,
+                  ),
+                ),
+                GoRoute(
+                  path: PatNotesPage.routePath,
+                  name: PatNotesPage.routeName,
+                  pageBuilder: (context, state) => getPage(
+                    child: const PatNotesPage(),
                     state: state,
                   ),
                 ),
