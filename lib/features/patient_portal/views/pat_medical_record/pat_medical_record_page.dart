@@ -1,4 +1,7 @@
+import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/bloc/report_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../pat_medical_record.dart';
 
 class PatMedicalRecordPage extends StatelessWidget {
@@ -7,6 +10,9 @@ class PatMedicalRecordPage extends StatelessWidget {
   static const routePath = 'pat-medical-record-page';
   @override
   Widget build(BuildContext context) {
-    return const PatMedicalRecordView();
+    return BlocProvider(
+      create: (context) => ReportBloc(getService()),
+      child: const PatMedicalRecordView(),
+    );
   }
 }
