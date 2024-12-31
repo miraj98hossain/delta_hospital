@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/patient_portal/pat_notes.dart';
 import 'package:delta_hospital/features/patient_portal/pat_prescription.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +155,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                   PatPortalGridWidget(
                     lable: "Notes",
                     image: ImageConstant.stickyNotes,
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(PatNotesPage.routeName);
+                    },
                   )
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart'
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/features/patient_portal/data/data_sources/pat_portal_remote_data_source.dart';
+import 'package:delta_hospital/features/patient_portal/data/models/patient_notes_gridlist_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_prescription_gridlist_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_report_gridlist_response.dart';
 import 'package:delta_hospital/features/patient_portal/domain/repositories/pat_portal_repository.dart';
@@ -49,5 +50,33 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
           response.message ?? "Error Occured While Fetching");
     }
     return response.obj ?? ReportGridList();
+  }
+
+  @override
+  Future<void> addNoteByAccessToken(
+      {required String title, required String description}) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await remoteDataSource.addNoteByAccessToken(
+        token: token?.accessToken ?? '',
+        title: title,
+        description: description);
+    if (response.success != true) {
+      throw ApiDataException(
+        response.message ?? "Error Occured While Adding Note",
+      );
+    }
+  }
+
+  @override
+  Future<NotesGridList> getNotesByAccessToken(
+      {required int start, required int length}) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await remoteDataSource.getNotesByAccessToken(
+        token: token?.accessToken ?? '', start: start, length: length);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.obj ?? NotesGridList();
   }
 }
