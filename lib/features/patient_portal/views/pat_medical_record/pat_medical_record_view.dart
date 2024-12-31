@@ -17,9 +17,9 @@ class _PatMedicalRecordViewState extends State<PatMedicalRecordView> {
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
-        child: Column(
+        child: const Column(
           children: [
-            const Text("Medical Record"),
+            Text("Medical Record"),
           ],
         ),
       ),
