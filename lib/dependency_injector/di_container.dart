@@ -6,6 +6,7 @@ import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/sembast.dart';
 import 'package:delta_hospital/features/book_appointment/data/data_sources/book_apt_remote_data_source.dart';
 import 'package:delta_hospital/features/book_appointment/domain/repositories/book_apt_repository.dart';
+import 'package:delta_hospital/features/doctor_portal/domain/repositories/doc_portal_repository.dart';
 import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
 import 'package:delta_hospital/features/items_booking/data/repositories/items_booking_repository_impl.dart';
 import 'package:delta_hospital/features/patient_portal/data/data_sources/pat_portal_remote_data_source.dart';
@@ -14,6 +15,8 @@ import 'package:delta_hospital/features/patient_portal/domain/repositories/pat_p
 import 'package:get_it/get_it.dart';
 
 import '../features/book_appointment/data/repositories/book_apt_repository_impl.dart';
+import '../features/doctor_portal/data/data_sources/doc_portal_remote_data_source.dart';
+import '../features/doctor_portal/data/repositories/doc_portal_repository_impl.dart';
 import '../features/items_booking/domain/repositories/items_booking_repository.dart';
 
 GetIt getIt = GetIt.instance;
@@ -89,6 +92,19 @@ abstract class DIContainer {
     getIt.registerLazySingleton<PatPortalRepository>(
       () => PatPortalRepositoryImpl(
         remoteDataSource: getIt<PatPortalRemoteDataSource>(),
+        localDataSource: getIt<AppLocalDataSource>(),
+      ),
+    );
+    // Doctor Portal
+    getIt.registerLazySingleton<DocPortalRemoteDataSource>(
+      () => DocPortalRemoteDataSourceImpl(
+        appConfig: getIt<AppConfig>(),
+      ),
+    );
+
+    getIt.registerLazySingleton<DocPortalRepository>(
+      () => DocPortalRepositoryImpl(
+        remoteDataSource: getIt<DocPortalRemoteDataSource>(),
         localDataSource: getIt<AppLocalDataSource>(),
       ),
     );
