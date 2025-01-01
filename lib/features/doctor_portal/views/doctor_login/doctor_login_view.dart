@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
+import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
@@ -43,9 +43,9 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: BlocListener<HisLoginBloc, HisLoginState>(
+      body: BlocListener<HisAuthBloc, HisAuthState>(
         listener: (context, state) {
-          if (state is HisLoginSuccess) {
+          if (state is HisAuthSuccess) {
             // context
             //     .read<LoggedHisUserCubit>()
             //     .setLoggedUser(userDetails: state.userDetails);
@@ -141,14 +141,14 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
                         const SizedBox(
                           height: 15,
                         ),
-                        BlocBuilder<HisLoginBloc, HisLoginState>(
+                        BlocBuilder<HisAuthBloc, HisAuthState>(
                           builder: (context, state) {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width * 0.85,
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    context.read<HisLoginBloc>().add(
+                                    context.read<HisAuthBloc>().add(
                                           HisLogin(
                                             username: _userNameController.text,
                                             password: _passwordController.text,
@@ -157,7 +157,7 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
                                   }
                                 },
                                 child: Text(
-                                  state is HisLoginLoading
+                                  state is HisAuthLoading
                                       ? "Logging In..."
                                       : "Login",
                                   style: lightTextTheme.bodySmall!.copyWith(

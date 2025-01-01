@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
+import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +12,7 @@ class PatPortalLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HisLoginBloc(getService()),
+      create: (context) => HisAuthBloc(getService()),
       child: const PatPortalLoginView(),
     );
   }

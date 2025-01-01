@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
+import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class PatientPortalPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HisLoginBloc(getService()),
+          create: (context) => HisAuthBloc(getService()),
         ),
         BlocProvider(
           create: (context) => HisPatientInfoBloc(getService()),

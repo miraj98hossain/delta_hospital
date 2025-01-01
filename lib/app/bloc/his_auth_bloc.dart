@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
-sealed class HisLoginEvent {}
+sealed class HisAuthEvent {}
 
-final class HisLogin extends HisLoginEvent {
+final class HisLogin extends HisAuthEvent {
   final String username;
   final String password;
 
@@ -16,48 +16,48 @@ final class HisLogin extends HisLoginEvent {
   });
 }
 
-final class HisLogout extends HisLoginEvent {}
+final class HisLogout extends HisAuthEvent {}
 
 @immutable
-sealed class HisLoginState {}
+sealed class HisAuthState {}
 
-final class HisLoginInitial extends HisLoginState {}
+final class HisAuthInitial extends HisAuthState {}
 
-final class HisLoginSuccess extends HisLoginState {
+final class HisAuthSuccess extends HisAuthState {
   final UserDetails userDetails;
 
-  HisLoginSuccess({required this.userDetails});
+  HisAuthSuccess({required this.userDetails});
 }
 
-final class HisLoginError extends HisLoginState {
+final class HisAuthError extends HisAuthState {
   final Object error;
 
-  HisLoginError({required this.error});
+  HisAuthError({required this.error});
 }
 
-final class HisLoginLoading extends HisLoginState {}
+final class HisAuthLoading extends HisAuthState {}
 
-class HisLoginBloc extends Bloc<HisLoginEvent, HisLoginState> {
+class HisAuthBloc extends Bloc<HisAuthEvent, HisAuthState> {
   final AppRepository appRepository;
-  HisLoginBloc(this.appRepository) : super(HisLoginInitial()) {
+  HisAuthBloc(this.appRepository) : super(HisAuthInitial()) {
     on<HisLogin>((event, emit) async {
-      emit(HisLoginLoading());
+      emit(HisAuthLoading());
       try {
         var auth = await appRepository.authenticate(
             userName: event.username, password: event.password);
         var userDetails = await appRepository.getUserDetails();
-        emit(HisLoginSuccess(userDetails: userDetails));
+        emit(HisAuthSuccess(userDetails: userDetails));
       } catch (e) {
-        emit(HisLoginError(error: e));
+        emit(HisAuthError(error: e));
       }
     });
     on<HisLogout>((event, emit) async {
-      emit(HisLoginLoading());
+      emit(HisAuthLoading());
       try {
         await appRepository.clearHisUser();
-        emit(HisLoginInitial());
+        emit(HisAuthInitial());
       } catch (e) {
-        emit(HisLoginError(error: e));
+        emit(HisAuthError(error: e));
       }
     });
   }

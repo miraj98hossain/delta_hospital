@@ -1,4 +1,4 @@
-import 'package:delta_hospital/app/bloc/his_login_bloc.dart';
+import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
@@ -32,9 +32,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: BlocListener<HisLoginBloc, HisLoginState>(
+      body: BlocListener<HisAuthBloc, HisAuthState>(
         listener: (context, state) {
-          if (state is HisLoginInitial) {
+          if (state is HisAuthInitial) {
             context.read<LoggedHisUserCubit>().resetState();
             context.pushReplacementNamed(PatPortalDashboardPage.routeName);
           }
@@ -165,7 +165,7 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                 lable: "Logout",
                 backgroundColor: Colors.red,
                 onPressed: () {
-                  context.read<HisLoginBloc>().add(HisLogout());
+                  context.read<HisAuthBloc>().add(HisLogout());
                 },
               )
             ],
