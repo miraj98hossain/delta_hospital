@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
@@ -46,10 +47,16 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
       body: BlocListener<HisAuthBloc, HisAuthState>(
         listener: (context, state) {
           if (state is HisAuthSuccess) {
-            // context
-            //     .read<LoggedHisUserCubit>()
-            //     .setLoggedUser(userDetails: state.userDetails);
-            context.pushNamed(DoctorDashPage.routeName);
+            _userNameController.clear();
+            _passwordController.clear();
+            _formKey.currentState?.reset();
+
+            if (state.userDetails.doctorNo != null) {
+              context
+                  .read<LoggedHisUserCubit>()
+                  .setLoggedUser(userDetails: state.userDetails);
+              context.pushNamed(DoctorDashPage.routeName);
+            }
           }
         },
         child: Column(

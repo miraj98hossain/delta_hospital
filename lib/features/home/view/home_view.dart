@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
@@ -84,6 +86,7 @@ class _HomeViewState extends State<HomeView> {
               icon: ImageConstant.doctorPortal,
               onTap: () {
                 if (_userDetails != null && _userDetails!.doctorNo != null) {
+                  log(_userDetails!.doctorNo.toString());
                   context.pushNamed(DoctorDashPage.routeName);
                 } else {
                   context.pushNamed(DoctorLoginPage.routeName);
