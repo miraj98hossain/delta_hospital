@@ -1,3 +1,5 @@
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
@@ -5,8 +7,10 @@ import 'package:delta_hospital/features/management/view/dashboard/management_das
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../book_appointment/views/doctor_list/doctor_list_page.dart';
+import '../../doctor_portal/doctor_login.dart';
 import '../../items_booking/views/item_list/item_list_page.dart';
 import '../home.dart';
 
@@ -18,6 +22,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late UserDetails? _userDetails;
+  @override
+  void initState() {
+    _userDetails = context.read<LoggedHisUserCubit>().state;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +83,11 @@ class _HomeViewState extends State<HomeView> {
               lable: "Doctor Portal",
               icon: ImageConstant.doctorPortal,
               onTap: () {
-                context.pushNamed(DoctorDashPage.routeName);
-                // context.pushNamed(DoctorLoginPage.routeName);
+                if (_userDetails != null && _userDetails!.doctorNo != null) {
+                  context.pushNamed(DoctorDashPage.routeName);
+                } else {
+                  context.pushNamed(DoctorLoginPage.routeName);
+                }
               },
             ),
             ModuleWidget(
