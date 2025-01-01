@@ -55,7 +55,7 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
               context
                   .read<LoggedHisUserCubit>()
                   .setLoggedUser(userDetails: state.userDetails);
-              context.pushNamed(DoctorDashPage.routeName);
+              context.pushReplacementNamed(DoctorDashPage.routeName);
             }
           }
         },

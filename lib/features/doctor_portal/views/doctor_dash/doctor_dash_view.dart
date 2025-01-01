@@ -1,7 +1,9 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/widgets/pat_dash_widget.dart';
@@ -20,6 +22,13 @@ class DoctorDashView extends StatefulWidget {
 }
 
 class _DoctorDashViewState extends State<DoctorDashView> {
+  late UserDetails _userDetails;
+  @override
+  void initState() {
+    _userDetails = context.read<LoggedHisUserCubit>().state!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,11 +55,22 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Miraj Hossain Shawon"),
-                    Text("Kidney Specialist"),
+                    Text(
+                      _userDetails.firstName ?? "",
+                      style: lightTextTheme.bodyMedium!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _userDetails.jobTile ?? "",
+                      style: lightTextTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
