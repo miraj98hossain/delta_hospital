@@ -320,14 +320,6 @@ class AppNavigation {
         ],
       ),
       GoRoute(
-        path: DoctorLoginPage.routePath,
-        name: DoctorLoginPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const DoctorLoginPage(),
-          state: state,
-        ),
-      ),
-      GoRoute(
         path: DoctorDashPage.routePath,
         name: DoctorDashPage.routeName,
         pageBuilder: (context, state) => getPage(
@@ -335,6 +327,14 @@ class AppNavigation {
           state: state,
         ),
         routes: [
+          GoRoute(
+            path: DoctorLoginPage.routePath,
+            name: DoctorLoginPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const DoctorLoginPage(),
+              state: state,
+            ),
+          ),
           GoRoute(
             path: DoctorOpdPortalPage.routePath,
             name: DoctorOpdPortalPage.routeName,

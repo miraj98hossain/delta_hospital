@@ -8,7 +8,7 @@ import '../../doctor_login.dart';
 class DoctorLoginPage extends StatelessWidget {
   const DoctorLoginPage({super.key});
   static const routeName = 'doctor-login-page';
-  static const routePath = '/doctor-login-page';
+  static const routePath = 'doctor-login-page';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
