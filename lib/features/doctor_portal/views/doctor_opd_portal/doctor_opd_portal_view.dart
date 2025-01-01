@@ -2,12 +2,14 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorOpdPortalView extends StatefulWidget {
-  const DoctorOpdPortalView({super.key});
-
+  const DoctorOpdPortalView({super.key, required this.shiftList});
+  final List<Shift> shiftList;
   @override
   State<DoctorOpdPortalView> createState() => _DoctorOpdPortalViewState();
 }
@@ -15,14 +17,13 @@ class DoctorOpdPortalView extends StatefulWidget {
 class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  int index = 0;
+
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController =
+        TabController(length: widget.shiftList.length, vsync: this);
     _tabController.addListener(() {
-      setState(() {
-        index = _tabController.index;
-      });
+      context.read<VariableStateCubit<int>>().update(_tabController.index);
     });
     super.initState();
   }
@@ -130,44 +131,45 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: const BoxDecoration(),
                 tabs: [
-                  Tab(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: index == 0 ? appTheme.deltaBlue : Colors.white,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Morning Shift",
-                          style: lightTextTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: index == 0
-                                ? appTheme.white
-                                : appTheme.darkPurple,
+                  ...List.generate(widget.shiftList.length, (index) {
+                    var shift = widget.shiftList[index];
+                    return Tab(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: index ==
+                                  context
+                                      .watch<VariableStateCubit<int>>()
+                                      .state!
+                              ? appTheme.deltaBlue
+                              : Colors.white,
+                        ),
+                        child: Center(
+                          child: Text(
+                            shift.shiftTime != null
+                                ? shift.shiftTime!
+                                    .replaceAll(
+                                      RegExp(
+                                        r'\([^)]*\)',
+                                      ),
+                                      "",
+                                    )
+                                    .trim()
+                                : "",
+                            style: lightTextTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: index ==
+                                      context
+                                          .watch<VariableStateCubit<int>>()
+                                          .state!
+                                  ? appTheme.white
+                                  : appTheme.darkPurple,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Tab(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: index == 1 ? appTheme.deltaBlue : Colors.white,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Evening Shift",
-                          style: lightTextTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: index == 1
-                                ? appTheme.white
-                                : appTheme.darkPurple,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                    );
+                  })
                 ],
               ),
             ),
@@ -179,174 +181,52 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  Column(
-                    children: [
-                      Expanded(
-                        child: ListView.separated(
-                          itemCount: 10,
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 10,
-                            );
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: appTheme.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: appTheme.primary,
+                  ...List.generate(widget.shiftList.length, (index) {
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: 10,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 10,
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: appTheme.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Lorem Ipsum is simply dummy",
+                                      style: lightTextTheme.bodySmall!.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: appTheme.black,
                                       ),
                                     ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.notifications_none_outlined,
-                                        color: appTheme.primary,
+                                    Text(
+                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the...",
+                                      style: lightTextTheme.bodySmall!.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10,
+                                        color: appTheme.black,
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Lorem Ipsum is simply dummy",
-                                          style: lightTextTheme.bodySmall!
-                                              .copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            color: appTheme.black,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the...",
-                                          style: lightTextTheme.bodySmall!
-                                              .copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            color: appTheme.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Expanded(
-                        child: ListView.separated(
-                          itemCount: 10,
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 10,
-                            );
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: appTheme.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Lorem Ipsum is simply dummy",
-                                    style: lightTextTheme.bodySmall!.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: appTheme.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the...",
-                                    style: lightTextTheme.bodySmall!.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10,
-                                      color: appTheme.black,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.calendar_today_outlined,
-                                            size: 12,
-                                            color: Colors.grey,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "30 Nov 2023",
-                                            style: lightTextTheme.bodySmall!
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.person_2_outlined,
-                                            size: 12,
-                                            color: Colors.grey,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "John Doe",
-                                            style: lightTextTheme.bodySmall!
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    );
+                  })
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
 import 'package:delta_hospital/features/book_appointment/views/doctor_info/doctor_info_page.dart';
+import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_ipd_portal.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_login.dart';
@@ -338,10 +339,15 @@ class AppNavigation {
           GoRoute(
             path: DoctorOpdPortalPage.routePath,
             name: DoctorOpdPortalPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DoctorOpdPortalPage(),
-              state: state,
-            ),
+            pageBuilder: (context, state) {
+              var map = state.extra as Map<String, List<Shift>>;
+              return getPage(
+                child: DoctorOpdPortalPage(
+                  shiftList: map['shiftList'] ?? [],
+                ),
+                state: state,
+              );
+            },
           ),
           GoRoute(
             path: DoctorIpdPortalPage.routePath,

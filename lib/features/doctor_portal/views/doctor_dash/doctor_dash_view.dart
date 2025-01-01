@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/doctor_portal/views/doctor_dash/bloc/doctor_shift_bloc.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/widgets/pat_dash_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _DoctorDashViewState extends State<DoctorDashView> {
   late UserDetails _userDetails;
   @override
   void initState() {
+    context.read<DoctorShiftBloc>().add(GetDoctorShiftEvent());
     _userDetails = context.read<LoggedHisUserCubit>().state!;
     super.initState();
   }
@@ -84,7 +86,11 @@ class _DoctorDashViewState extends State<DoctorDashView> {
                       lable: "OPD Portal",
                       image: ImageConstant.doctorVisit,
                       onTap: () {
-                        context.pushNamed(DoctorOpdPortalPage.routeName);
+                        var shiftState = context.read<DoctorShiftBloc>().state;
+                        if (shiftState is DoctorShiftSuccess) {
+                          context.pushNamed(DoctorOpdPortalPage.routeName,
+                              extra: {"shiftList": shiftState.doctorShiftList});
+                        }
                       },
                     ),
                   ),
