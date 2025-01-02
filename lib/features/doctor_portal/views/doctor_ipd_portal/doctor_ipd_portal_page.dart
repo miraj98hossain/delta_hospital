@@ -1,4 +1,7 @@
+import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_admitted_patient_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../doctor_ipd_portal.dart';
 
 class DoctorIpdPortalPage extends StatelessWidget {
@@ -7,6 +10,9 @@ class DoctorIpdPortalPage extends StatelessWidget {
   static const routePath = 'doctor-ipd-portal-page';
   @override
   Widget build(BuildContext context) {
-    return const DoctorIpdPortalView();
+    return BlocProvider(
+      create: (context) => DoctorAdmittedPatientBloc(getService()),
+      child: const DoctorIpdPortalView(),
+    );
   }
 }

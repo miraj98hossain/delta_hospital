@@ -1,5 +1,7 @@
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
+import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_consultation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../doctor_opd_portal.dart';
@@ -13,6 +15,7 @@ class DoctorOpdPortalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => DoctorConsultationBloc(getService())),
         BlocProvider(
           create: (context) =>
               VariableStateCubit<DateTime>()..update(DateTime.now()),

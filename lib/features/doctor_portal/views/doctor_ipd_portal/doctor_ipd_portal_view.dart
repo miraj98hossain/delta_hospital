@@ -1,6 +1,12 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/data/models/user_details_response.dart';
+import 'package:delta_hospital/app/widgets/common_loading.dart';
+import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_admitted_patient_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorIpdPortalView extends StatefulWidget {
   const DoctorIpdPortalView({super.key});
@@ -10,6 +16,16 @@ class DoctorIpdPortalView extends StatefulWidget {
 }
 
 class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
+  late UserDetails _userDetails;
+  @override
+  void initState() {
+    _userDetails = context.read<LoggedHisUserCubit>().state!;
+    context.read<DoctorAdmittedPatientBloc>().add(
+          GetDoctorAdmittedPatientEvent(doctorNo: _userDetails.doctorNo ?? 0),
+        );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,91 +34,121 @@ class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
-        child: ListView.separated(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          itemBuilder: (context, index) {
-            return Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                color: appTheme.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Admission Id : ",
-                      ),
-                      Text("1234"),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Patient Name : ",
-                      ),
-                      Expanded(
-                        child: Text(
-                          "Miraj Hossain Shawon",
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Gender : ",
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: BlocBuilder<DoctorAdmittedPatientBloc,
+                  DoctorAdmittedPatientState>(
+                builder: (context, state) {
+                  if (state is DoctorAdmittedPatientLaoding) {
+                    return const CommonLoading();
+                  }
+                  if (state is DoctorAdmittedPatientSuccess) {
+                    return ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      itemBuilder: (context, index) {
+                        var data = state.doctorAdmittedPatientList[index];
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          Text("Male"),
-                        ],
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            "Age : ",
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Admission Id : ",
+                                  ),
+                                  Text(data.admissionId ?? ""),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Patient Name : ",
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      data.patientName ?? "",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Gender : ",
+                                      ),
+                                      Text(
+                                        data.genderData ?? "",
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Age : ",
+                                      ),
+                                      Text(
+                                        data.age ?? "",
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Bed Name : ",
+                                  ),
+                                  Text(
+                                    data.bedName ?? "",
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Addmission Date : ",
+                                  ),
+                                  Text(data.admissionDateTime != null
+                                      ? DateTime.parse(
+                                              data.admissionDateTime ?? "")
+                                          .toFormatedString("dd-MMM-yyyy")
+                                      : ""),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text("34Y7M9D"),
-                        ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        "Bed Name : ",
-                      ),
-                      Text(
-                        "Pre Cath-Bed 1",
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        "Addmission Date : ",
-                      ),
-                      Text("10-Aug-2024-12:00:00"),
-                    ],
-                  ),
-                ],
+                      itemCount: state.doctorAdmittedPatientList.length,
+                    );
+                  }
+                  return Container();
+                },
               ),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 10,
-          ),
-          itemCount: 10,
+            ),
+          ],
         ),
       ),
     );

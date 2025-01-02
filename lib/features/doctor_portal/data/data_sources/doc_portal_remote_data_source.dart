@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
+import 'package:delta_hospital/features/doctor_portal/data/models/doctor_admitted_patient_list_response.dart';
 import 'package:delta_hospital/features/doctor_portal/data/models/doctor_consultaion_gridlist_response.dart';
 import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +15,10 @@ abstract class DocPortalRemoteDataSource {
     required int doctorNo,
     required String fromDate,
     required int shiftdtlNo,
+  });
+  Future<DoctorAdmittedPatientListResponse> getDoctorAdmittedPatientList({
+    required String token,
+    required int doctorNo,
   });
 }
 
@@ -63,5 +68,25 @@ class DocPortalRemoteDataSourceImpl
       response,
       decoder: DoctorConsultationGridListResponse.fromJson,
     );
+  }
+
+  @override
+  Future<DoctorAdmittedPatientListResponse> getDoctorAdmittedPatientList(
+      {required String token, required int doctorNo}) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}doctor-nurse-station-api/api/patient/admittedPatients-by-doctorNo'));
+    request.body = json.encode({"doctorNo": doctorNo});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: DoctorAdmittedPatientListResponse.fromJson);
   }
 }
