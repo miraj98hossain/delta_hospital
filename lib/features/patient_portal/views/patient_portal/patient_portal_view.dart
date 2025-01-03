@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
@@ -13,6 +14,7 @@ import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/patient_portal/pat_notes.dart';
 import 'package:delta_hospital/features/patient_portal/pat_prescription.dart';
+import 'package:delta_hospital/features/patient_portal/patient_portal.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +33,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
   @override
   void initState() {
     context.read<HisPatientInfoBloc>().add(GetHisPatientInfoEvent());
+    context
+        .read<ActivePageForSessionDialogCubit>()
+        .changeActivePage(PatientPortalPage.routeName);
     super.initState();
   }
 
@@ -51,7 +56,9 @@ class _PatientPortalViewState extends State<PatientPortalView> {
           ),
           BlocListener<LoggedHisUserCubit, UserDetails?>(
             listener: (context, state) {
-              if (state == null) {
+              var activePage =
+                  context.read<ActivePageForSessionDialogCubit>().state;
+              if (state == null && activePage == PatientPortalPage.routeName) {
                 AppModal.showCustomModal(
                   context,
                   title: "Session Expired",

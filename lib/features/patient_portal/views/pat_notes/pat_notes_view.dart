@@ -1,9 +1,15 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/app_modal.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_notes/bloc/add_note_bloc.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_notes/bloc/notes_bloc.dart';
+import 'package:delta_hospital/features/patient_portal/views/pat_notes/pat_notes_page.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal/patient_portal_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +31,9 @@ class _PatNotesViewState extends State<PatNotesView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
+    context
+        .read<ActivePageForSessionDialogCubit>()
+        .changeActivePage(PatNotesPage.routeName);
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     _titleFocusNode = FocusNode();
@@ -46,17 +55,34 @@ class _PatNotesViewState extends State<PatNotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: BlocListener<AddNoteBloc, AddNoteState>(
-        listener: (context, state) {
-          if (state is AddNoteSuccess) {
-            _titleController.clear();
-            _descriptionController.clear();
-            _titleFocusNode.unfocus();
-            _descriptionFocusNode.unfocus();
-            _formKey.currentState?.reset();
-            context.read<NotesBloc>().add(GetNotesEvent());
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AddNoteBloc, AddNoteState>(
+            listener: (context, state) {
+              if (state is AddNoteSuccess) {
+                _titleController.clear();
+                _descriptionController.clear();
+                _titleFocusNode.unfocus();
+                _descriptionFocusNode.unfocus();
+                _formKey.currentState?.reset();
+                context.read<NotesBloc>().add(GetNotesEvent());
+              }
+            },
+          ),
+          BlocListener<LoggedHisUserCubit, UserDetails?>(
+            listener: (context, state) {
+              var activePage =
+                  context.read<ActivePageForSessionDialogCubit>().state;
+              if (state == null && activePage == PatNotesPage.routeName) {
+                AppModal.showCustomModal(
+                  context,
+                  title: "Session Expired",
+                  content: const SessionExpireDialog(),
+                );
+              }
+            },
+          ),
+        ],
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 15,
