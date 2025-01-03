@@ -89,226 +89,280 @@ class AppNavigation {
         ),
       ),
       GoRoute(
-          path: HomePage.routePath,
-          name: HomePage.routeName,
-          pageBuilder: (context, state) => getPage(
-                child: const HomePage(),
-                state: state,
-              ),
-          routes: [
-            GoRoute(
-              path: PatPortalDashboardPage.routePath,
-              name: PatPortalDashboardPage.routeName,
-              pageBuilder: (context, state) => getPage(
-                child: const PatPortalDashboardPage(),
-                state: state,
-              ),
-              routes: [
-                GoRoute(
-                  path: PatPortalLoginPage.routePath,
-                  name: PatPortalLoginPage.routeName,
-                  pageBuilder: (context, state) => getPage(
-                    child: const PatPortalLoginPage(),
-                    state: state,
-                  ),
-                ),
-                GoRoute(
-                    path: PatientPortalPage.routePath,
-                    name: PatientPortalPage.routeName,
-                    pageBuilder: (context, state) => getPage(
-                          child: const PatientPortalPage(),
-                          state: state,
-                        ),
-                    routes: [
-                      GoRoute(
-                        path: PatPrescriptionPage.routePath,
-                        name: PatPrescriptionPage.routeName,
-                        pageBuilder: (context, state) => getPage(
-                          child: const PatPrescriptionPage(),
-                          state: state,
-                        ),
-                      ),
-                      GoRoute(
-                        path: PatMedicalRecordPage.routePath,
-                        name: PatMedicalRecordPage.routeName,
-                        pageBuilder: (context, state) => getPage(
-                          child: const PatMedicalRecordPage(),
-                          state: state,
-                        ),
-                      ),
-                      GoRoute(
-                        path: PatNotesPage.routePath,
-                        name: PatNotesPage.routeName,
-                        pageBuilder: (context, state) => getPage(
-                          child: const PatNotesPage(),
-                          state: state,
-                        ),
-                      ),
-                    ]),
-                GoRoute(
-                  path: FamilyListPage.routePath,
-                  name: FamilyListPage.routeName,
-                  pageBuilder: (context, state) => getPage(
-                    child: const FamilyListPage(),
-                    state: state,
-                  ),
-                ),
-              ],
-            ),
-          ]),
-      GoRoute(
-        path: DoctorListPage.routePath,
-        name: DoctorListPage.routeName,
+        path: HomePage.routePath,
+        name: HomePage.routeName,
         pageBuilder: (context, state) => getPage(
-          child: const DoctorListPage(),
+          child: const HomePage(),
           state: state,
         ),
         routes: [
+          // Book Appointment
           GoRoute(
-            path: DoctorInfoPage.routePath,
-            name: DoctorInfoPage.routeName,
-            pageBuilder: (context, state) {
-              var map = state.extra as Map<String, dynamic>;
-              var doctor = map['doctor'] as Doctor;
-              return getPage(
-                child: DoctorInfoPage(
-                  doctor: doctor,
-                ),
-                state: state,
-              );
-            },
-          ),
-          GoRoute(
-            path: BookAppointmentPage.routePath,
-            name: BookAppointmentPage.routeName,
-            pageBuilder: (context, state) {
-              var map = state.extra as Map<String, dynamic>;
-              var doctor = map['doctor'] as Doctor;
-              return getPage(
-                child: BookAppointmentPage(
-                  doctor: doctor,
-                ),
-                state: state,
-              );
-            },
-          ),
-          GoRoute(
-            path: PatientInfoPage.routePath,
-            name: PatientInfoPage.routeName,
+            path: DoctorListPage.routePath,
+            name: DoctorListPage.routeName,
             pageBuilder: (context, state) => getPage(
-              child: const PatientInfoPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: AppointmentInfoPage.routePath,
-            name: AppointmentInfoPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const AppointmentInfoPage(),
-              state: state,
-            ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: ItemListPage.routePath,
-        name: ItemListPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const ItemListPage(),
-          state: state,
-        ),
-        routes: [
-          GoRoute(
-            path: CartPage.routePath,
-            name: CartPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const CartPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: BookingPatientInfoPage.routePath,
-            name: BookingPatientInfoPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const BookingPatientInfoPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: BookingInfoPage.routePath,
-            name: BookingInfoPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const BookingInfoPage(),
-              state: state,
-            ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: ManagementDashboardPage.routePath,
-        name: ManagementDashboardPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const ManagementDashboardPage(),
-          state: state,
-        ),
-        routes: [
-          GoRoute(
-            path: DashboardLoginPage.routePath,
-            name: DashboardLoginPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DashboardLoginPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: DashboardVerifyOtpPage.routePath,
-            name: DashboardVerifyOtpPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DashboardVerifyOtpPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: FinancialDashboardPage.routePath,
-            name: FinancialDashboardPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const FinancialDashboardPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: DirectorPage.routePath,
-            name: DirectorPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DirectorPage(),
+              child: const DoctorListPage(),
               state: state,
             ),
             routes: [
               GoRoute(
-                path: DirectorPortalPage.routePath,
-                name: DirectorPortalPage.routeName,
+                path: DoctorInfoPage.routePath,
+                name: DoctorInfoPage.routeName,
+                pageBuilder: (context, state) {
+                  var map = state.extra as Map<String, dynamic>;
+                  var doctor = map['doctor'] as Doctor;
+                  return getPage(
+                    child: DoctorInfoPage(
+                      doctor: doctor,
+                    ),
+                    state: state,
+                  );
+                },
+              ),
+              GoRoute(
+                path: BookAppointmentPage.routePath,
+                name: BookAppointmentPage.routeName,
+                pageBuilder: (context, state) {
+                  var map = state.extra as Map<String, dynamic>;
+                  var doctor = map['doctor'] as Doctor;
+                  return getPage(
+                    child: BookAppointmentPage(
+                      doctor: doctor,
+                    ),
+                    state: state,
+                  );
+                },
+              ),
+              GoRoute(
+                path: PatientInfoPage.routePath,
+                name: PatientInfoPage.routeName,
                 pageBuilder: (context, state) => getPage(
-                  child: const DirectorPortalPage(),
+                  child: const PatientInfoPage(),
                   state: state,
                 ),
               ),
               GoRoute(
-                  path: DirectorPortfolioPage.routePath,
-                  name: DirectorPortfolioPage.routeName,
+                path: AppointmentInfoPage.routePath,
+                name: AppointmentInfoPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const AppointmentInfoPage(),
+                  state: state,
+                ),
+              ),
+            ],
+          ),
+          // Item List
+          GoRoute(
+            path: ItemListPage.routePath,
+            name: ItemListPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const ItemListPage(),
+              state: state,
+            ),
+            routes: [
+              GoRoute(
+                path: CartPage.routePath,
+                name: CartPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const CartPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: BookingPatientInfoPage.routePath,
+                name: BookingPatientInfoPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const BookingPatientInfoPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: BookingInfoPage.routePath,
+                name: BookingInfoPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const BookingInfoPage(),
+                  state: state,
+                ),
+              ),
+            ],
+          ),
+          // Patient Portal
+          GoRoute(
+            path: PatPortalDashboardPage.routePath,
+            name: PatPortalDashboardPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const PatPortalDashboardPage(),
+              state: state,
+            ),
+            routes: [
+              GoRoute(
+                path: PatPortalLoginPage.routePath,
+                name: PatPortalLoginPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const PatPortalLoginPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                  path: PatientPortalPage.routePath,
+                  name: PatientPortalPage.routeName,
                   pageBuilder: (context, state) => getPage(
-                        child: const DirectorPortfolioPage(),
+                        child: const PatientPortalPage(),
                         state: state,
                       ),
                   routes: [
                     GoRoute(
-                      path: DirectorNoticePage.routePath,
-                      name: DirectorNoticePage.routeName,
+                      path: PatPrescriptionPage.routePath,
+                      name: PatPrescriptionPage.routeName,
                       pageBuilder: (context, state) => getPage(
-                        child: const DirectorNoticePage(),
+                        child: const PatPrescriptionPage(),
+                        state: state,
+                      ),
+                    ),
+                    GoRoute(
+                      path: PatMedicalRecordPage.routePath,
+                      name: PatMedicalRecordPage.routeName,
+                      pageBuilder: (context, state) => getPage(
+                        child: const PatMedicalRecordPage(),
+                        state: state,
+                      ),
+                    ),
+                    GoRoute(
+                      path: PatNotesPage.routePath,
+                      name: PatNotesPage.routeName,
+                      pageBuilder: (context, state) => getPage(
+                        child: const PatNotesPage(),
                         state: state,
                       ),
                     ),
                   ]),
+              GoRoute(
+                path: FamilyListPage.routePath,
+                name: FamilyListPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const FamilyListPage(),
+                  state: state,
+                ),
+              ),
+            ],
+          ),
+          // Doctor Portal
+
+          GoRoute(
+            path: DoctorDashPage.routePath,
+            name: DoctorDashPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const DoctorDashPage(),
+              state: state,
+            ),
+            routes: [
+              GoRoute(
+                path: DoctorLoginPage.routePath,
+                name: DoctorLoginPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const DoctorLoginPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: DoctorOpdPortalPage.routePath,
+                name: DoctorOpdPortalPage.routeName,
+                pageBuilder: (context, state) {
+                  var map = state.extra as Map<String, List<Shift>>;
+                  return getPage(
+                    child: DoctorOpdPortalPage(
+                      shiftList: map['shiftList'] ?? [],
+                    ),
+                    state: state,
+                  );
+                },
+              ),
+              GoRoute(
+                path: DoctorIpdPortalPage.routePath,
+                name: DoctorIpdPortalPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const DoctorIpdPortalPage(),
+                  state: state,
+                ),
+              ),
+              // GoRoute(
+              //   path: FamilyListPage.routePath,
+              //   name: FamilyListPage.routeName,
+              //   pageBuilder: (context, state) => getPage(
+              //     child: const FamilyListPage(),
+              //     state: state,
+              //   ),
+              // ),
+            ],
+          ),
+          // Management
+          GoRoute(
+            path: ManagementDashboardPage.routePath,
+            name: ManagementDashboardPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const ManagementDashboardPage(),
+              state: state,
+            ),
+            routes: [
+              GoRoute(
+                path: DashboardLoginPage.routePath,
+                name: DashboardLoginPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const DashboardLoginPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: DashboardVerifyOtpPage.routePath,
+                name: DashboardVerifyOtpPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const DashboardVerifyOtpPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: FinancialDashboardPage.routePath,
+                name: FinancialDashboardPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const FinancialDashboardPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: DirectorPage.routePath,
+                name: DirectorPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const DirectorPage(),
+                  state: state,
+                ),
+                routes: [
+                  GoRoute(
+                    path: DirectorPortalPage.routePath,
+                    name: DirectorPortalPage.routeName,
+                    pageBuilder: (context, state) => getPage(
+                      child: const DirectorPortalPage(),
+                      state: state,
+                    ),
+                  ),
+                  GoRoute(
+                      path: DirectorPortfolioPage.routePath,
+                      name: DirectorPortfolioPage.routeName,
+                      pageBuilder: (context, state) => getPage(
+                            child: const DirectorPortfolioPage(),
+                            state: state,
+                          ),
+                      routes: [
+                        GoRoute(
+                          path: DirectorNoticePage.routePath,
+                          name: DirectorNoticePage.routeName,
+                          pageBuilder: (context, state) => getPage(
+                            child: const DirectorNoticePage(),
+                            state: state,
+                          ),
+                        ),
+                      ]),
+                ],
+              ),
             ],
           ),
         ],
@@ -320,53 +374,6 @@ class AppNavigation {
           child: const MyAppointmentPage(),
           state: state,
         ),
-      ),
-      GoRoute(
-        path: DoctorDashPage.routePath,
-        name: DoctorDashPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const DoctorDashPage(),
-          state: state,
-        ),
-        routes: [
-          GoRoute(
-            path: DoctorLoginPage.routePath,
-            name: DoctorLoginPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DoctorLoginPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-            path: DoctorOpdPortalPage.routePath,
-            name: DoctorOpdPortalPage.routeName,
-            pageBuilder: (context, state) {
-              var map = state.extra as Map<String, List<Shift>>;
-              return getPage(
-                child: DoctorOpdPortalPage(
-                  shiftList: map['shiftList'] ?? [],
-                ),
-                state: state,
-              );
-            },
-          ),
-          GoRoute(
-            path: DoctorIpdPortalPage.routePath,
-            name: DoctorIpdPortalPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const DoctorIpdPortalPage(),
-              state: state,
-            ),
-          ),
-          // GoRoute(
-          //   path: FamilyListPage.routePath,
-          //   name: FamilyListPage.routeName,
-          //   pageBuilder: (context, state) => getPage(
-          //     child: const FamilyListPage(),
-          //     state: state,
-          //   ),
-          // ),
-        ],
       ),
     ],
   );

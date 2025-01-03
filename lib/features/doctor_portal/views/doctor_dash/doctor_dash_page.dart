@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DoctorDashPage extends StatelessWidget {
   const DoctorDashPage({super.key});
   static const routeName = 'doctor-dash-page';
-  static const routePath = '/doctor-dash-page';
+  static const routePath = 'doctor-dash-page';
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
