@@ -1,10 +1,11 @@
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
-import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_prescription/bloc/prescription_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/prescription_widget.dart';
 
 class PatPrescriptionView extends StatefulWidget {
   const PatPrescriptionView({super.key});
@@ -29,7 +30,16 @@ class _PatPrescriptionViewState extends State<PatPrescriptionView> {
           horizontal: 15,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              "Your Prescriptions->",
+              style: lightTextTheme.bodyMedium!.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: appTheme.white,
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -47,81 +57,7 @@ class _PatPrescriptionViewState extends State<PatPrescriptionView> {
                       itemCount: state.prescriptionGridList.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         var data = state.prescriptionGridList.data?[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: const BorderRadius.horizontal(
-                              right: Radius.circular(8),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: IntrinsicHeight(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                        decoration: BoxDecoration(
-                                          color: data?.prescriptionNo == null
-                                              ? Colors.pink.shade600
-                                              : appTheme.secondary,
-                                          borderRadius:
-                                              const BorderRadius.horizontal(
-                                            right: Radius.circular(3),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                              data?.doctorName ??
-                                                                  ""),
-                                                          Text(
-                                                            data?.prescriptionDateTime ==
-                                                                    null
-                                                                ? ""
-                                                                : DateTime
-                                                                    .parse(
-                                                                    data?.prescriptionDateTime ??
-                                                                        "",
-                                                                  ).toFormatedString(
-                                                                    "dd-MMM-yyyy",
-                                                                  ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                        return PrescriptionWidget(data: data);
                       },
                     );
                   }
