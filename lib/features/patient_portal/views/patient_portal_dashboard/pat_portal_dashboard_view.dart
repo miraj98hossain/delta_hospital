@@ -18,10 +18,8 @@ class PatPortalDashboardView extends StatefulWidget {
 }
 
 class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
-  late UserDetails? _loggedHisUser;
   @override
   void initState() {
-    _loggedHisUser = context.read<LoggedHisUserCubit>().state;
     super.initState();
   }
 
@@ -46,8 +44,10 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                     lable: "Self Portal",
                     image: ImageConstant.selfPortal,
                     onTap: () {
-                      if (_loggedHisUser != null &&
-                          _loggedHisUser!.jobTile == "Patient") {
+                      var loggedHisUser =
+                          context.read<LoggedHisUserCubit>().state;
+                      if (loggedHisUser != null &&
+                          loggedHisUser.jobTile == "Patient") {
                         context.pushNamed(PatientPortalPage.routeName);
                       } else {
                         context.pushNamed(PatPortalLoginPage.routeName);

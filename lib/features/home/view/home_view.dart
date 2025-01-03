@@ -24,10 +24,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late UserDetails? _userDetails;
   @override
   void initState() {
-    _userDetails = context.read<LoggedHisUserCubit>().state;
     super.initState();
   }
 
@@ -85,8 +83,9 @@ class _HomeViewState extends State<HomeView> {
               lable: "Doctor Portal",
               icon: ImageConstant.doctorPortal,
               onTap: () {
-                if (_userDetails != null && _userDetails!.doctorNo != null) {
-                  log(_userDetails!.doctorNo.toString());
+                var userDetails = context.read<LoggedHisUserCubit>().state;
+                if (userDetails != null && userDetails!.doctorNo != null) {
+                  log(userDetails.doctorNo.toString());
                   context.pushNamed(DoctorDashPage.routeName);
                 } else {
                   context.pushNamed(DoctorLoginPage.routeName);
