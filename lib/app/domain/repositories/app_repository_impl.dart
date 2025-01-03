@@ -3,6 +3,7 @@ import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/data/repositories/app_repository.dart';
+import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/core/exceptions/custom_exception.dart';
 
 class AppRepositoryImpl implements AppRepository {
@@ -46,6 +47,13 @@ class AppRepositoryImpl implements AppRepository {
       throw Exception('No Token Found');
     }
     await saveAuthResponse(response: response);
+    await saveHisSessionExpiryTime(
+      dateTime: DateTime.now().add(
+        const Duration(
+          minutes: 1,
+        ),
+      ),
+    );
     return response;
   }
 
@@ -79,5 +87,37 @@ class AppRepositoryImpl implements AppRepository {
   @override
   Future<void> saveHisUser({required UserDetails userDetails}) async {
     await appLocalDataSource.saveHisUser(userDetails: userDetails);
+  }
+
+  @override
+  Future<void> clearHisSessionExpiryTime() async {
+    await appLocalDataSource.clearHisSessionExpiryTime();
+  }
+
+  @override
+  Future<DateTime> getHisSessionExpiryTime() async {
+    var response = await appLocalDataSource.getHisSessionExpiryTime();
+    if (response == null) {
+      throw const CustomException('No His Session Expiry Time found');
+    }
+    return response;
+  }
+
+  @override
+  Future<void> saveHisSessionExpiryTime({required DateTime dateTime}) async {
+    await appLocalDataSource.saveHisSessionExpiryTime(dateTime: dateTime);
+  }
+
+  @override
+  Future<void> hisUserlogout() async {
+    var token = await getAuthResponse();
+    var response =
+        await appRemoteDataSource.hisUserlogout(token: token.accessToken ?? '');
+    if (response.success != true) {
+      throw ApiDataException(response.message);
+    }
+    await clearAuthResponse();
+    await clearHisUser();
+    await clearHisSessionExpiryTime();
   }
 }

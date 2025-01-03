@@ -46,7 +46,7 @@ class _DoctorLoginViewState extends State<DoctorLoginView> {
       resizeToAvoidBottomInset: false,
       body: BlocListener<HisAuthBloc, HisAuthState>(
         listener: (context, state) {
-          if (state is HisAuthSuccess) {
+          if (state is HisAuthLoggedIn) {
             _userNameController.clear();
             _passwordController.clear();
             _formKey.currentState?.reset();

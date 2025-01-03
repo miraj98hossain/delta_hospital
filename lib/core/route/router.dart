@@ -89,13 +89,73 @@ class AppNavigation {
         ),
       ),
       GoRoute(
-        path: HomePage.routePath,
-        name: HomePage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const HomePage(),
-          state: state,
-        ),
-      ),
+          path: HomePage.routePath,
+          name: HomePage.routeName,
+          pageBuilder: (context, state) => getPage(
+                child: const HomePage(),
+                state: state,
+              ),
+          routes: [
+            GoRoute(
+              path: PatPortalDashboardPage.routePath,
+              name: PatPortalDashboardPage.routeName,
+              pageBuilder: (context, state) => getPage(
+                child: const PatPortalDashboardPage(),
+                state: state,
+              ),
+              routes: [
+                GoRoute(
+                  path: PatPortalLoginPage.routePath,
+                  name: PatPortalLoginPage.routeName,
+                  pageBuilder: (context, state) => getPage(
+                    child: const PatPortalLoginPage(),
+                    state: state,
+                  ),
+                ),
+                GoRoute(
+                    path: PatientPortalPage.routePath,
+                    name: PatientPortalPage.routeName,
+                    pageBuilder: (context, state) => getPage(
+                          child: const PatientPortalPage(),
+                          state: state,
+                        ),
+                    routes: [
+                      GoRoute(
+                        path: PatPrescriptionPage.routePath,
+                        name: PatPrescriptionPage.routeName,
+                        pageBuilder: (context, state) => getPage(
+                          child: const PatPrescriptionPage(),
+                          state: state,
+                        ),
+                      ),
+                      GoRoute(
+                        path: PatMedicalRecordPage.routePath,
+                        name: PatMedicalRecordPage.routeName,
+                        pageBuilder: (context, state) => getPage(
+                          child: const PatMedicalRecordPage(),
+                          state: state,
+                        ),
+                      ),
+                      GoRoute(
+                        path: PatNotesPage.routePath,
+                        name: PatNotesPage.routeName,
+                        pageBuilder: (context, state) => getPage(
+                          child: const PatNotesPage(),
+                          state: state,
+                        ),
+                      ),
+                    ]),
+                GoRoute(
+                  path: FamilyListPage.routePath,
+                  name: FamilyListPage.routeName,
+                  pageBuilder: (context, state) => getPage(
+                    child: const FamilyListPage(),
+                    state: state,
+                  ),
+                ),
+              ],
+            ),
+          ]),
       GoRoute(
         path: DoctorListPage.routePath,
         name: DoctorListPage.routeName,
@@ -260,65 +320,6 @@ class AppNavigation {
           child: const MyAppointmentPage(),
           state: state,
         ),
-      ),
-      GoRoute(
-        path: PatPortalDashboardPage.routePath,
-        name: PatPortalDashboardPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const PatPortalDashboardPage(),
-          state: state,
-        ),
-        routes: [
-          GoRoute(
-            path: PatPortalLoginPage.routePath,
-            name: PatPortalLoginPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const PatPortalLoginPage(),
-              state: state,
-            ),
-          ),
-          GoRoute(
-              path: PatientPortalPage.routePath,
-              name: PatientPortalPage.routeName,
-              pageBuilder: (context, state) => getPage(
-                    child: const PatientPortalPage(),
-                    state: state,
-                  ),
-              routes: [
-                GoRoute(
-                  path: PatPrescriptionPage.routePath,
-                  name: PatPrescriptionPage.routeName,
-                  pageBuilder: (context, state) => getPage(
-                    child: const PatPrescriptionPage(),
-                    state: state,
-                  ),
-                ),
-                GoRoute(
-                  path: PatMedicalRecordPage.routePath,
-                  name: PatMedicalRecordPage.routeName,
-                  pageBuilder: (context, state) => getPage(
-                    child: const PatMedicalRecordPage(),
-                    state: state,
-                  ),
-                ),
-                GoRoute(
-                  path: PatNotesPage.routePath,
-                  name: PatNotesPage.routeName,
-                  pageBuilder: (context, state) => getPage(
-                    child: const PatNotesPage(),
-                    state: state,
-                  ),
-                ),
-              ]),
-          GoRoute(
-            path: FamilyListPage.routePath,
-            name: FamilyListPage.routeName,
-            pageBuilder: (context, state) => getPage(
-              child: const FamilyListPage(),
-              state: state,
-            ),
-          ),
-        ],
       ),
       GoRoute(
         path: DoctorDashPage.routePath,

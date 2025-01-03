@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/ticker.dart';
 import 'package:delta_hospital/core/route/router.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
@@ -11,7 +12,7 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoggedHisUserCubit(getService()),
+      create: (context) => LoggedHisUserCubit(getService(), const Ticker()),
       child: MaterialApp.router(
         title: 'Delta Hospital',
         debugShowCheckedModeBanner: false,

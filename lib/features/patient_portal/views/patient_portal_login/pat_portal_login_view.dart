@@ -46,7 +46,7 @@ class _PatPortalLoginViewState extends State<PatPortalLoginView> {
       resizeToAvoidBottomInset: false,
       body: BlocListener<HisAuthBloc, HisAuthState>(
         listener: (context, state) {
-          if (state is HisAuthSuccess) {
+          if (state is HisAuthLoggedIn) {
             _userNameController.clear();
             _passwordController.clear();
             context

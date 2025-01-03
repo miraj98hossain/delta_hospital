@@ -16,6 +16,12 @@ abstract class AppLocalDataSource {
   });
   Future<UserDetails?> getHisUser();
   Future<void> clearHisUser();
+
+  Future<void> saveHisSessionExpiryTime({
+    required DateTime dateTime,
+  });
+  Future<DateTime?> getHisSessionExpiryTime();
+  Future<void> clearHisSessionExpiryTime();
 }
 
 class AppLocalDataSourceImpl implements AppLocalDataSource {
@@ -27,7 +33,7 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
 
   final String _appUserStore = 'appUser';
   final String _hisUserStore = 'hisUser';
-
+  final String _hisSesstionExpiryTime = 'hisSesstionExpiryTime';
   final String _companyStore = 'company';
 
   final String _cartStore = 'cart';
@@ -90,6 +96,38 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
 
     if (user != null) {
       return UserDetails.fromJson(jsonEncode(user));
+    }
+    return null;
+  }
+
+  @override
+  Future<void> saveHisSessionExpiryTime({required DateTime dateTime}) async {
+    var store = intMapStoreFactory.store(_hisSesstionExpiryTime);
+
+    await store.delete(_database);
+
+    await store.record(0).put(_database, {
+      'dateTime': dateTime.toIso8601String(),
+    });
+
+    return;
+  }
+
+  @override
+  Future<void> clearHisSessionExpiryTime() async {
+    var store = stringMapStoreFactory.store(_hisSesstionExpiryTime);
+
+    await store.delete(_database);
+  }
+
+  @override
+  Future<DateTime?> getHisSessionExpiryTime() async {
+    var store = intMapStoreFactory.store(_hisSesstionExpiryTime);
+
+    var dateTime = await store.record(0).get(_database);
+
+    if (dateTime != null) {
+      return DateTime.parse(dateTime['dateTime'] as String);
     }
     return null;
   }

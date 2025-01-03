@@ -13,7 +13,7 @@ abstract class AppRepository {
     required String userName,
     required String password,
   });
-
+  Future<void> hisUserlogout();
   Future<UserDetails> getUserDetails();
 
   Future<void> saveHisUser({
@@ -21,4 +21,10 @@ abstract class AppRepository {
   });
   Future<UserDetails> getHisUser();
   Future<void> clearHisUser();
+
+  Future<void> saveHisSessionExpiryTime({
+    required DateTime dateTime,
+  });
+  Future<DateTime> getHisSessionExpiryTime();
+  Future<void> clearHisSessionExpiryTime();
 }

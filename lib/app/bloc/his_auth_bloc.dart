@@ -23,10 +23,14 @@ sealed class HisAuthState {}
 
 final class HisAuthInitial extends HisAuthState {}
 
-final class HisAuthSuccess extends HisAuthState {
+final class HisAuthLoggedIn extends HisAuthState {
   final UserDetails userDetails;
 
-  HisAuthSuccess({required this.userDetails});
+  HisAuthLoggedIn({required this.userDetails});
+}
+
+final class HisAuthLoggedOut extends HisAuthState {
+  HisAuthLoggedOut();
 }
 
 final class HisAuthError extends HisAuthState {
@@ -44,9 +48,11 @@ class HisAuthBloc extends Bloc<HisAuthEvent, HisAuthState> {
       emit(HisAuthLoading());
       try {
         var auth = await appRepository.authenticate(
-            userName: event.username, password: event.password);
+          userName: event.username,
+          password: event.password,
+        );
         var userDetails = await appRepository.getUserDetails();
-        emit(HisAuthSuccess(userDetails: userDetails));
+        emit(HisAuthLoggedIn(userDetails: userDetails));
       } catch (e) {
         emit(HisAuthError(error: e));
       }
@@ -54,8 +60,8 @@ class HisAuthBloc extends Bloc<HisAuthEvent, HisAuthState> {
     on<HisLogout>((event, emit) async {
       emit(HisAuthLoading());
       try {
-        await appRepository.clearHisUser();
-        emit(HisAuthInitial());
+        await appRepository.hisUserlogout();
+        emit(HisAuthLoggedOut());
       } catch (e) {
         emit(HisAuthError(error: e));
       }

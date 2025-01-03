@@ -32,4 +32,5 @@ class ImageConstant {
   static String stickyNotes = '$_imagePath/sticky-notes.png';
   static String doctorVisit = '$_imagePath/doctor-visit.png';
   static String hospital = '$_imagePath/hospital.png';
+  static String risk = '$_imagePath/risk.png';
 }
