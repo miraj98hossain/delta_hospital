@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/ticker.dart';
 import 'package:delta_hospital/core/route/router.dart';
@@ -16,6 +17,11 @@ class AppView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoggedHisUserCubit(getService(), const Ticker()),
+        ),
+        BlocProvider(
+          create: (context) => LoggedAppUserCubit(
+            getService(),
+          ),
         ),
         BlocProvider(
           create: (context) => ActivePageForSessionDialogCubit(),

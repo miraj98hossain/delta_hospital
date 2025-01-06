@@ -1,5 +1,6 @@
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CommonTextFieldWidget extends StatelessWidget {
   const CommonTextFieldWidget({
@@ -10,10 +11,12 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.onChanged,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.inputFormatters,
   });
   final String hintText;
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final List<TextInputFormatter>? inputFormatters;
   final void Function(String value)? onChanged;
   final TextInputType? keyboardType;
   final String? Function(String? value)? validator;
@@ -31,6 +34,7 @@ class CommonTextFieldWidget extends StatelessWidget {
         fontSize: 12,
         color: Colors.grey,
       ),
+      inputFormatters: inputFormatters,
       onChanged: onChanged,
       decoration: InputDecoration(
         fillColor: appTheme.white,

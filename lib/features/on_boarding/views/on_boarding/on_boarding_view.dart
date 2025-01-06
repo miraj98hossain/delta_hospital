@@ -81,7 +81,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                           context.pushNamed(AppLoginPage.routeName);
                         },
                         child: Text(
-                          "Sign In",
+                          "Login",
                           style: lightTextTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: appTheme.white,
@@ -96,7 +96,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                           context.pushNamed(AppRegistrationPage.routeName);
                         },
                         child: Text(
-                          "Sign Up",
+                          "Register",
                           style: lightTextTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: appTheme.white,
