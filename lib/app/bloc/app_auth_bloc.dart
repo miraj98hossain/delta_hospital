@@ -61,7 +61,6 @@ class AppAuthBloc extends Bloc<AppAuthEvent, AppAuthState> {
     on<AppLogout>((event, emit) async {
       emit(AppAuthLoading());
       try {
-        await appRepository.hisUserlogout();
         await appRepository.applogout();
         emit(AppAuthLoggedOut());
       } catch (e) {

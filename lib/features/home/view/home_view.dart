@@ -1,12 +1,16 @@
 import 'dart:developer';
 
+import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/user_details_response.dart';
+
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
+import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
+import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +28,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -32,7 +37,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppbar(),
+      key: _key,
+      drawer: const CommonDrawer(),
+      appBar: CommonAppbar(
+        onTap: () {
+          _key.currentState?.openDrawer();
+        },
+      ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: GridView(
@@ -120,6 +131,65 @@ class _HomeViewState extends State<HomeView> {
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CommonDrawer extends StatefulWidget {
+  const CommonDrawer({
+    super.key,
+  });
+
+  @override
+  State<CommonDrawer> createState() => _CommonDrawerState();
+}
+
+class _CommonDrawerState extends State<CommonDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AppAuthBloc(getService()),
+      child: BlocListener<AppAuthBloc, AppAuthState>(
+        listener: (context, state) {
+          if (state is AppAuthLoggedOut) {
+            context.goNamed(OnBoardingPage.routeName);
+          }
+        },
+        child: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).viewPadding.top,
+                ),
+                BlocBuilder<AppAuthBloc, AppAuthState>(
+                  builder: (context, state) {
+                    if (state is AppAuthLoading) {
+                      return const CircularProgressIndicator();
+                    }
+                    return GestureDetector(
+                      onTap: () {
+                        context.read<AppAuthBloc>().add(AppLogout());
+                      },
+                      child: Icon(
+                        Icons.logout,
+                        color: appTheme.white,
+                        size: 30,
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).viewPadding.bottom,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

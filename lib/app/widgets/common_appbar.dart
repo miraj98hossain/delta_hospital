@@ -3,7 +3,8 @@ import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 
 class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CommonAppbar({super.key});
+  const CommonAppbar({super.key, this.onTap});
+  final void Function()? onTap;
   @override
   Size get preferredSize => const Size.fromHeight(65.0);
   @override
@@ -24,10 +25,13 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                height: 46,
-                width: 44,
-                ImageConstant.appBarMenu,
+              GestureDetector(
+                onTap: onTap,
+                child: Image.asset(
+                  height: 46,
+                  width: 44,
+                  ImageConstant.appBarMenu,
+                ),
               ),
               Image.asset(
                 height: 50,

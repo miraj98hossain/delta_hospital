@@ -157,6 +157,9 @@ class AppRepositoryImpl implements AppRepository {
 
   @override
   Future<void> applogout() async {
+    await clearAuthResponse();
+    await clearHisUser();
+    await clearHisSessionExpiryTime();
     await clearAppUser();
   }
 }
