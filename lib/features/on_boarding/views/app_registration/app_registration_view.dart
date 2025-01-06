@@ -1,7 +1,7 @@
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/features/auth/app_otp_verification.dart';
+import 'package:delta_hospital/features/on_boarding/app_otp_verification.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

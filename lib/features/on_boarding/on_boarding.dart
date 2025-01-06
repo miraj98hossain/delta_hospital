@@ -1,2 +1,2 @@
-export 'view/on_boarding_page.dart';
-export 'view/on_boarding_view.dart';
+export 'views/on_boarding/on_boarding_page.dart';
+export 'views/on_boarding/on_boarding_view.dart';

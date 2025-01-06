@@ -4,7 +4,7 @@ import '../../app_registration.dart';
 
 class AppRegistrationPage extends StatelessWidget {
   const AppRegistrationPage({super.key});
-  static String routePath = '/app-registration-page';
+  static String routePath = 'app-registration-page';
   static String routeName = 'app-registration-page';
 
   @override

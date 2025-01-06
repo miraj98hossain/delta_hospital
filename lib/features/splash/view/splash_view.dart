@@ -17,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     context.read<LoggedHisUserCubit>().checkLoggedUser();
     Future.delayed(const Duration(seconds: 3))
-        .then((value) => context.pushNamed(OnBoardingPage.routeName));
+        .then((value) => context.goNamed(OnBoardingPage.routeName));
     super.initState();
   }
 

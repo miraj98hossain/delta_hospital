@@ -1,6 +1,6 @@
-import 'package:delta_hospital/features/auth/app_registration.dart';
-import 'package:delta_hospital/features/auth/app_otp_verification.dart';
-import 'package:delta_hospital/features/auth/view/app_login/app_login_page.dart';
+import 'package:delta_hospital/features/on_boarding/app_registration.dart';
+import 'package:delta_hospital/features/on_boarding/app_otp_verification.dart';
+import 'package:delta_hospital/features/on_boarding/views/app_login/app_login_page.dart';
 import 'package:delta_hospital/features/book_appointment/book_appointment.dart';
 import 'package:delta_hospital/features/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/features/book_appointment/patient_info.dart';
@@ -63,30 +63,32 @@ class AppNavigation {
           child: const OnBoardingPage(),
           state: state,
         ),
-      ),
-      GoRoute(
-        path: AppLoginPage.routePath,
-        name: AppLoginPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const AppLoginPage(),
-          state: state,
-        ),
-      ),
-      GoRoute(
-        path: AppRegistrationPage.routePath,
-        name: AppRegistrationPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const AppRegistrationPage(),
-          state: state,
-        ),
-      ),
-      GoRoute(
-        path: AppOtpVerificationPage.routePath,
-        name: AppOtpVerificationPage.routeName,
-        pageBuilder: (context, state) => getPage(
-          child: const AppOtpVerificationPage(),
-          state: state,
-        ),
+        routes: [
+          GoRoute(
+            path: AppLoginPage.routePath,
+            name: AppLoginPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const AppLoginPage(),
+              state: state,
+            ),
+          ),
+          GoRoute(
+            path: AppRegistrationPage.routePath,
+            name: AppRegistrationPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const AppRegistrationPage(),
+              state: state,
+            ),
+          ),
+          GoRoute(
+            path: AppOtpVerificationPage.routePath,
+            name: AppOtpVerificationPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const AppOtpVerificationPage(),
+              state: state,
+            ),
+          ),
+        ],
       ),
       GoRoute(
         path: HomePage.routePath,
