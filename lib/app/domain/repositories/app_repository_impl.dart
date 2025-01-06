@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/data/repositories/app_repository.dart';
@@ -71,8 +72,22 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
+  Future<void> clearAppUser() async {
+    await appLocalDataSource.clearAppUser();
+  }
+
+  @override
   Future<void> clearHisUser() async {
     await appLocalDataSource.clearHisUser();
+  }
+
+  @override
+  Future<AppUserDetails> getAppUser() async {
+    var response = await appLocalDataSource.getAppUser();
+    if (response == null) {
+      throw const CustomException('No His User found');
+    }
+    return response;
   }
 
   @override
@@ -82,6 +97,11 @@ class AppRepositoryImpl implements AppRepository {
       throw const CustomException('No His User found');
     }
     return response;
+  }
+
+  @override
+  Future<void> saveAppUser({required AppUserDetails userDetails}) async {
+    await appLocalDataSource.saveAppUser(appUserDetails: userDetails);
   }
 
   @override
@@ -119,5 +139,24 @@ class AppRepositoryImpl implements AppRepository {
     await clearAuthResponse();
     await clearHisUser();
     await clearHisSessionExpiryTime();
+  }
+
+  @override
+  Future<AppUserDetails> appLogin({
+    required String phone,
+    required String password,
+  }) async {
+    var response =
+        await appRemoteDataSource.appLogin(phone: phone, password: password);
+    if (response.success != true) {
+      throw ApiDataException(response.message);
+    }
+    await saveAppUser(userDetails: response.obj!);
+    return response.obj ?? AppUserDetails();
+  }
+
+  @override
+  Future<void> applogout() async {
+    await clearAppUser();
   }
 }

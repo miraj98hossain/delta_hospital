@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
@@ -15,6 +18,11 @@ abstract class AppRemoteDataSource {
   });
   Future<HisLogoutResponse> hisUserlogout({
     required String token,
+  });
+
+  Future<AppLoginResponse> appLogin({
+    required String phone,
+    required String password,
   });
 }
 
@@ -73,5 +81,23 @@ class AppRemoteDataSourceImpl
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse(response, decoder: HisLogoutResponse.fromJson);
+  }
+
+  @override
+  Future<AppLoginResponse> appLogin({
+    required String phone,
+    required String password,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${appConfig.baseUrl}/mobile-app-firebase-api/api/appAuthentication/find-by-user'));
+    request.body = json.encode({"phone": phone, "password": password});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, decoder: AppLoginResponse.fromJson);
   }
 }

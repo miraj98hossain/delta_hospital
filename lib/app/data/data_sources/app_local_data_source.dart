@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:sembast/sembast.dart';
@@ -16,6 +17,12 @@ abstract class AppLocalDataSource {
   });
   Future<UserDetails?> getHisUser();
   Future<void> clearHisUser();
+
+  Future<void> saveAppUser({
+    required AppUserDetails appUserDetails,
+  });
+  Future<AppUserDetails?> getAppUser();
+  Future<void> clearAppUser();
 
   Future<void> saveHisSessionExpiryTime({
     required DateTime dateTime,
@@ -96,6 +103,36 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
 
     if (user != null) {
       return UserDetails.fromJson(jsonEncode(user));
+    }
+    return null;
+  }
+
+  @override
+  Future<void> saveAppUser({required AppUserDetails appUserDetails}) async {
+    var store = intMapStoreFactory.store(_appUserStore);
+
+    await store.delete(_database);
+
+    await store.record(0).put(_database, appUserDetails.toMap());
+
+    return;
+  }
+
+  @override
+  Future<void> clearAppUser() async {
+    var store = stringMapStoreFactory.store(_appUserStore);
+
+    await store.delete(_database);
+  }
+
+  @override
+  Future<AppUserDetails?> getAppUser() async {
+    var store = intMapStoreFactory.store(_appUserStore);
+
+    var user = await store.record(0).get(_database);
+
+    if (user != null) {
+      return AppUserDetails.fromJson(jsonEncode(user));
     }
     return null;
   }
