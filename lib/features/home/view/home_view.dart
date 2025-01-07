@@ -95,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
               icon: ImageConstant.doctorPortal,
               onTap: () {
                 var userDetails = context.read<LoggedHisUserCubit>().state;
-                if (userDetails != null && userDetails!.doctorNo != null) {
+                if (userDetails != null && userDetails.doctorNo != null) {
                   log(userDetails.doctorNo.toString());
                   context.pushNamed(DoctorDashPage.routeName);
                 } else {

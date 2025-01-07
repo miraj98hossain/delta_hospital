@@ -1,9 +1,13 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
+import 'package:delta_hospital/app/widgets/session_expire_dialog.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/app_modal.dart';
+import 'package:delta_hospital/features/doctor_portal/views/doctor_ipd_portal/doctor_ipd_portal_page.dart';
 import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_admitted_patient_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +24,9 @@ class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
   @override
   void initState() {
     _userDetails = context.read<LoggedHisUserCubit>().state!;
+    context
+        .read<ActivePageForSessionDialogCubit>()
+        .changeActivePage(DoctorIpdPortalPage.routeName);
     context.read<DoctorAdmittedPatientBloc>().add(
           GetDoctorAdmittedPatientEvent(doctorNo: _userDetails.doctorNo ?? 0),
         );
@@ -30,125 +37,138 @@ class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: BlocBuilder<DoctorAdmittedPatientBloc,
-                  DoctorAdmittedPatientState>(
-                builder: (context, state) {
-                  if (state is DoctorAdmittedPatientLaoding) {
-                    return const CommonLoading();
-                  }
-                  if (state is DoctorAdmittedPatientSuccess) {
-                    return ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      itemBuilder: (context, index) {
-                        var data = state.doctorAdmittedPatientList[index];
-                        return Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const Text(
-                                    "Admission Id : ",
-                                  ),
-                                  Text(data.admissionId ?? ""),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Patient Name : ",
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      data.patientName ?? "",
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Gender : ",
-                                      ),
-                                      Text(
-                                        data.genderData ?? "",
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Age : ",
-                                      ),
-                                      Text(
-                                        data.age ?? "",
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "Bed Name : ",
-                                  ),
-                                  Text(
-                                    data.bedName ?? "",
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "Addmission Date : ",
-                                  ),
-                                  Text(data.admissionDateTime != null
-                                      ? DateTime.parse(
-                                              data.admissionDateTime ?? "")
-                                          .toFormatedString("dd-MMM-yyyy")
-                                      : ""),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
-                      ),
-                      itemCount: state.doctorAdmittedPatientList.length,
-                    );
-                  }
-                  return Container();
-                },
+      body: BlocListener<LoggedHisUserCubit, UserDetails?>(
+        listener: (context, state) {
+          var activePage =
+              context.read<ActivePageForSessionDialogCubit>().state;
+          if (state == null && activePage == DoctorIpdPortalPage.routeName) {
+            AppModal.showCustomModal(
+              context,
+              title: "Session Expired",
+              content: const SessionExpireDialog(),
+            );
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            ),
-          ],
+              Expanded(
+                child: BlocBuilder<DoctorAdmittedPatientBloc,
+                    DoctorAdmittedPatientState>(
+                  builder: (context, state) {
+                    if (state is DoctorAdmittedPatientLaoding) {
+                      return const CommonLoading();
+                    }
+                    if (state is DoctorAdmittedPatientSuccess) {
+                      return ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        itemBuilder: (context, index) {
+                          var data = state.doctorAdmittedPatientList[index];
+                          return Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: appTheme.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Admission Id : ",
+                                    ),
+                                    Text(data.admissionId ?? ""),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Patient Name : ",
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        data.patientName ?? "",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Gender : ",
+                                        ),
+                                        Text(
+                                          data.genderData ?? "",
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Age : ",
+                                        ),
+                                        Text(
+                                          data.age ?? "",
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Bed Name : ",
+                                    ),
+                                    Text(
+                                      data.bedName ?? "",
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Addmission Date : ",
+                                    ),
+                                    Text(data.admissionDateTime != null
+                                        ? DateTime.parse(
+                                                data.admissionDateTime ?? "")
+                                            .toFormatedString("dd-MMM-yyyy")
+                                        : ""),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        ),
+                        itemCount: state.doctorAdmittedPatientList.length,
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

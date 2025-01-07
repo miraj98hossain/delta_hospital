@@ -1,12 +1,16 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
+import 'package:delta_hospital/app/widgets/session_expire_dialog.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/app_modal.dart';
 import 'package:delta_hospital/features/doctor_portal/data/models/doctor_consultaion_gridlist_response.dart';
 import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_opd_portal.dart';
 import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_consultation_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +32,9 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
   void initState() {
     _userDetails = context.read<LoggedHisUserCubit>().state!;
     _selectedDate = context.read<VariableStateCubit<DateTime>>().state!;
-
+    context
+        .read<ActivePageForSessionDialogCubit>()
+        .changeActivePage(DoctorOpdPortalPage.routeName);
     _tabController =
         TabController(length: widget.shiftList.length, vsync: this);
     context.read<DoctorConsultationBloc>().add(GetDoctorConsultationEvent(
@@ -54,208 +60,222 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 35,
-              decoration: BoxDecoration(
-                color: appTheme.white,
-                borderRadius: BorderRadius.circular(8),
+      body: BlocListener<LoggedHisUserCubit, UserDetails?>(
+        listener: (context, state) {
+          var activePage =
+              context.read<ActivePageForSessionDialogCubit>().state;
+          if (state == null && activePage == DoctorOpdPortalPage.routeName) {
+            AppModal.showCustomModal(
+              context,
+              title: "Session Expired",
+              content: const SessionExpireDialog(),
+            );
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: appTheme.secondary,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Appointment Date",
-                          style: lightTextTheme.bodyMedium!.copyWith(
-                            color: appTheme.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          BlocBuilder<VariableStateCubit<DateTime>, DateTime?>(
-                            builder: (context, state) {
-                              return Text(
-                                context
-                                        .watch<VariableStateCubit<DateTime>>()
-                                        .state
-                                        ?.toFormatedString("dd-MMM-yyyy") ??
-                                    "",
-                                style: lightTextTheme.bodyMedium!.copyWith(
-                                  color: appTheme.primary,
-                                ),
-                              );
-                            },
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              var date = context
-                                  .read<VariableStateCubit<DateTime>>()
-                                  .state;
-                              var selectedDate = await showDatePicker(
-                                context: context,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime.now()
-                                    .add(const Duration(days: 30)),
-                                initialDate: date,
-                              );
-                              if (selectedDate != null && context.mounted) {
-                                context
-                                    .read<VariableStateCubit<DateTime>>()
-                                    .update(selectedDate);
-                                context
-                                    .read<DoctorConsultationBloc>()
-                                    .add(GetDoctorConsultationEvent(
-                                      doctorNo: _userDetails.doctorNo ?? 0,
-                                      shiftdtlNo: widget
-                                              .shiftList[_tabController.index]
-                                              .shiftNo ??
-                                          0,
-                                      fromDate: selectedDate
-                                          .toFormatedString('dd-MMM-yyyy'),
-                                    ));
-                              }
-                            },
-                            icon: Icon(
-                              size: 20,
-                              color: appTheme.primary,
-                              Icons.calendar_today_outlined,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 30,
-              child: TabBar(
-                controller: _tabController,
-                dividerColor: Colors.transparent,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: const BoxDecoration(),
-                tabs: [
-                  ...List.generate(widget.shiftList.length, (index) {
-                    var shift = widget.shiftList[index];
-                    return Tab(
+              Container(
+                height: 35,
+                decoration: BoxDecoration(
+                  color: appTheme.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: index ==
-                                  context
-                                      .watch<VariableStateCubit<int>>()
-                                      .state!
-                              ? appTheme.deltaBlue
-                              : Colors.white,
+                          color: appTheme.secondary,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            bottomLeft: Radius.circular(8),
+                          ),
                         ),
                         child: Center(
                           child: Text(
-                            shift.shiftTime != null
-                                ? shift.shiftTime!
-                                    .replaceAll(
-                                      RegExp(
-                                        r'\([^)]*\)',
-                                      ),
-                                      "",
-                                    )
-                                    .trim()
-                                : "",
+                            "Appointment Date",
                             style: lightTextTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: index ==
-                                      context
-                                          .watch<VariableStateCubit<int>>()
-                                          .state!
-                                  ? appTheme.white
-                                  : appTheme.darkPurple,
+                              color: appTheme.white,
                             ),
                           ),
                         ),
                       ),
-                    );
-                  })
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  ...List.generate(widget.shiftList.length, (index) {
-                    return Column(
-                      children: [
-                        Expanded(
-                          child: BlocBuilder<DoctorConsultationBloc,
-                              DoctorConsultationState>(
-                            builder: (context, state) {
-                              if (state is DoctorConsultationLaoding) {
-                                return const CommonLoading();
-                              }
-                              if (state is DoctorConsultationSuccess) {
-                                return ListView.separated(
-                                  itemCount:
-                                      state.doctorConsultationList.length,
-                                  separatorBuilder: (context, index) {
-                                    return const SizedBox(
-                                      height: 10,
-                                    );
-                                  },
-                                  itemBuilder: (context, index) {
-                                    var consultation =
-                                        state.doctorConsultationList[index];
-                                    return ConsultationWidget(
-                                        consultation: consultation);
-                                  },
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            BlocBuilder<VariableStateCubit<DateTime>,
+                                DateTime?>(
+                              builder: (context, state) {
+                                return Text(
+                                  context
+                                          .watch<VariableStateCubit<DateTime>>()
+                                          .state
+                                          ?.toFormatedString("dd-MMM-yyyy") ??
+                                      "",
+                                  style: lightTextTheme.bodyMedium!.copyWith(
+                                    color: appTheme.primary,
+                                  ),
                                 );
-                              }
-                              return Container();
-                            },
-                          ),
-                        )
-                      ],
-                    );
-                  })
-                ],
+                              },
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () async {
+                                var date = context
+                                    .read<VariableStateCubit<DateTime>>()
+                                    .state;
+                                var selectedDate = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now()
+                                      .add(const Duration(days: 30)),
+                                  initialDate: date,
+                                );
+                                if (selectedDate != null && context.mounted) {
+                                  context
+                                      .read<VariableStateCubit<DateTime>>()
+                                      .update(selectedDate);
+                                  context
+                                      .read<DoctorConsultationBloc>()
+                                      .add(GetDoctorConsultationEvent(
+                                        doctorNo: _userDetails.doctorNo ?? 0,
+                                        shiftdtlNo: widget
+                                                .shiftList[_tabController.index]
+                                                .shiftNo ??
+                                            0,
+                                        fromDate: selectedDate
+                                            .toFormatedString('dd-MMM-yyyy'),
+                                      ));
+                                }
+                              },
+                              icon: Icon(
+                                size: 20,
+                                color: appTheme.primary,
+                                Icons.calendar_today_outlined,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 30,
+                child: TabBar(
+                  controller: _tabController,
+                  dividerColor: Colors.transparent,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicator: const BoxDecoration(),
+                  tabs: [
+                    ...List.generate(widget.shiftList.length, (index) {
+                      var shift = widget.shiftList[index];
+                      return Tab(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: index ==
+                                    context
+                                        .watch<VariableStateCubit<int>>()
+                                        .state!
+                                ? appTheme.deltaBlue
+                                : Colors.white,
+                          ),
+                          child: Center(
+                            child: Text(
+                              shift.shiftTime != null
+                                  ? shift.shiftTime!
+                                      .replaceAll(
+                                        RegExp(
+                                          r'\([^)]*\)',
+                                        ),
+                                        "",
+                                      )
+                                      .trim()
+                                  : "",
+                              style: lightTextTheme.bodyMedium!.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: index ==
+                                        context
+                                            .watch<VariableStateCubit<int>>()
+                                            .state!
+                                    ? appTheme.white
+                                    : appTheme.darkPurple,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _tabController,
+                  children: [
+                    ...List.generate(widget.shiftList.length, (index) {
+                      return Column(
+                        children: [
+                          Expanded(
+                            child: BlocBuilder<DoctorConsultationBloc,
+                                DoctorConsultationState>(
+                              builder: (context, state) {
+                                if (state is DoctorConsultationLaoding) {
+                                  return const CommonLoading();
+                                }
+                                if (state is DoctorConsultationSuccess) {
+                                  return ListView.separated(
+                                    itemCount:
+                                        state.doctorConsultationList.length,
+                                    separatorBuilder: (context, index) {
+                                      return const SizedBox(
+                                        height: 10,
+                                      );
+                                    },
+                                    itemBuilder: (context, index) {
+                                      var consultation =
+                                          state.doctorConsultationList[index];
+                                      return ConsultationWidget(
+                                          consultation: consultation);
+                                    },
+                                  );
+                                }
+                                return Container();
+                              },
+                            ),
+                          )
+                        ],
+                      );
+                    })
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,14 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/app/widgets/session_expire_dialog.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/app_modal.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/doctor_portal/views/doctor_dash/bloc/doctor_shift_bloc.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/widgets/pat_dash_widget.dart';
@@ -28,6 +32,9 @@ class _DoctorDashViewState extends State<DoctorDashView> {
   void initState() {
     context.read<DoctorShiftBloc>().add(GetDoctorShiftEvent());
     _userDetails = context.read<LoggedHisUserCubit>().state!;
+    context
+        .read<ActivePageForSessionDialogCubit>()
+        .changeActivePage(DoctorDashPage.routeName);
     super.initState();
   }
 
@@ -35,11 +42,30 @@ class _DoctorDashViewState extends State<DoctorDashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: BlocListener<HisAuthBloc, HisAuthState>(
-        listener: (context, state) {
-          context.read<LoggedHisUserCubit>().resetState();
-          context.pushReplacementNamed(HomePage.routeName);
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<HisAuthBloc, HisAuthState>(
+            listener: (context, state) {
+              if (state is HisAuthLoggedOut) {
+                context.read<LoggedHisUserCubit>().resetState();
+                context.goNamed(HomePage.routeName);
+              }
+            },
+          ),
+          BlocListener<LoggedHisUserCubit, UserDetails?>(
+            listener: (context, state) {
+              var activePage =
+                  context.read<ActivePageForSessionDialogCubit>().state;
+              if (state == null && activePage == DoctorDashPage.routeName) {
+                AppModal.showCustomModal(
+                  context,
+                  title: "Session Expired",
+                  content: const SessionExpireDialog(),
+                );
+              }
+            },
+          ),
+        ],
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 15,

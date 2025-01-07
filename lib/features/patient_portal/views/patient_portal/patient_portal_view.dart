@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
