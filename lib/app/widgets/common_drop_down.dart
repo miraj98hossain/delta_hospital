@@ -17,48 +17,48 @@ class CommonDropdownButton<T> extends StatelessWidget {
   final String? Function(T? value)? validator;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      child: DropdownButtonFormField<T>(
-        value: value,
-        isExpanded: true,
-        padding: EdgeInsets.zero,
-        menuMaxHeight: 250,
-        decoration: const InputDecoration()
-            .applyDefaults(Theme.of(context).inputDecorationTheme)
-            .copyWith(
-              contentPadding: const EdgeInsets.all(5),
-            ),
-        hint: Text(
-          hintText,
-          style: lightTextTheme.bodySmall!.copyWith(
-            color: appTheme.primary,
-            fontWeight: FontWeight.bold,
+    return DropdownButtonFormField<T>(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      value: value,
+      isExpanded: true,
+      isDense: true,
+      padding: EdgeInsets.zero,
+      menuMaxHeight: 250,
+      decoration: const InputDecoration()
+          .applyDefaults(Theme.of(context).inputDecorationTheme)
+          .copyWith(
+            isDense: true,
+            contentPadding: const EdgeInsets.all(8),
           ),
-        ),
-        style: lightTextTheme.bodyMedium!.copyWith(
-          overflow: TextOverflow.ellipsis,
+      hint: Text(
+        hintText,
+        style: lightTextTheme.bodySmall!.copyWith(
           color: appTheme.primary,
           fontWeight: FontWeight.bold,
         ),
-        items: items?.map(
-          (e) {
-            return DropdownMenuItem(
-              value: e,
-              child: Text(
-                e.toString(),
-                style: lightTextTheme.bodySmall!.copyWith(
-                  overflow: TextOverflow.ellipsis,
-                  color: appTheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            );
-          },
-        ).toList(),
-        onChanged: onChanged,
-        validator: validator,
       ),
+      style: lightTextTheme.bodyMedium!.copyWith(
+        overflow: TextOverflow.ellipsis,
+        color: appTheme.primary,
+        fontWeight: FontWeight.bold,
+      ),
+      items: items?.map(
+        (e) {
+          return DropdownMenuItem(
+            value: e,
+            child: Text(
+              e.toString(),
+              style: lightTextTheme.bodySmall!.copyWith(
+                overflow: TextOverflow.ellipsis,
+                color: appTheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
+      ).toList(),
+      onChanged: onChanged,
+      validator: validator,
     );
   }
 }

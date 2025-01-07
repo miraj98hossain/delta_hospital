@@ -12,6 +12,7 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.inputFormatters,
+    this.readOnly = false,
   });
   final String hintText;
   final TextEditingController? controller;
@@ -20,9 +21,11 @@ class CommonTextFieldWidget extends StatelessWidget {
   final void Function(String value)? onChanged;
   final TextInputType? keyboardType;
   final String? Function(String? value)? validator;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       keyboardType: keyboardType,
