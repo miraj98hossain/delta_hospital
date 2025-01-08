@@ -1,4 +1,4 @@
-package com.example.delta_hospital
+package com.delta.hospital
 
 import io.flutter.embedding.android.FlutterActivity
 
