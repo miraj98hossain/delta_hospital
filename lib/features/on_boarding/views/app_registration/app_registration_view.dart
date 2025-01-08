@@ -105,6 +105,7 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
             _fullAddressController.clear();
             context.read<VariableStateCubit<Gender>>().reset();
             context.read<VariableStateCubit<DateTime>>().reset();
+            _formKey.currentState?.reset();
             context
                 .read<LoggedAppUserCubit>()
                 .setLoggedAppUser(userDetails: state.userDetails);

@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
@@ -47,6 +48,14 @@ class _AppLoginViewState extends State<AppLoginView> {
       body: BlocListener<AppAuthBloc, AppAuthState>(
         listener: (context, state) {
           if (state is AppAuthLoggedIn) {
+            passwordController.clear();
+            phoneNumberController.clear();
+            phoneNumberFocusNode.unfocus();
+            passwordFocusNode.unfocus();
+            _formKey.currentState?.reset();
+            context
+                .read<LoggedAppUserCubit>()
+                .setLoggedAppUser(userDetails: state.userDetails);
             context.goNamed(HomePage.routeName);
           }
           if (state is AppAuthError) {
