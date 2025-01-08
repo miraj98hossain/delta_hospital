@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
+import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -23,6 +25,9 @@ abstract class AppRemoteDataSource {
   Future<AppLoginResponse> appLogin({
     required String phone,
     required String password,
+  });
+  Future<GenericResponse> appRegistration({
+    required AppUserDetails userDetails,
   });
 }
 
@@ -92,12 +97,30 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${appConfig.baseUrl}/mobile-app-firebase-api/api/appAuthentication/find-by-user'));
+            '${appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/find-by-user'));
     request.body = json.encode({"phone": phone, "password": password});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse(response, decoder: AppLoginResponse.fromJson);
+  }
+
+  @override
+  Future<GenericResponse> appRegistration({
+    required AppUserDetails userDetails,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/save-user'));
+    request.body = json.encode(userDetails.toMapReg());
+
+    request.headers.addAll(headers);
+    log(request.body);
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, decoder: GenericResponse.fromJson);
   }
 }

@@ -39,4 +39,5 @@ abstract class AppRepository {
     required String password,
   });
   Future<void> applogout();
+  Future<void> appRegistration({required AppUserDetails userDetails});
 }

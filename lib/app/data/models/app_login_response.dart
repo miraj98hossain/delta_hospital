@@ -253,4 +253,28 @@ class AppUserDetails {
         "entityName": entityName,
         "documentId": documentId,
       };
+  Map<String, dynamic> toMapReg() => {
+        "deviceId": deviceId,
+        "userId": userId,
+        "phone": phone,
+        "mrn": mrn,
+        "firstName": firstName,
+        "lastName": lastName,
+        "userImage": userImage,
+        "dateOfBirth": dateOfBirth,
+        "ageYear": ageYear,
+        "ageMonth": ageMonth,
+        "ageDay": ageDay,
+        "gender": gender,
+        "email": email,
+        "division": division,
+        "fullAddress": fullAddress,
+        "nationalId": nationalId,
+        "birthCertificate": birthCertificate,
+        "passportNumber": passportNumber,
+        "password": password,
+        "activeStatus": activeStatus,
+        "entityName": entityName,
+        "documentId": documentId,
+      };
 }

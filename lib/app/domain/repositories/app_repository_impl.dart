@@ -162,4 +162,13 @@ class AppRepositoryImpl implements AppRepository {
     await clearHisSessionExpiryTime();
     await clearAppUser();
   }
+
+  @override
+  Future<void> appRegistration({required AppUserDetails userDetails}) async {
+    var response =
+        await appRemoteDataSource.appRegistration(userDetails: userDetails);
+    if (response.success != true) {
+      throw ApiDataException(response.message);
+    }
+  }
 }

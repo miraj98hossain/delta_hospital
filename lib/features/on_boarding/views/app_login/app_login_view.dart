@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
+import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/home/home.dart';
@@ -47,6 +48,11 @@ class _AppLoginViewState extends State<AppLoginView> {
         listener: (context, state) {
           if (state is AppAuthLoggedIn) {
             context.goNamed(HomePage.routeName);
+          }
+          if (state is AppAuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.errorSnackber(message: "Invalid Credentials"),
+            );
           }
         },
         child: Column(
