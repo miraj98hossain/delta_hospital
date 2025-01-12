@@ -51,7 +51,7 @@ class AppRepositoryImpl implements AppRepository {
     await saveHisSessionExpiryTime(
       dateTime: DateTime.now().add(
         const Duration(
-          minutes: 1,
+          minutes: 45,
         ),
       ),
     );
