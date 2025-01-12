@@ -459,6 +459,26 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
                               CommonTextFieldWidget(
                                 controller: _passwordController,
                                 focusNode: _passwordFocusNode,
+                                obscureText: context
+                                    .watch<VariableStateCubit<bool>>()
+                                    .state!,
+                                suffix: GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<VariableStateCubit<bool>>()
+                                        .update(!context
+                                            .read<VariableStateCubit<bool>>()
+                                            .state!);
+                                  },
+                                  child: Icon(
+                                    context
+                                            .watch<VariableStateCubit<bool>>()
+                                            .state!
+                                        ? Icons.remove_red_eye_outlined
+                                        : Icons.remove_red_eye_sharp,
+                                    color: appTheme.primary,
+                                  ),
+                                ),
                                 hintText: "Password",
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -473,6 +493,26 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
                               CommonTextFieldWidget(
                                 controller: _confirmPasswordController,
                                 focusNode: _confirmPasswordFocusNode,
+                                obscureText: context
+                                    .watch<VariableStateCubit<bool>>()
+                                    .state!,
+                                // suffix: GestureDetector(
+                                //   onTap: () {
+                                //     context
+                                //         .read<VariableStateCubit<bool>>()
+                                //         .update(!context
+                                //             .read<VariableStateCubit<bool>>()
+                                //             .state!);
+                                //   },
+                                //   child: Icon(
+                                //     context
+                                //             .watch<VariableStateCubit<bool>>()
+                                //             .state!
+                                //         ? Icons.remove_red_eye_outlined
+                                //         : Icons.remove_red_eye_sharp,
+                                //     color: appTheme.primary,
+                                //   ),
+                                // ),
                                 hintText: "Confirm Password",
                                 validator: (value) {
                                   if (_passwordController.text != value) {

@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/on_boarding/app_login.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,15 @@ class AppLoginPage extends StatelessWidget {
   static const routeName = 'app-login-page';
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppAuthBloc(getService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppAuthBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<bool>()..update(true),
+        ),
+      ],
       child: const AppLoginView(),
     );
   }

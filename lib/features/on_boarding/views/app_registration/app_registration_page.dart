@@ -22,6 +22,9 @@ class AppRegistrationPage extends StatelessWidget {
         BlocProvider(
           create: (context) => VariableStateCubit<Gender>(),
         ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<bool>()..update(true),
+        ),
       ],
       child: const AppRegistrationView(),
     );

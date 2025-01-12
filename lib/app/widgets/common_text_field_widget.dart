@@ -13,6 +13,8 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.validator,
     this.inputFormatters,
     this.readOnly = false,
+    this.suffix,
+    this.obscureText = false,
   });
   final String hintText;
   final TextEditingController? controller;
@@ -22,9 +24,12 @@ class CommonTextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String? value)? validator;
   final bool readOnly;
+  final Widget? suffix;
+  final bool obscureText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
       readOnly: readOnly,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
@@ -37,11 +42,15 @@ class CommonTextFieldWidget extends StatelessWidget {
         fontSize: 12,
         color: Colors.grey,
       ),
+      onTapOutside: (event) {
+        focusNode?.unfocus();
+      },
       inputFormatters: inputFormatters,
       onChanged: onChanged,
       decoration: InputDecoration(
         fillColor: appTheme.white,
         filled: true,
+        suffixIcon: suffix,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0), // Circular border
           borderSide: BorderSide(

@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
@@ -145,6 +146,23 @@ class _AppLoginViewState extends State<AppLoginView> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.85,
                           child: CommonTextFieldWidget(
+                            obscureText: context
+                                .watch<VariableStateCubit<bool>>()
+                                .state!,
+                            suffix: GestureDetector(
+                              onTap: () {
+                                context.read<VariableStateCubit<bool>>().update(
+                                    !context
+                                        .read<VariableStateCubit<bool>>()
+                                        .state!);
+                              },
+                              child: Icon(
+                                context.watch<VariableStateCubit<bool>>().state!
+                                    ? Icons.remove_red_eye_outlined
+                                    : Icons.remove_red_eye_sharp,
+                                color: appTheme.primary,
+                              ),
+                            ),
                             controller: passwordController,
                             focusNode: passwordFocusNode,
                             hintText: "Password",
