@@ -1,6 +1,6 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
@@ -32,9 +32,7 @@ class _DoctorDashViewState extends State<DoctorDashView> {
   void initState() {
     context.read<DoctorShiftBloc>().add(GetDoctorShiftEvent());
     _userDetails = context.read<LoggedHisUserCubit>().state!;
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(DoctorDashPage.routeName);
+
     super.initState();
   }
 
@@ -54,8 +52,8 @@ class _DoctorDashViewState extends State<DoctorDashView> {
           ),
           BlocListener<LoggedHisUserCubit, UserDetails?>(
             listener: (context, state) {
-              var activePage =
-                  context.read<ActivePageForSessionDialogCubit>().state;
+              var activePage = GoRouterState.of(context).name.toString();
+
               if (state == null && activePage == DoctorDashPage.routeName) {
                 AppModal.showCustomModal(
                   context,

@@ -1,4 +1,3 @@
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
@@ -11,6 +10,7 @@ import 'package:delta_hospital/features/patient_portal/views/pat_prescription/pa
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/patient_portal_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widgets/prescription_widget.dart';
 
@@ -25,9 +25,7 @@ class _PatPrescriptionViewState extends State<PatPrescriptionView> {
   @override
   void initState() {
     context.read<PrescriptionBloc>().add(GetPrescriptionEvent());
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(PatPrescriptionPage.routeName);
+
     super.initState();
   }
 
@@ -37,8 +35,7 @@ class _PatPrescriptionViewState extends State<PatPrescriptionView> {
       appBar: const CommonAppbar(),
       body: BlocListener<LoggedHisUserCubit, UserDetails?>(
         listener: (context, state) {
-          var activePage =
-              context.read<ActivePageForSessionDialogCubit>().state;
+          var activePage = GoRouterState.of(context).name.toString();
           if (state == null && activePage == PatPrescriptionPage.routeName) {
             AppModal.showCustomModal(
               context,

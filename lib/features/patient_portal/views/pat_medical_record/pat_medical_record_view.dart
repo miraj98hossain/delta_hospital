@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/app.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
@@ -10,6 +10,7 @@ import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/
 import 'package:delta_hospital/features/patient_portal/views/patient_portal/patient_portal_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'bloc/report_bloc.dart';
 
@@ -24,9 +25,7 @@ class _PatMedicalRecordViewState extends State<PatMedicalRecordView> {
   @override
   void initState() {
     context.read<ReportBloc>().add(GetReportEvent());
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(PatMedicalRecordPage.routeName);
+
     super.initState();
   }
 
@@ -36,8 +35,7 @@ class _PatMedicalRecordViewState extends State<PatMedicalRecordView> {
       appBar: const CommonAppbar(),
       body: BlocListener<LoggedHisUserCubit, UserDetails?>(
         listener: (context, state) {
-          var activePage =
-              context.read<ActivePageForSessionDialogCubit>().state;
+          var activePage = GoRouterState.of(context).name.toString();
           if (state == null && activePage == PatMedicalRecordPage.routeName) {
             AppModal.showCustomModal(
               context,

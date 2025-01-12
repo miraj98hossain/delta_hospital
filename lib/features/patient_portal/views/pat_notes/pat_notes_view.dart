@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/app.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
@@ -13,6 +13,7 @@ import 'package:delta_hospital/features/patient_portal/views/patient_portal/pati
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/widgets/common_text_field_widget.dart';
 
@@ -31,9 +32,6 @@ class _PatNotesViewState extends State<PatNotesView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(PatNotesPage.routeName);
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     _titleFocusNode = FocusNode();
@@ -71,8 +69,7 @@ class _PatNotesViewState extends State<PatNotesView> {
           ),
           BlocListener<LoggedHisUserCubit, UserDetails?>(
             listener: (context, state) {
-              var activePage =
-                  context.read<ActivePageForSessionDialogCubit>().state;
+              var activePage = GoRouterState.of(context).name.toString();
               if (state == null && activePage == PatNotesPage.routeName) {
                 AppModal.showCustomModal(
                   context,

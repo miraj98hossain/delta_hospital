@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
@@ -31,9 +31,7 @@ class _PatientPortalViewState extends State<PatientPortalView> {
   @override
   void initState() {
     context.read<HisPatientInfoBloc>().add(GetHisPatientInfoEvent());
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(PatientPortalPage.routeName);
+
     super.initState();
   }
 
@@ -54,8 +52,7 @@ class _PatientPortalViewState extends State<PatientPortalView> {
           ),
           BlocListener<LoggedHisUserCubit, UserDetails?>(
             listener: (context, state) {
-              var activePage =
-                  context.read<ActivePageForSessionDialogCubit>().state;
+              var activePage = GoRouterState.of(context).name.toString();
               if (state == null && activePage == PatientPortalPage.routeName) {
                 AppModal.showCustomModal(
                   context,

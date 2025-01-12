@@ -1,4 +1,3 @@
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/ticker.dart';
@@ -23,9 +22,6 @@ class AppView extends StatelessWidget {
           create: (context) => LoggedAppUserCubit(
             getService(),
           ),
-        ),
-        BlocProvider(
-          create: (context) => ActivePageForSessionDialogCubit(),
         ),
       ],
       child: MaterialApp.router(

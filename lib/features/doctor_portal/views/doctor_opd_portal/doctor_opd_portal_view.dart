@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/app.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
+
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
@@ -15,6 +15,7 @@ import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bl
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class DoctorOpdPortalView extends StatefulWidget {
   const DoctorOpdPortalView({super.key, required this.shiftList});
@@ -32,9 +33,7 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
   void initState() {
     _userDetails = context.read<LoggedHisUserCubit>().state!;
     _selectedDate = context.read<VariableStateCubit<DateTime>>().state!;
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(DoctorOpdPortalPage.routeName);
+
     _tabController =
         TabController(length: widget.shiftList.length, vsync: this);
     context.read<DoctorConsultationBloc>().add(GetDoctorConsultationEvent(
@@ -62,8 +61,7 @@ class _DoctorOpdPortalViewState extends State<DoctorOpdPortalView>
       appBar: const CommonAppbar(),
       body: BlocListener<LoggedHisUserCubit, UserDetails?>(
         listener: (context, state) {
-          var activePage =
-              context.read<ActivePageForSessionDialogCubit>().state;
+          var activePage = GoRouterState.of(context).name.toString();
           if (state == null && activePage == DoctorOpdPortalPage.routeName) {
             AppModal.showCustomModal(
               context,

@@ -1,5 +1,4 @@
 import 'package:delta_hospital/app/app.dart';
-import 'package:delta_hospital/app/cubit/active_page_for_session_dialog_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
@@ -11,6 +10,7 @@ import 'package:delta_hospital/features/doctor_portal/views/doctor_ipd_portal/do
 import 'package:delta_hospital/features/doctor_portal/views/doctor_opd_portal/bloc/doctor_admitted_patient_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class DoctorIpdPortalView extends StatefulWidget {
   const DoctorIpdPortalView({super.key});
@@ -24,9 +24,7 @@ class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
   @override
   void initState() {
     _userDetails = context.read<LoggedHisUserCubit>().state!;
-    context
-        .read<ActivePageForSessionDialogCubit>()
-        .changeActivePage(DoctorIpdPortalPage.routeName);
+
     context.read<DoctorAdmittedPatientBloc>().add(
           GetDoctorAdmittedPatientEvent(doctorNo: _userDetails.doctorNo ?? 0),
         );
@@ -39,8 +37,7 @@ class _DoctorIpdPortalViewState extends State<DoctorIpdPortalView> {
       appBar: const CommonAppbar(),
       body: BlocListener<LoggedHisUserCubit, UserDetails?>(
         listener: (context, state) {
-          var activePage =
-              context.read<ActivePageForSessionDialogCubit>().state;
+          var activePage = GoRouterState.of(context).name.toString();
           if (state == null && activePage == DoctorIpdPortalPage.routeName) {
             AppModal.showCustomModal(
               context,

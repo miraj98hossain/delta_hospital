@@ -10,8 +10,12 @@ class DoctorIpdPortalPage extends StatelessWidget {
   static const routePath = 'doctor-ipd-portal-page';
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DoctorAdmittedPatientBloc(getService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => DoctorAdmittedPatientBloc(getService()),
+        ),
+      ],
       child: const DoctorIpdPortalView(),
     );
   }
