@@ -1,4 +1,5 @@
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +12,15 @@ class DoctorLoginPage extends StatelessWidget {
   static const routePath = 'doctor-login-page';
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HisAuthBloc(getService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HisAuthBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<bool>()..update(true),
+        ),
+      ],
       child: const DoctorLoginView(),
     );
   }

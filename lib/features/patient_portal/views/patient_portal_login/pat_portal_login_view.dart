@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
@@ -134,6 +135,26 @@ class _PatPortalLoginViewState extends State<PatPortalLoginView> {
                               controller: _passwordController,
                               focusNode: _passwordFocusNode,
                               hintText: "Password",
+                              obscureText: context
+                                  .watch<VariableStateCubit<bool>>()
+                                  .state!,
+                              suffix: GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<VariableStateCubit<bool>>()
+                                      .update(!context
+                                          .read<VariableStateCubit<bool>>()
+                                          .state!);
+                                },
+                                child: Icon(
+                                  context
+                                          .watch<VariableStateCubit<bool>>()
+                                          .state!
+                                      ? Icons.remove_red_eye_outlined
+                                      : Icons.remove_red_eye_sharp,
+                                  color: appTheme.primary,
+                                ),
+                              ),
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please enter your password";
