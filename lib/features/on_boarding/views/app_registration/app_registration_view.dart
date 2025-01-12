@@ -124,491 +124,483 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
               decoration: BoxDecoration(
                 color: appTheme.white,
               ),
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.2 +
-                        MediaQuery.of(context).viewPadding.top,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: appTheme.skyBlue,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2 +
+                          MediaQuery.of(context).viewPadding.top,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: appTheme.skyBlue,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).viewPadding.top,
+                          ),
+                          Text(
+                            "Registration",
+                            style: lightTextTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: appTheme.primary,
+                            ),
+                          ),
+                          Text(
+                            "Please Register To Continue",
+                            style: lightTextTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Image.asset(
+                            height: 100,
+                            width: 150,
+                            ImageConstant.loginImage,
+                          ),
+                        ],
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).viewPadding.top,
-                        ),
-                        Text(
-                          "Registration",
-                          style: lightTextTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: appTheme.primary,
-                          ),
-                        ),
-                        Text(
-                          "Please Register To Continue",
-                          style: lightTextTheme.bodySmall!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Image.asset(
-                          height: 100,
-                          width: 150,
-                          ImageConstant.loginImage,
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.59,
-                    child: Form(
+                    Form(
                       key: _formKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CommonTextFieldWidget(
-                                      controller: _firstNameController,
-                                      focusNode: _firstNameFocusNode,
-                                      hintText: "First Name",
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your first name';
-                                        }
-                                        return null;
-                                      },
-                                    ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CommonTextFieldWidget(
+                                    controller: _firstNameController,
+                                    focusNode: _firstNameFocusNode,
+                                    hintText: "First Name",
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your first name';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: CommonTextFieldWidget(
-                                      controller: _lastNameController,
-                                      focusNode: _lastNameFocusNode,
-                                      hintText: "Last Name",
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your last name';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CommonTextFieldWidget(
-                                      controller: _phoneController,
-                                      focusNode: _phoneFocusNode,
-                                      hintText: "Mobile Number",
-                                      keyboardType: TextInputType.phone,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your mobile number';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: CommonTextFieldWidget(
-                                      controller: _emailController,
-                                      focusNode: _emailFocusNode,
-                                      keyboardType: TextInputType.emailAddress,
-                                      hintText: "Email Address",
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.isEmpty ||
-                                            !value.contains("@")) {
-                                          return 'Please enter your email address correctly';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CommonDropdownButton<Gender>(
-                                hintText: "Gender",
-                                value: context
-                                    .watch<VariableStateCubit<Gender>>()
-                                    .state,
-                                items: Gender.values.toList(),
-                                onChanged: (value) {
-                                  context
-                                      .read<VariableStateCubit<Gender>>()
-                                      .update(value!);
-                                },
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select your gender';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 35,
-                                decoration: BoxDecoration(
-                                  color: appTheme.white,
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: appTheme.primary,
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            bottomLeft: Radius.circular(8),
-                                          ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: CommonTextFieldWidget(
+                                    controller: _lastNameController,
+                                    focusNode: _lastNameFocusNode,
+                                    hintText: "Last Name",
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your last name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CommonTextFieldWidget(
+                                    controller: _phoneController,
+                                    focusNode: _phoneFocusNode,
+                                    hintText: "Mobile Number",
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your mobile number';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: CommonTextFieldWidget(
+                                    controller: _emailController,
+                                    focusNode: _emailFocusNode,
+                                    keyboardType: TextInputType.emailAddress,
+                                    hintText: "Email Address",
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          !value.contains("@")) {
+                                        return 'Please enter your email address correctly';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CommonDropdownButton<Gender>(
+                              hintText: "Gender",
+                              value: context
+                                  .watch<VariableStateCubit<Gender>>()
+                                  .state,
+                              items: Gender.values.toList(),
+                              onChanged: (value) {
+                                context
+                                    .read<VariableStateCubit<Gender>>()
+                                    .update(value!);
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select your gender';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                color: appTheme.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: appTheme.primary,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(8),
+                                          bottomLeft: Radius.circular(8),
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            "Date of Birth",
-                                            style: lightTextTheme.bodyMedium!
-                                                .copyWith(
-                                              color: appTheme.white,
-                                            ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Date of Birth",
+                                          style: lightTextTheme.bodyMedium!
+                                              .copyWith(
+                                            color: appTheme.white,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: 10,
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            context
+                                                    .watch<
+                                                        VariableStateCubit<
+                                                            DateTime>>()
+                                                    .state
+                                                    ?.toFormatedString(
+                                                        "dd-MM-yyyy") ??
+                                                "Please Select Date",
+                                            style: lightTextTheme.bodyMedium!
+                                                .copyWith(
+                                              color: appTheme.primary,
                                             ),
-                                            Text(
-                                              context
-                                                      .watch<
-                                                          VariableStateCubit<
-                                                              DateTime>>()
-                                                      .state
-                                                      ?.toFormatedString(
-                                                          "dd-MM-yyyy") ??
-                                                  "Please Select Date",
-                                              style: lightTextTheme.bodyMedium!
-                                                  .copyWith(
-                                                color: appTheme.primary,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            IconButton(
-                                              onPressed: () async {
-                                                var date = context
+                                          ),
+                                          const Spacer(),
+                                          IconButton(
+                                            onPressed: () async {
+                                              var date = context
+                                                  .read<
+                                                      VariableStateCubit<
+                                                          DateTime>>()
+                                                  .state;
+                                              var selectedDate =
+                                                  await showDatePicker(
+                                                context: context,
+                                                firstDate: DateTime(1900),
+                                                lastDate: DateTime(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month,
+                                                    DateTime.now().day),
+                                                initialDate: date,
+                                              );
+                                              if (selectedDate != null &&
+                                                  context.mounted) {
+                                                context
                                                     .read<
                                                         VariableStateCubit<
                                                             DateTime>>()
-                                                    .state;
-                                                var selectedDate =
-                                                    await showDatePicker(
-                                                  context: context,
-                                                  firstDate: DateTime(1900),
-                                                  lastDate: DateTime(
-                                                      DateTime.now().year,
-                                                      DateTime.now().month,
-                                                      DateTime.now().day),
-                                                  initialDate: date,
-                                                );
-                                                if (selectedDate != null &&
-                                                    context.mounted) {
-                                                  context
-                                                      .read<
-                                                          VariableStateCubit<
-                                                              DateTime>>()
-                                                      .update(selectedDate);
-                                                }
-                                              },
-                                              icon: Icon(
-                                                size: 20,
-                                                color: appTheme.primary,
-                                                Icons.calendar_today_outlined,
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                                    .update(selectedDate);
+                                              }
+                                            },
+                                            icon: Icon(
+                                              size: 20,
+                                              color: appTheme.primary,
+                                              Icons.calendar_today_outlined,
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              BlocBuilder<VariableStateCubit<DateTime>,
-                                  DateTime?>(
-                                builder: (context, state) {
-                                  if (state != null) {
-                                    return Row(
-                                      children: [
-                                        Expanded(
-                                          child: CommonTextFieldWidget(
-                                            controller: TextEditingController(
-                                              text: context
-                                                  .watch<
-                                                      VariableStateCubit<
-                                                          DateTime>>()
-                                                  .state!
-                                                  .calculateAge()[0]
-                                                  .toString(),
-                                            ),
-                                            readOnly: true,
-                                            hintText: "Year",
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: CommonTextFieldWidget(
-                                            controller: TextEditingController(
-                                              text: context
-                                                  .watch<
-                                                      VariableStateCubit<
-                                                          DateTime>>()
-                                                  .state!
-                                                  .calculateAge()[1]
-                                                  .toString(),
-                                            ),
-                                            readOnly: true,
-                                            hintText: "Month",
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: CommonTextFieldWidget(
-                                            controller: TextEditingController(
-                                              text: context
-                                                  .watch<
-                                                      VariableStateCubit<
-                                                          DateTime>>()
-                                                  .state!
-                                                  .calculateAge()[2]
-                                                  .toString(),
-                                            ),
-                                            readOnly: true,
-                                            hintText: "Days",
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CommonTextFieldWidget(
-                                controller: _fullAddressController,
-                                focusNode: _fullAddressFocusNode,
-                                hintText: "Full Address",
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter full address';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CommonTextFieldWidget(
-                                controller: _passwordController,
-                                focusNode: _passwordFocusNode,
-                                obscureText: context
-                                    .watch<VariableStateCubit<bool>>()
-                                    .state!,
-                                suffix: GestureDetector(
-                                  onTap: () {
-                                    context
-                                        .read<VariableStateCubit<bool>>()
-                                        .update(!context
-                                            .read<VariableStateCubit<bool>>()
-                                            .state!);
-                                  },
-                                  child: Icon(
-                                    context
-                                            .watch<VariableStateCubit<bool>>()
-                                            .state!
-                                        ? Icons.remove_red_eye_outlined
-                                        : Icons.remove_red_eye_sharp,
-                                    color: appTheme.primary,
                                   ),
-                                ),
-                                hintText: "Password",
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter password';
-                                  }
-                                  return null;
-                                },
+                                ],
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CommonTextFieldWidget(
-                                controller: _confirmPasswordController,
-                                focusNode: _confirmPasswordFocusNode,
-                                obscureText: context
-                                    .watch<VariableStateCubit<bool>>()
-                                    .state!,
-                                // suffix: GestureDetector(
-                                //   onTap: () {
-                                //     context
-                                //         .read<VariableStateCubit<bool>>()
-                                //         .update(!context
-                                //             .read<VariableStateCubit<bool>>()
-                                //             .state!);
-                                //   },
-                                //   child: Icon(
-                                //     context
-                                //             .watch<VariableStateCubit<bool>>()
-                                //             .state!
-                                //         ? Icons.remove_red_eye_outlined
-                                //         : Icons.remove_red_eye_sharp,
-                                //     color: appTheme.primary,
-                                //   ),
-                                // ),
-                                hintText: "Confirm Password",
-                                validator: (value) {
-                                  if (_passwordController.text != value) {
-                                    return 'Password does not match';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              BlocBuilder<AppRegBloc, AppRegState>(
-                                builder: (context, state) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        var selectedDate = context
-                                            .read<
-                                                VariableStateCubit<DateTime>>()
-                                            .state;
-                                        if (_formKey.currentState!.validate()) {
-                                          if (selectedDate == null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              CustomSnackBar.successSnackber(
-                                                  message:
-                                                      "Please select date of birth"),
-                                            );
-                                            return;
-                                          }
-                                          AppUserDetails userDetails =
-                                              AppUserDetails(
-                                            firstName:
-                                                _firstNameController.text,
-                                            lastName: _lastNameController.text,
-                                            phone: _phoneController.text,
-                                            email: _emailController.text,
-                                            gender: context
-                                                .read<
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            BlocBuilder<VariableStateCubit<DateTime>,
+                                DateTime?>(
+                              builder: (context, state) {
+                                if (state != null) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: CommonTextFieldWidget(
+                                          controller: TextEditingController(
+                                            text: context
+                                                .watch<
                                                     VariableStateCubit<
-                                                        Gender>>()
+                                                        DateTime>>()
                                                 .state!
-                                                .value,
-                                            password: _passwordController.text,
-                                            dateOfBirth: selectedDate
-                                                .toFormatedString('yyyy-MM-dd'),
-                                            fullAddress:
-                                                _fullAddressController.text,
-                                            ageDay:
-                                                selectedDate.calculateAge()[2],
-                                            ageMonth:
-                                                selectedDate.calculateAge()[1],
-                                            ageYear:
-                                                selectedDate.calculateAge()[0],
-                                            userImage: null,
-                                            mrn: "",
-                                            userId: "",
-                                            deviceId: "",
-                                            activeStatus: 1,
-                                            division: "",
-                                            birthCertificate: "",
-                                            documentId: 0,
-                                            entityName: "",
-                                            passportNumber: "",
-                                            nationalId: "",
-                                            ssCreatedOn: "",
-                                            ssModifiedOn: "",
-                                          );
-                                          context.read<AppRegBloc>().add(
-                                              AppRegistration(
-                                                  userDetails: userDetails));
-                                        }
-                                      },
-                                      child: Text(
-                                        state is AppRegLoading
-                                            ? "Registering..."
-                                            : "Register",
-                                        style:
-                                            lightTextTheme.bodySmall!.copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          color: appTheme.white,
+                                                .calculateAge()[0]
+                                                .toString(),
+                                          ),
+                                          readOnly: true,
+                                          hintText: "Year",
                                         ),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: CommonTextFieldWidget(
+                                          controller: TextEditingController(
+                                            text: context
+                                                .watch<
+                                                    VariableStateCubit<
+                                                        DateTime>>()
+                                                .state!
+                                                .calculateAge()[1]
+                                                .toString(),
+                                          ),
+                                          readOnly: true,
+                                          hintText: "Month",
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: CommonTextFieldWidget(
+                                          controller: TextEditingController(
+                                            text: context
+                                                .watch<
+                                                    VariableStateCubit<
+                                                        DateTime>>()
+                                                .state!
+                                                .calculateAge()[2]
+                                                .toString(),
+                                          ),
+                                          readOnly: true,
+                                          hintText: "Days",
+                                        ),
+                                      ),
+                                    ],
                                   );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CommonTextFieldWidget(
+                              controller: _fullAddressController,
+                              focusNode: _fullAddressFocusNode,
+                              hintText: "Full Address",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter full address';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CommonTextFieldWidget(
+                              controller: _passwordController,
+                              focusNode: _passwordFocusNode,
+                              obscureText: context
+                                  .watch<VariableStateCubit<bool>>()
+                                  .state!,
+                              suffix: GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<VariableStateCubit<bool>>()
+                                      .update(!context
+                                          .read<VariableStateCubit<bool>>()
+                                          .state!);
                                 },
+                                child: Icon(
+                                  context
+                                          .watch<VariableStateCubit<bool>>()
+                                          .state!
+                                      ? Icons.remove_red_eye_outlined
+                                      : Icons.remove_red_eye_sharp,
+                                  color: appTheme.primary,
+                                ),
                               ),
-                            ],
-                          ),
+                              hintText: "Password",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter password';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CommonTextFieldWidget(
+                              controller: _confirmPasswordController,
+                              focusNode: _confirmPasswordFocusNode,
+                              obscureText: context
+                                  .watch<VariableStateCubit<bool>>()
+                                  .state!,
+                              // suffix: GestureDetector(
+                              //   onTap: () {
+                              //     context
+                              //         .read<VariableStateCubit<bool>>()
+                              //         .update(!context
+                              //             .read<VariableStateCubit<bool>>()
+                              //             .state!);
+                              //   },
+                              //   child: Icon(
+                              //     context
+                              //             .watch<VariableStateCubit<bool>>()
+                              //             .state!
+                              //         ? Icons.remove_red_eye_outlined
+                              //         : Icons.remove_red_eye_sharp,
+                              //     color: appTheme.primary,
+                              //   ),
+                              // ),
+                              hintText: "Confirm Password",
+                              validator: (value) {
+                                if (_passwordController.text != value) {
+                                  return 'Password does not match';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            BlocBuilder<AppRegBloc, AppRegState>(
+                              builder: (context, state) {
+                                return SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      var selectedDate = context
+                                          .read<VariableStateCubit<DateTime>>()
+                                          .state;
+                                      if (_formKey.currentState!.validate()) {
+                                        if (selectedDate == null) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            CustomSnackBar.successSnackber(
+                                                message:
+                                                    "Please select date of birth"),
+                                          );
+                                          return;
+                                        }
+                                        AppUserDetails userDetails =
+                                            AppUserDetails(
+                                          firstName: _firstNameController.text,
+                                          lastName: _lastNameController.text,
+                                          phone: _phoneController.text,
+                                          email: _emailController.text,
+                                          gender: context
+                                              .read<
+                                                  VariableStateCubit<Gender>>()
+                                              .state!
+                                              .value,
+                                          password: _passwordController.text,
+                                          dateOfBirth: selectedDate
+                                              .toFormatedString('yyyy-MM-dd'),
+                                          fullAddress:
+                                              _fullAddressController.text,
+                                          ageDay:
+                                              selectedDate.calculateAge()[2],
+                                          ageMonth:
+                                              selectedDate.calculateAge()[1],
+                                          ageYear:
+                                              selectedDate.calculateAge()[0],
+                                          userImage: null,
+                                          mrn: "",
+                                          userId: "",
+                                          deviceId: "",
+                                          activeStatus: 1,
+                                          division: "",
+                                          birthCertificate: "",
+                                          documentId: 0,
+                                          entityName: "",
+                                          passportNumber: "",
+                                          nationalId: "",
+                                          ssCreatedOn: "",
+                                          ssModifiedOn: "",
+                                        );
+                                        context.read<AppRegBloc>().add(
+                                            AppRegistration(
+                                                userDetails: userDetails));
+                                      }
+                                    },
+                                    child: Text(
+                                      state is AppRegLoading
+                                          ? "Registering..."
+                                          : "Register",
+                                      style: lightTextTheme.bodySmall!.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: appTheme.white,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
