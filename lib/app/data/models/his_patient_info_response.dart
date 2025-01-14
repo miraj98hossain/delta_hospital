@@ -9,7 +9,7 @@ class HisPatientInfoResponse {
   final int? errorCode;
   final dynamic id;
   final dynamic model;
-  final dynamic items;
+  final List<HisPatientInfo>? items;
   final HisPatientInfo? obj;
   final dynamic count;
 
@@ -69,7 +69,10 @@ class HisPatientInfoResponse {
         errorCode: json["errorCode"],
         id: json["id"],
         model: json["model"],
-        items: json["items"],
+        items: json["items"] == null
+            ? []
+            : List<HisPatientInfo>.from(
+                json["items"]!.map((x) => HisPatientInfo.fromMap(x))),
         obj: json["obj"] == null ? null : HisPatientInfo.fromMap(json["obj"]),
         count: json["count"],
       );
