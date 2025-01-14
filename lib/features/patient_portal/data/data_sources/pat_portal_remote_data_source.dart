@@ -36,6 +36,9 @@ abstract class PatPortalRemoteDataSource {
   Future<HisPatientInfoResponse> getRegPatientInfo({
     required String mrnOrPhNo,
   });
+  Future<HisPatientInfoResponse> findRegAndCreateUser({
+    required String mrn,
+  });
 }
 
 class PatPortalRemoteDataSourceImpl
@@ -147,6 +150,24 @@ class PatPortalRemoteDataSourceImpl
         Uri.parse(
             '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/findRegistrationByPhoneNo'));
     request.body = json.encode({"mobileNo": mrnOrPhNo});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: HisPatientInfoResponse.fromJson);
+  }
+
+  @override
+  Future<HisPatientInfoResponse> findRegAndCreateUser({
+    required String mrn,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/findRegistrationAndCreateUser'));
+    request.body = json.encode({"mrn": mrn});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

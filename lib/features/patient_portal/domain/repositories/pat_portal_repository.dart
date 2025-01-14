@@ -24,4 +24,7 @@ abstract class PatPortalRepository {
   Future<HisPatientInfo> getRegPatientInfo({
     required String mrnOrPhNo,
   });
+  Future<HisPatientInfo> findRegAndCreateUser({
+    required String mrn,
+  });
 }
