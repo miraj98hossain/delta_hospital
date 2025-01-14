@@ -21,4 +21,7 @@ abstract class PatPortalRepository {
     required int start,
     required int length,
   });
+  Future<HisPatientInfo> getRegPatientInfo({
+    required String mrnOrPhNo,
+  });
 }

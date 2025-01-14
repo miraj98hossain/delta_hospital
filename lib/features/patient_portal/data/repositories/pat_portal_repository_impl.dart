@@ -79,4 +79,17 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
     }
     return response.obj ?? NotesGridList();
   }
+
+  @override
+  Future<HisPatientInfo> getRegPatientInfo({
+    required String mrnOrPhNo,
+  }) async {
+    var response =
+        await remoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.obj ?? HisPatientInfo();
+  }
 }
