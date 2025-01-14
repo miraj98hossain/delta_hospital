@@ -28,6 +28,7 @@ import 'package:delta_hospital/features/patient_portal/family_list.dart';
 import 'package:delta_hospital/features/patient_portal/pat_notes.dart';
 import 'package:delta_hospital/features/patient_portal/patient_portal.dart';
 import 'package:delta_hospital/features/patient_portal/patient_portal_dashboard.dart';
+import 'package:delta_hospital/features/patient_portal/views/add_patient/add_patient_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/pat_medical_record_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_prescription/pat_prescription_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_page.dart';
@@ -238,6 +239,14 @@ class AppNavigation {
                       ),
                     ),
                   ]),
+              GoRoute(
+                path: AddPatientPage.routePath,
+                name: AddPatientPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const AddPatientPage(),
+                  state: state,
+                ),
+              ),
               GoRoute(
                 path: FamilyListPage.routePath,
                 name: FamilyListPage.routeName,

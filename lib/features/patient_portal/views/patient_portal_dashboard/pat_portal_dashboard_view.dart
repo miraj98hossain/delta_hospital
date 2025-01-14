@@ -7,6 +7,7 @@ import 'package:delta_hospital/features/patient_portal/views/patient_portal_logi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../add_patient.dart';
 import 'widgets/pat_dash_widget.dart';
 
 class PatPortalDashboardView extends StatefulWidget {
@@ -40,17 +41,10 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
               children: [
                 Expanded(
                   child: PatDashWidget(
-                    lable: "Self Portal",
+                    lable: "Add Patient",
                     image: ImageConstant.selfPortal,
                     onTap: () {
-                      var loggedHisUser =
-                          context.read<LoggedHisUserCubit>().state;
-                      if (loggedHisUser != null &&
-                          loggedHisUser.jobTile == "Patient") {
-                        context.pushNamed(PatientPortalPage.routeName);
-                      } else {
-                        context.pushNamed(PatPortalLoginPage.routeName);
-                      }
+                      context.pushNamed(AddPatientPage.routeName);
                     },
                   ),
                 ),
@@ -59,7 +53,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                 ),
                 Expanded(
                   child: PatDashWidget(
-                    lable: "Family Portal",
+                    lable: "Patient List",
                     image: ImageConstant.familyPortal,
                     onTap: () {
                       context.pushNamed(FamilyListPage.routeName);
@@ -74,3 +68,11 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
     );
   }
 }
+// var loggedHisUser =
+//                           context.read<LoggedHisUserCubit>().state;
+//                       if (loggedHisUser != null &&
+//                           loggedHisUser.jobTile == "Patient") {
+//                         context.pushNamed(PatientPortalPage.routeName);
+//                       } else {
+//                         context.pushNamed(PatPortalLoginPage.routeName);
+//                       }
