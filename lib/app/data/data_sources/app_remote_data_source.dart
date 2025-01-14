@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
+import 'package:delta_hospital/app/data/models/sms_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
@@ -28,6 +29,10 @@ abstract class AppRemoteDataSource {
   });
   Future<GenericResponse> appRegistration({
     required AppUserDetails userDetails,
+  });
+  Future<SmsResponse> sendSms({
+    required String phone,
+    required String message,
   });
 }
 
@@ -122,5 +127,25 @@ class AppRemoteDataSourceImpl
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse(response, decoder: GenericResponse.fromJson);
+  }
+
+  @override
+  Future<SmsResponse> sendSms({
+    required String phone,
+    required String message,
+  }) async {
+    var request = http.Request(
+      'GET',
+      Uri.parse(
+        'http://smpp.revesms.com:7788/sendtext?apikey=a789d21afe106ddf&secretkey=76d6d05e&callerID=BSHL&toUser=$phone&messageContent=$message',
+      ),
+    );
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse<SmsResponse>(
+      response,
+      decoder: SmsResponse.fromJson,
+    );
   }
 }

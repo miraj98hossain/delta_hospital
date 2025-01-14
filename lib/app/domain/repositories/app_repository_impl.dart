@@ -171,4 +171,16 @@ class AppRepositoryImpl implements AppRepository {
       throw ApiDataException(response.message);
     }
   }
+
+  @override
+  Future<void> sendSms({
+    required String phone,
+    required String message,
+  }) async {
+    var response =
+        await appRemoteDataSource.sendSms(phone: phone, message: message);
+    if (response.status != "0") {
+      throw const ApiDataException("Error Occured While Sending SMS");
+    }
+  }
 }

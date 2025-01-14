@@ -40,4 +40,8 @@ abstract class AppRepository {
   });
   Future<void> applogout();
   Future<void> appRegistration({required AppUserDetails userDetails});
+  Future<void> sendSms({
+    required String phone,
+    required String message,
+  });
 }
