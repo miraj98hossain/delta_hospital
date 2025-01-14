@@ -22,14 +22,13 @@ class CommonDropdownButton<T> extends StatelessWidget {
       value: value,
       isExpanded: true,
       isDense: true,
+      dropdownColor: appTheme.white,
       padding: EdgeInsets.zero,
       menuMaxHeight: 250,
-      decoration: const InputDecoration()
-          .applyDefaults(Theme.of(context).inputDecorationTheme)
-          .copyWith(
-            isDense: true,
-            contentPadding: const EdgeInsets.all(8),
-          ),
+      decoration: const InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.all(8),
+      ).applyDefaults(Theme.of(context).inputDecorationTheme),
       hint: Text(
         hintText,
         style: lightTextTheme.bodySmall!.copyWith(
