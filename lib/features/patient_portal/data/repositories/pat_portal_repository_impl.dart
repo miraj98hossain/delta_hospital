@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
@@ -119,5 +120,16 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
           response.message ?? "Error Occured While Fetching");
     }
     return response.items ?? [];
+  }
+
+  @override
+  Future<void> savePatientPortalUser({
+    required AppUserDetails userDetails,
+  }) async {
+    var response = await appRemoteDataSource.savePatientPortalUser(
+        userDetails: userDetails);
+    if (response.success != true) {
+      throw const ApiDataException("Error Occured While Sending SMS");
+    }
   }
 }

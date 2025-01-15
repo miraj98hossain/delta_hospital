@@ -114,6 +114,10 @@ class AppUserDetails {
   final String? ssModifiedOn;
   final String? entityName;
   final int? documentId;
+  final String? relationship;
+  final String? refId;
+  final String? type;
+  final String? isPaid;
 
   AppUserDetails({
     this.deviceId,
@@ -140,6 +144,10 @@ class AppUserDetails {
     this.ssModifiedOn,
     this.entityName,
     this.documentId,
+    this.relationship,
+    this.refId,
+    this.type,
+    this.isPaid,
   });
 
   AppUserDetails copyWith({
@@ -167,6 +175,10 @@ class AppUserDetails {
     String? ssModifiedOn,
     String? entityName,
     int? documentId,
+    String? relationship,
+    String? refId,
+    String? type,
+    String? isPaid,
   }) =>
       AppUserDetails(
         deviceId: deviceId ?? this.deviceId,
@@ -193,6 +205,10 @@ class AppUserDetails {
         ssModifiedOn: ssModifiedOn ?? this.ssModifiedOn,
         entityName: entityName ?? this.entityName,
         documentId: documentId ?? this.documentId,
+        relationship: relationship ?? this.relationship,
+        refId: refId ?? this.refId,
+        type: type ?? this.type,
+        isPaid: isPaid ?? this.isPaid,
       );
 
   factory AppUserDetails.fromJson(String str) =>
@@ -225,6 +241,10 @@ class AppUserDetails {
         ssModifiedOn: json["ssModifiedOn"],
         entityName: json["entityName"],
         documentId: json["documentId"],
+        relationship: json["relationship"],
+        refId: json["refId"],
+        type: json["type"],
+        isPaid: json["isPaid"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -252,6 +272,10 @@ class AppUserDetails {
         "ssModifiedOn": ssModifiedOn,
         "entityName": entityName,
         "documentId": documentId,
+        "relationship": relationship,
+        "refId": refId,
+        "type": type,
+        "isPaid": isPaid,
       };
   Map<String, dynamic> toMapReg() => {
         "deviceId": deviceId,
@@ -276,5 +300,25 @@ class AppUserDetails {
         "activeStatus": activeStatus,
         "entityName": entityName,
         "documentId": documentId,
+      };
+
+  Map<String, dynamic> toAddPatMap() => {
+        "phone": phone,
+        "mrn": mrn,
+        "firstName": firstName,
+        "lastName": lastName,
+        "userImage": userImage,
+        "dateOfBirth": dateOfBirth,
+        "ageYear": ageYear,
+        "ageMonth": ageMonth,
+        "ageDay": ageDay,
+        "gender": gender,
+        "email": email,
+        "fullAddress": fullAddress,
+        "password": password,
+        "relationship": relationship,
+        "refId": refId,
+        "type": type,
+        "isPaid": isPaid,
       };
 }

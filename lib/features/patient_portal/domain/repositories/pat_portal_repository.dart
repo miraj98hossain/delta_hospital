@@ -1,3 +1,4 @@
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_notes_gridlist_response.dart';
@@ -29,4 +30,7 @@ abstract class PatPortalRepository {
     required String mrn,
   });
   Future<List<PatientRelation>> getPatientRelationList();
+  Future<void> savePatientPortalUser({
+    required AppUserDetails userDetails,
+  });
 }

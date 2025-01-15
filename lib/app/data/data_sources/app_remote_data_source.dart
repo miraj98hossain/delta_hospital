@@ -36,6 +36,9 @@ abstract class AppRemoteDataSource {
     required String message,
   });
   Future<PatientRelationListResponse> getPatientRelationList();
+  Future<GenericResponse> savePatientPortalUser({
+    required AppUserDetails userDetails,
+  });
 }
 
 class AppRemoteDataSourceImpl
@@ -162,5 +165,21 @@ class AppRemoteDataSourceImpl
 
     return await decodeResponse(response,
         decoder: PatientRelationListResponse.fromJson);
+  }
+
+  @override
+  Future<GenericResponse> savePatientPortalUser({
+    required AppUserDetails userDetails,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/save-patientPortalUsers'));
+    request.body = json.encode(userDetails.toMap());
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    return await decodeResponse(response, decoder: GenericResponse.fromJson);
   }
 }
