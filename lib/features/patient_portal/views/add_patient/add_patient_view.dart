@@ -1,8 +1,10 @@
+import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
+import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/his_user_create_bloc.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/pat_relation_list_bloc.dart';
@@ -46,104 +48,135 @@ class _AddPatientViewState extends State<AddPatientView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppbar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-        ),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    "Add Patient",
-                    style: lightTextTheme.bodyLarge!.copyWith(
-                      color: appTheme.white,
-                      fontWeight: FontWeight.w600,
+      body: BlocListener<HisUserCreateBloc, HisUserCreateState>(
+        listener: (context, state) {
+          if (state is HisUserCreateSuccess) {
+            _hospitalNoController.clear();
+            context.read<VariableStateCubit<PatientRelation>>().reset();
+            _formKey.currentState?.reset();
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.successSnackber(
+                  message: "Patient Added Successfully"),
+            );
+          }
+          if (state is HisUserCreateError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              CustomSnackBar.errorSnackber(message: "Patient Add Failed"),
+            );
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+          ),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Text(
+                      "Add Patient",
+                      style: lightTextTheme.bodyLarge!.copyWith(
+                        color: appTheme.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: CommonTextFieldWidget(
-                      controller: _hospitalNoController,
-                      focusNode: _hospitalNoFocusNode,
-                      hintText: "Hospital Number",
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter your hospital number";
-                        }
-                        return null;
-                      },
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child:
-                        BlocBuilder<PatRelationListBloc, PatRelationListState>(
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: CommonTextFieldWidget(
+                        controller: _hospitalNoController,
+                        focusNode: _hospitalNoFocusNode,
+                        hintText: "Hospital Number",
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter your hospital number";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: BlocBuilder<PatRelationListBloc,
+                          PatRelationListState>(
+                        builder: (context, state) {
+                          return CommonDropdownButton<PatientRelation>(
+                            hintText: "Select Relation",
+                            validator: (value) {
+                              if (value == null) {
+                                return "Please select relation";
+                              }
+                              return null;
+                            },
+                            value: context
+                                .watch<VariableStateCubit<PatientRelation>>()
+                                .state,
+                            onChanged: (value) {
+                              if (value != null) {
+                                context
+                                    .read<VariableStateCubit<PatientRelation>>()
+                                    .update(value);
+                              }
+                            },
+                            items: state is PatRelationListSuccess
+                                ? state.patientRelationList
+                                : [],
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    BlocBuilder<HisUserCreateBloc, HisUserCreateState>(
                       builder: (context, state) {
-                        return CommonDropdownButton<PatientRelation>(
-                          hintText: "Select Relation",
-                          validator: (value) {
-                            if (value == null) {
-                              return "Please select relation";
-                            }
-                            return null;
-                          },
-                          value: context
-                              .watch<VariableStateCubit<PatientRelation>>()
-                              .state,
-                          onChanged: (value) {
-                            if (value != null) {
-                              context
-                                  .read<VariableStateCubit<PatientRelation>>()
-                                  .update(value);
-                            }
-                          },
-                          items: state is PatRelationListSuccess
-                              ? state.patientRelationList
-                              : [],
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                var selectedRelation = context
+                                    .read<VariableStateCubit<PatientRelation>>()
+                                    .state!;
+                                var loggedAppUser =
+                                    context.read<LoggedAppUserCubit>().state!;
+                                context.read<HisUserCreateBloc>().add(
+                                      HisUserCreate(
+                                        mrn: _hospitalNoController.text,
+                                        relation: selectedRelation,
+                                        refId: loggedAppUser.phone ?? "",
+                                      ),
+                                    );
+                              }
+                            },
+                            child: Text(
+                              state is HisUserCreateLoading
+                                  ? "Please wait..."
+                                  : "Add",
+                              style: lightTextTheme.bodySmall!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: appTheme.white,
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  BlocBuilder<HisUserCreateBloc, HisUserCreateState>(
-                    builder: (context, state) {
-                      return SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {}
-                          },
-                          child: Text(
-                            state is HisUserCreateLoading
-                                ? "Logging In..."
-                                : "Login",
-                            style: lightTextTheme.bodySmall!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: appTheme.white,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
