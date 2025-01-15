@@ -168,4 +168,8 @@ class PatientRelation {
         "entityName": entityName,
         "documentId": documentId,
       };
+  @override
+  String toString() {
+    return relationName ?? "";
+  }
 }
