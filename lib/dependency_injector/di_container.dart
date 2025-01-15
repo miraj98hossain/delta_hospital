@@ -91,7 +91,8 @@ abstract class DIContainer {
 
     getIt.registerLazySingleton<PatPortalRepository>(
       () => PatPortalRepositoryImpl(
-        remoteDataSource: getIt<PatPortalRemoteDataSource>(),
+        appRemoteDataSource: getIt<AppRemoteDataSource>(),
+        patRemoteDataSource: getIt<PatPortalRemoteDataSource>(),
         localDataSource: getIt<AppLocalDataSource>(),
       ),
     );

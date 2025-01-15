@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
+import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/app/data/models/sms_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -34,6 +35,7 @@ abstract class AppRemoteDataSource {
     required String phone,
     required String message,
   });
+  Future<PatientRelationListResponse> getPatientRelationList();
 }
 
 class AppRemoteDataSourceImpl
@@ -147,5 +149,18 @@ class AppRemoteDataSourceImpl
       response,
       decoder: SmsResponse.fromJson,
     );
+  }
+
+  @override
+  Future<PatientRelationListResponse> getPatientRelationList() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientRelation/find-all-patient-relation'));
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: PatientRelationListResponse.fromJson);
   }
 }

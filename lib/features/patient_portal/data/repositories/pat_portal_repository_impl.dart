@@ -1,5 +1,7 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
+import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
+import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/features/patient_portal/data/data_sources/pat_portal_remote_data_source.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_notes_gridlist_response.dart';
@@ -8,16 +10,20 @@ import 'package:delta_hospital/features/patient_portal/data/models/patient_repor
 import 'package:delta_hospital/features/patient_portal/domain/repositories/pat_portal_repository.dart';
 
 class PatPortalRepositoryImpl implements PatPortalRepository {
-  final PatPortalRemoteDataSource remoteDataSource;
+  final PatPortalRemoteDataSource patRemoteDataSource;
+  final AppRemoteDataSource appRemoteDataSource;
   final AppLocalDataSource localDataSource;
 
-  PatPortalRepositoryImpl(
-      {required this.remoteDataSource, required this.localDataSource});
+  PatPortalRepositoryImpl({
+    required this.patRemoteDataSource,
+    required this.localDataSource,
+    required this.appRemoteDataSource,
+  });
 
   @override
   Future<HisPatientInfo> getPatientInfoByAccessToken() async {
     var token = await localDataSource.getAuthResponse();
-    var response = await remoteDataSource.getPatientInfoByAccessToken(
+    var response = await patRemoteDataSource.getPatientInfoByAccessToken(
         token: token?.accessToken ?? '');
     if (response.success != true) {
       throw ApiDataException(
@@ -30,7 +36,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   Future<PrescriptionGridList> getPrescriptionByAccessToken(
       {required int start, required int length}) async {
     var token = await localDataSource.getAuthResponse();
-    var response = await remoteDataSource.getPrescriptionByAccessToken(
+    var response = await patRemoteDataSource.getPrescriptionByAccessToken(
         token: token?.accessToken ?? '', start: start, length: length);
     if (response.success != true) {
       throw ApiDataException(
@@ -43,7 +49,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   Future<ReportGridList> getReportByAccessToken(
       {required int start, required int length}) async {
     var token = await localDataSource.getAuthResponse();
-    var response = await remoteDataSource.getReportByAccessToken(
+    var response = await patRemoteDataSource.getReportByAccessToken(
         token: token?.accessToken ?? '', start: start, length: length);
     if (response.success != true) {
       throw ApiDataException(
@@ -56,7 +62,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   Future<void> addNoteByAccessToken(
       {required String title, required String description}) async {
     var token = await localDataSource.getAuthResponse();
-    var response = await remoteDataSource.addNoteByAccessToken(
+    var response = await patRemoteDataSource.addNoteByAccessToken(
         token: token?.accessToken ?? '',
         title: title,
         description: description);
@@ -71,7 +77,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   Future<NotesGridList> getNotesByAccessToken(
       {required int start, required int length}) async {
     var token = await localDataSource.getAuthResponse();
-    var response = await remoteDataSource.getNotesByAccessToken(
+    var response = await patRemoteDataSource.getNotesByAccessToken(
         token: token?.accessToken ?? '', start: start, length: length);
     if (response.success != true) {
       throw ApiDataException(
@@ -85,7 +91,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
     required String mrnOrPhNo,
   }) async {
     var response =
-        await remoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
+        await patRemoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
     if (response.success != true) {
       throw ApiDataException(
           response.message ?? "Error Occured While Fetching");
@@ -97,11 +103,21 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   Future<HisPatientInfo> findRegAndCreateUser({
     required String mrn,
   }) async {
-    var response = await remoteDataSource.findRegAndCreateUser(mrn: mrn);
+    var response = await patRemoteDataSource.findRegAndCreateUser(mrn: mrn);
     if (response.success != true) {
       throw ApiDataException(
           response.message ?? "Error Occured While Fetching");
     }
     return response.obj ?? HisPatientInfo();
+  }
+
+  @override
+  Future<List<PatientRelation>> getPatientRelationList() async {
+    var response = await appRemoteDataSource.getPatientRelationList();
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.items ?? [];
   }
 }
