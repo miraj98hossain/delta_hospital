@@ -194,4 +194,15 @@ class AppRepositoryImpl implements AppRepository {
       throw const ApiDataException("Error Occured While Sending SMS");
     }
   }
+  @override
+  Future<List<PatientPortalUser>> finalPatientPortalUserByRefId({
+    required String refId,
+  })async{
+    var response = await appRemoteDataSource.finalPatientPortalUserByRefId(
+        refId: refId);
+    if (response.success != true) {
+      throw const ApiDataException("Error Occured While Sending SMS");
+    }
+    return response.items??[];
+  }
 }
