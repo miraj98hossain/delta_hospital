@@ -1,7 +1,13 @@
 import 'package:delta_hospital/app/app.dart';
-import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
+import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
+import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
+import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
+import 'package:delta_hospital/app/widgets/common_loading.dart';
+
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FamilyListView extends StatefulWidget {
   const FamilyListView({super.key});
@@ -11,6 +17,16 @@ class FamilyListView extends StatefulWidget {
 }
 
 class _FamilyListViewState extends State<FamilyListView> {
+  late AppUserDetails loggedAppUser;
+  @override
+  void initState() {
+    loggedAppUser = context.read<LoggedAppUserCubit>().state!;
+    context.read<AddedPatUserListBloc>().add(GetAddedPatUserListEvent(
+          refId: loggedAppUser.phone ?? '0',
+        ));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,87 +41,95 @@ class _FamilyListViewState extends State<FamilyListView> {
               height: 10,
             ),
             Expanded(
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                itemCount: 15,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: appTheme.white,
-                      borderRadius: const BorderRadius.horizontal(
-                        right: Radius.circular(8),
+              child: BlocBuilder<AddedPatUserListBloc, AddedPatUserListState>(
+                builder: (context, state) {
+                  if (state is AddedPatUserListLoading) {
+                    return const CommonLoading();
+                  }
+                  if (state is AddedPatUserListSuccess) {
+                    return ListView.separated(
+                      padding: EdgeInsets.zero,
+                      itemCount: state.patientPortalUserList.length,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 20,
-                                  decoration: BoxDecoration(
-                                    color: appTheme.secondary,
-                                    borderRadius: const BorderRadius.horizontal(
-                                      right: Radius.circular(3),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                      itemBuilder: (context, index) {
+                        var data = state.patientPortalUserList[index];
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: const BorderRadius.horizontal(
+                              right: Radius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: IntrinsicHeight(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                          color: appTheme.secondary,
+                                          borderRadius:
+                                              const BorderRadius.horizontal(
+                                            right: Radius.circular(3),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
                                             children: [
-                                              const Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                        "Miraj Hossain Shawon"),
-                                                    Text("Brother"),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(data.firstName ??
+                                                              ""),
+                                                          Text(
+                                                              data.relationship ??
+                                                                  ""),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    IconButton.filled(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.more_vert,
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                               ),
-                                              IconButton.filled(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                  Icons.more_vert,
-                                                ),
-                                              )
                                             ],
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
+                  return Container();
                 },
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            CommonElevatedButton(
-              lable: "Add Family Member",
-              backgroundColor: appTheme.secondary,
-              onPressed: () {},
             ),
             SizedBox(
               height: MediaQuery.of(context).viewPadding.bottom,
