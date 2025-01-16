@@ -52,8 +52,10 @@ class _AddPatientViewState extends State<AddPatientView> {
         listener: (context, state) {
           if (state is HisUserCreateSuccess) {
             _hospitalNoController.clear();
-            context.read<VariableStateCubit<PatientRelation>>().reset();
             _formKey.currentState?.reset();
+
+            context.read<VariableStateCubit<PatientRelation>>().reset();
+
             ScaffoldMessenger.of(context).showSnackBar(
               CustomSnackBar.successSnackber(
                   message: "Patient Added Successfully"),
@@ -61,7 +63,7 @@ class _AddPatientViewState extends State<AddPatientView> {
           }
           if (state is HisUserCreateError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              CustomSnackBar.errorSnackber(message: "Patient Add Failed"),
+              CustomSnackBar.errorSnackber(message: state.error.toString()),
             );
           }
         },
