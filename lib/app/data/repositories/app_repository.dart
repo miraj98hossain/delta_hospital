@@ -48,4 +48,7 @@ abstract class AppRepository {
   Future<void> savePatientPortalUser({
     required AppUserDetails userDetails,
   });
+  Future<List<PatientPortalUser>> finalPatientPortalUserByRefId({
+    required String refId,
+  });
 }
