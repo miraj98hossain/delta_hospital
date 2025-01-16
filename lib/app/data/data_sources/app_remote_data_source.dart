@@ -6,6 +6,7 @@ import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
+import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/data/models/sms_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -38,6 +39,9 @@ abstract class AppRemoteDataSource {
   Future<PatientRelationListResponse> getPatientRelationList();
   Future<GenericResponse> savePatientPortalUser({
     required AppUserDetails userDetails,
+  });
+  Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
+    required String refId,
   });
 }
 
@@ -181,5 +185,15 @@ class AppRemoteDataSourceImpl
 
     http.StreamedResponse response = await request.send();
     return await decodeResponse(response, decoder: GenericResponse.fromJson);
+  }
+  @override
+   Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
+    required String refId,
+  }){
+     var request = http.Request('GET', Uri.parse('${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/find-user-by-refId/$refId'));
+
+
+http.StreamedResponse response = await request.send();
+     return await decodeResponse(response, decoder: PatientPortalListResponse.fromJson);
   }
 }
