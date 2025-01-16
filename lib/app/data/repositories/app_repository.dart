@@ -1,6 +1,5 @@
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
-import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 
 abstract class AppRepository {
