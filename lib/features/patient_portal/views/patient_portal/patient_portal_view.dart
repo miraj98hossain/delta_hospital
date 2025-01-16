@@ -95,7 +95,10 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              Text(state.hisPatientInfo.patientName ?? ""),
+                              Flexible(
+                                  child: Text(
+                                      textAlign: TextAlign.end,
+                                      state.hisPatientInfo.patientName ?? "")),
                             ],
                           ),
                           const SizedBox(
