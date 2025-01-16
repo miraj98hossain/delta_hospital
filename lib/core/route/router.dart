@@ -251,10 +251,10 @@ class AppNavigation {
                 ),
               ),
               GoRoute(
-                path: FamilyListPage.routePath,
-                name: FamilyListPage.routeName,
+                path: PatientListPage.routePath,
+                name: PatientListPage.routeName,
                 pageBuilder: (context, state) => getPage(
-                  child: const FamilyListPage(),
+                  child: const PatientListPage(),
                   state: state,
                 ),
               ),

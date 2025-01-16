@@ -5,15 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../patient_list.dart';
 
-class FamilyListPage extends StatelessWidget {
-  const FamilyListPage({super.key});
+class PatientListPage extends StatelessWidget {
+  const PatientListPage({super.key});
   static const String routeName = 'patient-list-page';
   static const String routePath = 'patient-list-page';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddedPatUserListBloc(getService()),
-      child: const FamilyListView(),
+      child: const PatientListView(),
     );
   }
 }

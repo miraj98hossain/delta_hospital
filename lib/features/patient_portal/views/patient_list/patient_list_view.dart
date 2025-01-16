@@ -13,14 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class FamilyListView extends StatefulWidget {
-  const FamilyListView({super.key});
+class PatientListView extends StatefulWidget {
+  const PatientListView({super.key});
 
   @override
-  State<FamilyListView> createState() => _FamilyListViewState();
+  State<PatientListView> createState() => _PatientListViewState();
 }
 
-class _FamilyListViewState extends State<FamilyListView> {
+class _PatientListViewState extends State<PatientListView> {
   late AppUserDetails loggedAppUser;
   @override
   void initState() {

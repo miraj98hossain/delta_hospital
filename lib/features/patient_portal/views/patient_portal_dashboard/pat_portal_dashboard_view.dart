@@ -52,7 +52,7 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
                     lable: "Patient List",
                     image: ImageConstant.familyPortal,
                     onTap: () {
-                      context.pushNamed(FamilyListPage.routeName);
+                      context.pushNamed(PatientListPage.routeName);
                     },
                   ),
                 ),
