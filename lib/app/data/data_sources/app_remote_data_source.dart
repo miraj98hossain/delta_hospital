@@ -186,14 +186,18 @@ class AppRemoteDataSourceImpl
     http.StreamedResponse response = await request.send();
     return await decodeResponse(response, decoder: GenericResponse.fromJson);
   }
+
   @override
-   Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
+  Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
     required String refId,
-  }){
-     var request = http.Request('GET', Uri.parse('${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/find-user-by-refId/$refId'));
+  }) async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/find-user-by-refId/$refId'));
 
-
-http.StreamedResponse response = await request.send();
-     return await decodeResponse(response, decoder: PatientPortalListResponse.fromJson);
+    http.StreamedResponse response = await request.send();
+    return await decodeResponse(response,
+        decoder: PatientPortalListResponse.fromJson);
   }
 }
