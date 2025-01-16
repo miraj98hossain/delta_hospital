@@ -6,6 +6,7 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/his_user_create_bloc.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/pat_relation_list_bloc.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,6 @@ class _AddPatientViewState extends State<AddPatientView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppbar(),
       body: BlocListener<HisUserCreateBloc, HisUserCreateState>(
         listener: (context, state) {
           if (state is HisUserCreateSuccess) {
@@ -67,118 +67,163 @@ class _AddPatientViewState extends State<AddPatientView> {
             );
           }
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      "Add Patient",
-                      style: lightTextTheme.bodyLarge!.copyWith(
-                        color: appTheme.white,
-                        fontWeight: FontWeight.w600,
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.88,
+              decoration: BoxDecoration(
+                color: appTheme.white,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.3 +
+                        MediaQuery.of(context).viewPadding.top,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: appTheme.skyBlue,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.15,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).viewPadding.top,
+                        ),
+                        Text(
+                          "Add Patient",
+                          style: lightTextTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: appTheme.primary,
+                          ),
+                        ),
+                        Text(
+                          "Please Add To Continue",
+                          style: lightTextTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Image.asset(
+                          height: 150,
+                          width: 150,
+                          ImageConstant.loginImage,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: CommonTextFieldWidget(
-                        controller: _hospitalNoController,
-                        focusNode: _hospitalNoFocusNode,
-                        hintText: "Hospital Number",
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter your hospital number";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: BlocBuilder<PatRelationListBloc,
-                          PatRelationListState>(
-                        builder: (context, state) {
-                          return CommonDropdownButton<PatientRelation>(
-                            hintText: "Select Relation",
+                  ),
+                  const SizedBox(
+                    height: 45,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: CommonTextFieldWidget(
+                            controller: _hospitalNoController,
+                            focusNode: _hospitalNoFocusNode,
+                            hintText: "Hospital Number",
                             validator: (value) {
-                              if (value == null) {
-                                return "Please select relation";
+                              if (value!.isEmpty) {
+                                return "Please enter your hospital number";
                               }
                               return null;
                             },
-                            value: context
-                                .watch<VariableStateCubit<PatientRelation>>()
-                                .state,
-                            onChanged: (value) {
-                              if (value != null) {
-                                context
-                                    .read<VariableStateCubit<PatientRelation>>()
-                                    .update(value);
-                              }
-                            },
-                            items: state is PatRelationListSuccess
-                                ? state.patientRelationList
-                                : [],
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    BlocBuilder<HisUserCreateBloc, HisUserCreateState>(
-                      builder: (context, state) {
-                        return SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                var selectedRelation = context
-                                    .read<VariableStateCubit<PatientRelation>>()
-                                    .state!;
-                                var loggedAppUser =
-                                    context.read<LoggedAppUserCubit>().state!;
-                                context.read<HisUserCreateBloc>().add(
-                                      HisUserCreate(
-                                        mrn: _hospitalNoController.text,
-                                        relation: selectedRelation,
-                                        refId: loggedAppUser.phone ?? "",
-                                      ),
-                                    );
-                              }
-                            },
-                            child: Text(
-                              state is HisUserCreateLoading
-                                  ? "Please wait..."
-                                  : "Add",
-                              style: lightTextTheme.bodySmall!.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: appTheme.white,
-                              ),
-                            ),
                           ),
-                        );
-                      },
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: BlocBuilder<PatRelationListBloc,
+                              PatRelationListState>(
+                            builder: (context, state) {
+                              return CommonDropdownButton<PatientRelation>(
+                                hintText: "Select Relation",
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Please select relation";
+                                  }
+                                  return null;
+                                },
+                                value: context
+                                    .watch<
+                                        VariableStateCubit<PatientRelation>>()
+                                    .state,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context
+                                        .read<
+                                            VariableStateCubit<
+                                                PatientRelation>>()
+                                        .update(value);
+                                  }
+                                },
+                                items: state is PatRelationListSuccess
+                                    ? state.patientRelationList
+                                    : [],
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        BlocBuilder<HisUserCreateBloc, HisUserCreateState>(
+                          builder: (context, state) {
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    var selectedRelation = context
+                                        .read<
+                                            VariableStateCubit<
+                                                PatientRelation>>()
+                                        .state!;
+                                    var loggedAppUser = context
+                                        .read<LoggedAppUserCubit>()
+                                        .state!;
+                                    context.read<HisUserCreateBloc>().add(
+                                          HisUserCreate(
+                                            mrn: _hospitalNoController.text,
+                                            relation: selectedRelation,
+                                            refId: loggedAppUser.phone ?? "",
+                                          ),
+                                        );
+                                  }
+                                },
+                                child: Text(
+                                  state is HisUserCreateLoading
+                                      ? "Please wait..."
+                                      : "Add",
+                                  style: lightTextTheme.bodySmall!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: appTheme.white,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
