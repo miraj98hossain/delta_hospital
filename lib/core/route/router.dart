@@ -201,10 +201,13 @@ class AppNavigation {
               GoRoute(
                 path: PatPortalLoginPage.routePath,
                 name: PatPortalLoginPage.routeName,
-                pageBuilder: (context, state) => getPage(
-                  child: const PatPortalLoginPage(),
-                  state: state,
-                ),
+                pageBuilder: (context, state) {
+                  final String mnr = state.uri.queryParameters['mrn'] ?? '';
+                  return getPage(
+                    child: PatPortalLoginPage(mrn: mnr),
+                    state: state,
+                  );
+                },
               ),
               GoRoute(
                   path: PatientPortalPage.routePath,

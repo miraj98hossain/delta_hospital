@@ -7,9 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../patient_portal_login.dart';
 
 class PatPortalLoginPage extends StatelessWidget {
-  const PatPortalLoginPage({super.key});
+  const PatPortalLoginPage({super.key, required this.mrn});
   static String routeName = 'pat-portal-login';
   static String routePath = 'pat-portal-login';
+  final String mrn;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -21,7 +22,9 @@ class PatPortalLoginPage extends StatelessWidget {
           create: (context) => VariableStateCubit<bool>()..update(true),
         ),
       ],
-      child: const PatPortalLoginView(),
+      child: PatPortalLoginView(
+        mrn: mrn,
+      ),
     );
   }
 }

@@ -64,11 +64,3 @@ class _PatPortalDashboardViewState extends State<PatPortalDashboardView> {
     );
   }
 }
-// var loggedHisUser =
-//                           context.read<LoggedHisUserCubit>().state;
-//                       if (loggedHisUser != null &&
-//                           loggedHisUser.jobTile == "Patient") {
-//                         context.pushNamed(PatientPortalPage.routeName);
-//                       } else {
-//                         context.pushNamed(PatPortalLoginPage.routeName);
-//                       }

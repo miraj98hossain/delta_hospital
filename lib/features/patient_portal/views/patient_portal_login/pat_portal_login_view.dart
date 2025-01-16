@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class PatPortalLoginView extends StatefulWidget {
-  const PatPortalLoginView({super.key});
-
+  const PatPortalLoginView({super.key, required this.mrn});
+  final String mrn;
   @override
   State<PatPortalLoginView> createState() => _PatPortalLoginViewState();
 }
@@ -24,7 +24,7 @@ class _PatPortalLoginViewState extends State<PatPortalLoginView> {
   late GlobalKey<FormState> _formKey;
   @override
   void initState() {
-    _userNameController = TextEditingController();
+    _userNameController = TextEditingController(text: widget.mrn);
     _passwordController = TextEditingController();
     _userNameFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
