@@ -90,7 +90,9 @@ class PatientWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         var loggedHisUser = context.read<LoggedHisUserCubit>().state;
-        if (loggedHisUser != null && loggedHisUser.jobTile == "Patient") {
+        if (loggedHisUser != null &&
+            loggedHisUser.jobTile == "Patient" &&
+            loggedHisUser.userName == data.mrn) {
           context.pushNamed(PatientPortalPage.routeName);
         } else {
           context.pushNamed(PatPortalLoginPage.routeName, queryParameters: {
@@ -115,7 +117,15 @@ class PatientWidget extends StatelessWidget {
                     Container(
                       width: 20,
                       decoration: BoxDecoration(
-                        color: appTheme.secondary,
+                        color:
+                            context.watch<LoggedHisUserCubit>().state != null &&
+                                    context
+                                            .watch<LoggedHisUserCubit>()
+                                            .state!
+                                            .userName ==
+                                        data.mrn
+                                ? Colors.green.shade400
+                                : appTheme.secondary,
                         borderRadius: const BorderRadius.horizontal(
                           right: Radius.circular(3),
                         ),
