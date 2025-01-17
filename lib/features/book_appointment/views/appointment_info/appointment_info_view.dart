@@ -179,7 +179,8 @@ class _AppointmentInfoViewState extends State<AppointmentInfoView> {
                             ),
                           ),
                           Text(
-                            DateTime.parse(widget.slot.appointDate ?? "")
+                            DateTime.parse(widget.slot.startTime ?? "")
+                                .toLocal()
                                 .toFormatedString("hh:mm a"),
                             style: lightTextTheme.bodyMedium!.copyWith(
                               color: appTheme.secondary,
