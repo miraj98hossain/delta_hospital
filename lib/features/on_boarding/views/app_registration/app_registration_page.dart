@@ -1,5 +1,6 @@
 import 'package:delta_hospital/app/bloc/app_reg_bloc.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

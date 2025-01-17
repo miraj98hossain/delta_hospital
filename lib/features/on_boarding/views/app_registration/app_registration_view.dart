@@ -6,6 +6,7 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -19,20 +20,6 @@ class AppRegistrationView extends StatefulWidget {
 
   @override
   State<AppRegistrationView> createState() => _AppRegistrationViewState();
-}
-
-enum Gender {
-  male("Male"),
-  female("Female"),
-  other("Other");
-
-  const Gender(this.value);
-
-  final String value;
-  @override
-  String toString() {
-    return value;
-  }
 }
 
 class _AppRegistrationViewState extends State<AppRegistrationView> {
