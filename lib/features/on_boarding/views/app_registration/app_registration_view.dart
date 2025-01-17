@@ -2,9 +2,10 @@ import 'package:delta_hospital/app/bloc/app_reg_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
+import 'package:delta_hospital/app/widgets/app_snack_bar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
-import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
+
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
@@ -99,8 +100,10 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
             context.goNamed(HomePage.routeName);
           }
           if (state is AppRegError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              CustomSnackBar.errorSnackber(message: "Registration Failed"),
+            AppSnackBar.showSnackBar(
+              context: context,
+              message: "Registration Failed",
+              type: SnackBarType.error,
             );
           }
         },
@@ -520,12 +523,13 @@ class _AppRegistrationViewState extends State<AppRegistrationView> {
                                           .state;
                                       if (_formKey.currentState!.validate()) {
                                         if (selectedDate == null) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            CustomSnackBar.successSnackber(
-                                                message:
-                                                    "Please select date of birth"),
+                                          AppSnackBar.showSnackBar(
+                                            context: context,
+                                            message:
+                                                "Please select date of birth",
+                                            type: SnackBarType.warning,
                                           );
+
                                           return;
                                         }
                                         AppUserDetails userDetails =

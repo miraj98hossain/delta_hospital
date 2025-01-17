@@ -1,10 +1,11 @@
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
+import 'package:delta_hospital/app/widgets/app_snack_bar.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
-import 'package:delta_hospital/app/widgets/custom_snackBar_widget.dart';
+
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/his_user_create_bloc.dart';
@@ -55,15 +56,17 @@ class _AddPatientViewState extends State<AddPatientView> {
             _formKey.currentState?.reset();
 
             context.read<VariableStateCubit<PatientRelation>>().reset();
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              CustomSnackBar.successSnackber(
-                  message: "Patient Added Successfully"),
+            AppSnackBar.showSnackBar(
+              context: context,
+              message: "Patient Added Successfully",
+              type: SnackBarType.success,
             );
           }
           if (state is HisUserCreateError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              CustomSnackBar.errorSnackber(message: state.error.toString()),
+            AppSnackBar.showSnackBar(
+              context: context,
+              message: state.error.toString(),
+              type: SnackBarType.error,
             );
           }
         },
