@@ -50,6 +50,7 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
     var patType = context.read<VariableStateCubit<PatientType>>().state;
 
     if (patType == null) return;
+    context.read<VariableStateCubit<ConsultationType>>().reset();
     context.read<ConsultationTypeBloc>().add(GetConsultationTypeEvent(
           doctorNo: widget.doctor.doctorNo ?? 0,
           patTypeNo: patType.patientTypeNo ?? "",
@@ -155,6 +156,10 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                               _getConsultationType();
                               if (value.patientTypeNo == '2') {
                                 context
+                                    .read<
+                                        VariableStateCubit<PatientPortalUser>>()
+                                    .reset();
+                                context
                                     .read<AddedPatUserListBloc>()
                                     .add(GetAddedPatUserListEvent(
                                       refId: loggedAppUser.phone ?? '0',
@@ -178,7 +183,16 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                       builder: (context, state) {
                         return CommonDropdownButton<ConsultationType>(
                           hintText: "Consultation Type",
-                          onChanged: (value) {},
+                          value: context
+                              .watch<VariableStateCubit<ConsultationType>>()
+                              .state,
+                          onChanged: (value) {
+                            if (value != null) {
+                              context
+                                  .read<VariableStateCubit<ConsultationType>>()
+                                  .update(value);
+                            }
+                          },
                           items: state is ConsultationTypeSuccess
                               ? state.colsuntationTypeList
                               : [],
@@ -208,12 +222,12 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                             builder: (context, state) {
                               return CommonDropdownButton<PatientPortalUser>(
                                 hintText: "Select Patient",
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Please select patient";
-                                  }
-                                  return null;
-                                },
+                                // validator: (value) {
+                                //   if (value == null) {
+                                //     return "Please select patient";
+                                //   }
+                                //   return null;
+                                // },
                                 value: context
                                     .watch<
                                         VariableStateCubit<PatientPortalUser>>()
@@ -399,15 +413,77 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                     lable: "Book Appointment",
                     backgroundColor: appTheme.secondary,
                     onPressed: () {
-                      context.pushNamed(PatientInfoPage.routeName);
+                      if (_validate()) {
+                        context.pushNamed(PatientInfoPage.routeName, extra: {
+                          "slot":
+                              context.read<VariableStateCubit<Slot>>().state,
+                          "consultationType": context
+                              .read<VariableStateCubit<ConsultationType>>()
+                              .state,
+                          "patType": context
+                              .read<VariableStateCubit<PatientType>>()
+                              .state,
+                          "doctor": widget.doctor,
+                          "patient": context
+                              .read<VariableStateCubit<PatientPortalUser>>()
+                              .state
+                        });
+                      }
                     },
                   ),
                 ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).viewPadding.bottom,
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  bool _validate() {
+    var selectedPatType = context.read<VariableStateCubit<PatientType>>().state;
+    var selectedSlot = context.read<VariableStateCubit<Slot>>().state;
+    var selectedPatient =
+        context.read<VariableStateCubit<PatientPortalUser>>().state;
+    var selectedConsultationType =
+        context.read<VariableStateCubit<ConsultationType>>().state;
+
+    if (selectedPatType == null) {
+      AppSnackBar.showSnackBar(
+        context: context,
+        message: "Please select patient type",
+        type: SnackBarType.warning,
+      );
+      return false;
+    }
+    if (selectedConsultationType == null) {
+      AppSnackBar.showSnackBar(
+        context: context,
+        message: "Please select consultation type",
+        type: SnackBarType.warning,
+      );
+      return false;
+    }
+    if (selectedPatType.patientTypeNo == "2" && selectedPatient == null) {
+      AppSnackBar.showSnackBar(
+        context: context,
+        message: "Please select patient",
+        type: SnackBarType.warning,
+      );
+      return false;
+    }
+    if (selectedSlot == null) {
+      AppSnackBar.showSnackBar(
+        context: context,
+        message: "Please select slot",
+        type: SnackBarType.warning,
+      );
+      return false;
+    }
+
+    return true;
   }
 }
