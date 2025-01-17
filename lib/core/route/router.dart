@@ -154,13 +154,21 @@ class AppNavigation {
                 },
               ),
               GoRoute(
-                path: AppointmentInfoPage.routePath,
-                name: AppointmentInfoPage.routeName,
-                pageBuilder: (context, state) => getPage(
-                  child: const AppointmentInfoPage(),
-                  state: state,
-                ),
-              ),
+                  path: AppointmentInfoPage.routePath,
+                  name: AppointmentInfoPage.routeName,
+                  pageBuilder: (context, state) {
+                    final map = state.extra as Map<String, dynamic>;
+                    return getPage(
+                      child: AppointmentInfoPage(
+                        patient: map['patient'],
+                        patientType: map['patType'],
+                        slot: map['slot'],
+                        consultationType: map['consultationType'],
+                        doctor: map['doctor'],
+                      ),
+                      state: state,
+                    );
+                  }),
             ],
           ),
           // Item List

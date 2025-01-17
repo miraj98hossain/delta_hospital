@@ -107,9 +107,9 @@ class HisPatientInfo {
   final String? fname;
   final String? gender;
   final String? dob;
-  final dynamic nationality;
+  final String? nationality;
   final String? bloodGroup;
-  final dynamic identityMark;
+  final String? identityMark;
   final String? salutation;
   final String? lname;
   final String? patientName;
@@ -120,14 +120,14 @@ class HisPatientInfo {
   final int? ageYy;
   final String? age;
   final String? phoneMobile;
-  final dynamic foreignMobile;
-  final dynamic phoneMobile2;
-  final dynamic email;
+  final String? foreignMobile;
+  final String? phoneMobile2;
+  final String? email;
   final String? address;
-  final dynamic fatherName;
-  final dynamic motherName;
-  final dynamic spouseName;
-  final dynamic passportNo;
+  final String? fatherName;
+  final String? motherName;
+  final String? spouseName;
+  final String? passportNo;
   final int? patTypeNo;
   final int? regPoint;
   final dynamic phoneTnt;
@@ -139,20 +139,20 @@ class HisPatientInfo {
   final dynamic empNo;
   final dynamic relationNo;
   final dynamic nationalId;
-  final dynamic religion;
-  final dynamic presentAddress;
-  final dynamic presentDistrict;
-  final dynamic permanertAddress;
-  final dynamic permanentDistrict;
+  final String? religion;
+  final String? presentAddress;
+  final String? presentDistrict;
+  final String? permanertAddress;
+  final String? permanentDistrict;
   final dynamic personalId;
   final dynamic regType;
-  final dynamic patientPhoto;
-  final dynamic birthCertificateNo;
-  final dynamic specialInstruction;
+  final String? patientPhoto;
+  final String? birthCertificateNo;
+  final String? specialInstruction;
   final dynamic medCampaignNo;
   final dynamic remarks;
-  final dynamic photo;
-  final dynamic likeHospitalNumber;
+  final String? photo;
+  final String? likeHospitalNumber;
   final dynamic notEqualId;
   final dynamic fromDate;
   final dynamic toDate;
@@ -238,76 +238,76 @@ class HisPatientInfo {
   });
 
   HisPatientInfo copyWith({
-    int? ssCreator,
-    String? ssCreatedOn,
-    int? ssCreateSession,
-    int? ssModifier,
-    String? ssModifiedOn,
-    int? ssModifiedSession,
-    int? companyNo,
-    int? id,
-    int? activeStatus,
-    String? hospitalNumber,
-    String? regDate,
-    String? fname,
-    String? gender,
-    String? dob,
-    dynamic nationality,
-    String? bloodGroup,
-    dynamic identityMark,
-    String? salutation,
-    String? lname,
-    String? patientName,
-    String? genderData,
-    String? maritalStatus,
-    int? ageDd,
-    int? ageMm,
-    int? ageYy,
-    String? age,
-    String? phoneMobile,
-    dynamic foreignMobile,
-    dynamic phoneMobile2,
-    dynamic email,
-    String? address,
-    dynamic fatherName,
-    dynamic motherName,
-    dynamic spouseName,
-    dynamic passportNo,
-    int? patTypeNo,
-    int? regPoint,
-    dynamic phoneTnt,
-    dynamic upazilaNo,
-    dynamic upazilaName,
-    dynamic corClientNo,
-    dynamic corClientCardNo,
-    dynamic corClientDesig,
-    dynamic empNo,
-    dynamic relationNo,
-    dynamic nationalId,
-    dynamic religion,
-    dynamic presentAddress,
-    dynamic presentDistrict,
-    dynamic permanertAddress,
-    dynamic permanentDistrict,
-    dynamic personalId,
-    dynamic regType,
-    dynamic patientPhoto,
-    dynamic birthCertificateNo,
-    dynamic specialInstruction,
-    dynamic medCampaignNo,
-    dynamic remarks,
-    dynamic photo,
-    dynamic likeHospitalNumber,
-    dynamic notEqualId,
-    dynamic fromDate,
-    dynamic toDate,
-    dynamic phoneOrHNo,
-    dynamic blackListPatient,
-    dynamic vipPatientFlag,
-    dynamic isPassportNoApproved,
-    dynamic cardBilledStatus,
-    dynamic hnOrPhoneMobile,
-    String? mstatusData,
+    final int? ssCreator,
+    final String? ssCreatedOn,
+    final int? ssCreateSession,
+    final int? ssModifier,
+    final String? ssModifiedOn,
+    final int? ssModifiedSession,
+    final int? companyNo,
+    final int? id,
+    final int? activeStatus,
+    final String? hospitalNumber,
+    final String? regDate,
+    final String? fname,
+    final String? gender,
+    final String? dob,
+    final String? nationality,
+    final String? bloodGroup,
+    final String? identityMark,
+    final String? salutation,
+    final String? lname,
+    final String? patientName,
+    final String? genderData,
+    final String? maritalStatus,
+    final int? ageDd,
+    final int? ageMm,
+    final int? ageYy,
+    final String? age,
+    final String? phoneMobile,
+    final String? foreignMobile,
+    final String? phoneMobile2,
+    final String? email,
+    final String? address,
+    final String? fatherName,
+    final String? motherName,
+    final String? spouseName,
+    final String? passportNo,
+    final int? patTypeNo,
+    final int? regPoint,
+    final dynamic phoneTnt,
+    final dynamic upazilaNo,
+    final dynamic upazilaName,
+    final dynamic corClientNo,
+    final dynamic corClientCardNo,
+    final dynamic corClientDesig,
+    final dynamic empNo,
+    final dynamic relationNo,
+    final dynamic nationalId,
+    final String? religion,
+    final String? presentAddress,
+    final String? presentDistrict,
+    final String? permanertAddress,
+    final String? permanentDistrict,
+    final dynamic personalId,
+    final dynamic regType,
+    final String? patientPhoto,
+    final String? birthCertificateNo,
+    final String? specialInstruction,
+    final dynamic medCampaignNo,
+    final dynamic remarks,
+    final String? photo,
+    final String? likeHospitalNumber,
+    final dynamic notEqualId,
+    final dynamic fromDate,
+    final dynamic toDate,
+    final dynamic phoneOrHNo,
+    final dynamic blackListPatient,
+    final dynamic vipPatientFlag,
+    final dynamic isPassportNoApproved,
+    final dynamic cardBilledStatus,
+    final dynamic hnOrPhoneMobile,
+    final String? mstatusData,
   }) =>
       HisPatientInfo(
         ssCreator: ssCreator ?? this.ssCreator,

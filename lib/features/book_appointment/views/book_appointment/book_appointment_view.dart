@@ -414,20 +414,23 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                     backgroundColor: appTheme.secondary,
                     onPressed: () {
                       if (_validate()) {
-                        context.pushNamed(PatientInfoPage.routeName, extra: {
-                          "slot":
-                              context.read<VariableStateCubit<Slot>>().state,
-                          "consultationType": context
-                              .read<VariableStateCubit<ConsultationType>>()
-                              .state,
-                          "patType": context
-                              .read<VariableStateCubit<PatientType>>()
-                              .state,
-                          "doctor": widget.doctor,
-                          "patient": context
-                              .read<VariableStateCubit<PatientPortalUser>>()
-                              .state
-                        });
+                        context.pushNamed(
+                          PatientInfoPage.routeName,
+                          extra: {
+                            "slot":
+                                context.read<VariableStateCubit<Slot>>().state,
+                            "consultationType": context
+                                .read<VariableStateCubit<ConsultationType>>()
+                                .state,
+                            "patType": context
+                                .read<VariableStateCubit<PatientType>>()
+                                .state,
+                            "doctor": widget.doctor,
+                            "patient": context
+                                .read<VariableStateCubit<PatientPortalUser>>()
+                                .state
+                          },
+                        );
                       }
                     },
                   ),

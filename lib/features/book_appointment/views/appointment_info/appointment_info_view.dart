@@ -1,13 +1,28 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentInfoView extends StatefulWidget {
-  const AppointmentInfoView({super.key});
-
+  const AppointmentInfoView(
+      {super.key,
+      required this.patient,
+      required this.patientType,
+      required this.slot,
+      required this.consultationType,
+      required this.doctor});
+  final HisPatientInfo patient;
+  final PatientType patientType;
+  final Slot slot;
+  final ConsultationType consultationType;
+  final Doctor doctor;
   @override
   State<AppointmentInfoView> createState() => _AppointmentInfoViewState();
 }
