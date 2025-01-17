@@ -2,6 +2,7 @@ import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart'
 import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
+import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/data/repositories/app_repository.dart';
@@ -206,5 +207,18 @@ class AppRepositoryImpl implements AppRepository {
       throw const ApiDataException("Error Occured While Sending SMS");
     }
     return response.items ?? [];
+  }
+
+  @override
+  Future<HisPatientInfo> getRegPatientInfo({
+    required String mrnOrPhNo,
+  }) async {
+    var response =
+        await appRemoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.items?.first ?? HisPatientInfo();
   }
 }
