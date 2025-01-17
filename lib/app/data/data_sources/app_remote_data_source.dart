@@ -8,6 +8,7 @@ import 'package:delta_hospital/app/data/models/his_logout_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/app/data/models/sms_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -47,6 +48,7 @@ abstract class AppRemoteDataSource {
   Future<HisPatientInfoResponse> getRegPatientInfo({
     required String mrnOrPhNo,
   });
+  Future<PaymodeListResponse> getPayModeList();
 }
 
 class AppRemoteDataSourceImpl
@@ -221,5 +223,18 @@ class AppRemoteDataSourceImpl
 
     return await decodeResponse(response,
         decoder: HisPatientInfoResponse.fromJson);
+  }
+
+  @override
+  Future<PaymodeListResponse> getPayModeList() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/online-paymode-list'));
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: PaymodeListResponse.fromJson);
   }
 }

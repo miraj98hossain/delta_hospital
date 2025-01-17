@@ -4,6 +4,7 @@ import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/domain/repositories/app_repository.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
@@ -220,5 +221,14 @@ class AppRepositoryImpl implements AppRepository {
           response.message ?? "Error Occured While Fetching");
     }
     return response.items?.first ?? HisPatientInfo();
+  }
+
+  @override
+  Future<List<Paymode>> getPayModeList() async {
+    var response = await appRemoteDataSource.getPayModeList();
+    if (response.success != true) {
+      throw const ApiDataException("Error Occured While Fetching");
+    }
+    return response.items ?? [];
   }
 }
