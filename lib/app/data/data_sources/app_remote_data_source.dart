@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/app/data/models/his_logout_response.dart';
+import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/data/models/sms_response.dart';
@@ -43,16 +44,19 @@ abstract class AppRemoteDataSource {
   Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
     required String refId,
   });
+  Future<HisPatientInfoResponse> getRegPatientInfo({
+    required String mrnOrPhNo,
+  });
 }
 
 class AppRemoteDataSourceImpl
     with DecoderServiceMixin
     implements AppRemoteDataSource {
-  final AppConfig appConfig;
+  final AppConfig _appConfig;
 
   AppRemoteDataSourceImpl({
-    required this.appConfig,
-  });
+    required AppConfig appConfig,
+  }) : _appConfig = appConfig;
 
   @override
   Future<AuthResponse> authenticate(
@@ -61,7 +65,7 @@ class AppRemoteDataSourceImpl
       'Authorization': 'Basic bWVkQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ='
     };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('${appConfig.baseUrl}auth-api/oauth/token'));
+        'POST', Uri.parse('${_appConfig.baseUrl}auth-api/oauth/token'));
     request.fields.addAll({
       'username': userName,
       'password': password,
@@ -79,7 +83,7 @@ class AppRemoteDataSourceImpl
   Future<UserDetailsResponse> getUserDetails({required String token}) async {
     var headers = {'Authorization': 'Bearer $token'};
     var request = http.Request('GET',
-        Uri.parse('${appConfig.baseUrl}auth-api/api/coreUser/user-details'));
+        Uri.parse('${_appConfig.baseUrl}auth-api/api/coreUser/user-details'));
 
     request.headers.addAll(headers);
 
@@ -92,8 +96,8 @@ class AppRemoteDataSourceImpl
   @override
   Future<HisLogoutResponse> hisUserlogout({required String token}) async {
     var headers = {'Authorization': 'Bearer $token'};
-    var request = http.Request(
-        'DELETE', Uri.parse('${appConfig.baseUrl}auth-api/oauth/token/logout'));
+    var request = http.Request('DELETE',
+        Uri.parse('${_appConfig.baseUrl}auth-api/oauth/token/logout'));
 
     request.headers.addAll(headers);
 
@@ -111,7 +115,7 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/find-by-user'));
+            '${_appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/find-by-user'));
     request.body = json.encode({"phone": phone, "password": password});
     request.headers.addAll(headers);
 
@@ -128,7 +132,7 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'POST',
         Uri.parse(
-            '${appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/save-user'));
+            '${_appConfig.baseUrl}mobile-app-firebase-api/api/appAuthentication/save-user'));
     request.body = json.encode(userDetails.toMapReg());
 
     request.headers.addAll(headers);
@@ -163,7 +167,7 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientRelation/find-all-patient-relation'));
+            '${_appConfig.baseUrl}mobile-app-firebase-api/api/patientRelation/find-all-patient-relation'));
 
     http.StreamedResponse response = await request.send();
 
@@ -179,7 +183,7 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'POST',
         Uri.parse(
-            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/save-patientPortalUsers'));
+            '${_appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/save-patientPortalUsers'));
     request.body = json.encode(userDetails.toMap());
     request.headers.addAll(headers);
 
@@ -194,10 +198,28 @@ class AppRemoteDataSourceImpl
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/find-user-by-refId/$refId'));
+            '${_appConfig.baseUrl}mobile-app-firebase-api/api/patientPortalUsers/find-user-by-refId/$refId'));
 
     http.StreamedResponse response = await request.send();
     return await decodeResponse(response,
         decoder: PatientPortalListResponse.fromJson);
+  }
+
+  @override
+  Future<HisPatientInfoResponse> getRegPatientInfo({
+    required String mrnOrPhNo,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/findRegistrationByPhoneNo'));
+    request.body = json.encode({"mobileNo": mrnOrPhNo});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: HisPatientInfoResponse.fromJson);
   }
 }

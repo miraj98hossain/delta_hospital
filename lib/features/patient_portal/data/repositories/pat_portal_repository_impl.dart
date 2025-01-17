@@ -92,7 +92,7 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
     required String mrnOrPhNo,
   }) async {
     var response =
-        await patRemoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
+        await appRemoteDataSource.getRegPatientInfo(mrnOrPhNo: mrnOrPhNo);
     if (response.success != true) {
       throw ApiDataException(
           response.message ?? "Error Occured While Fetching");
