@@ -41,4 +41,9 @@ abstract class BookAptRepository {
     required int doctorNo,
     required String scheduleDate,
   });
+  Future<int> getDoctorConsultationFee({
+    required int doctorNo,
+    required String patTypeNo,
+    required String? conTypeNo,
+  });
 }

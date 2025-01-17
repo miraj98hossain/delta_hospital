@@ -97,7 +97,7 @@ class Slot {
   final int? slotNo;
   final int? doctorNo;
   final String? doctorName;
-  final DateTime? appointDate;
+  final String? appointDate;
   final int? shiftdtlNo;
   final String? shift;
   final int? slotSl;
@@ -107,7 +107,7 @@ class Slot {
   final int? extraSlot;
   final int? slotSplited;
   final int? ssCreator;
-  final DateTime? ssCreatedOn;
+  final String? ssCreatedOn;
   final dynamic remarks;
   final int? appointStatus;
   final int? slotAppointStatus;
@@ -138,7 +138,7 @@ class Slot {
     int? slotNo,
     int? doctorNo,
     String? doctorName,
-    DateTime? appointDate,
+    String? appointDate,
     int? shiftdtlNo,
     String? shift,
     int? slotSl,
@@ -148,7 +148,7 @@ class Slot {
     int? extraSlot,
     int? slotSplited,
     int? ssCreator,
-    DateTime? ssCreatedOn,
+    String? ssCreatedOn,
     dynamic remarks,
     int? appointStatus,
     int? slotAppointStatus,
@@ -183,9 +183,7 @@ class Slot {
         slotNo: json["slotNo"],
         doctorNo: json["doctorNo"],
         doctorName: json["doctorName"],
-        appointDate: json["appointDate"] == null
-            ? null
-            : DateTime.parse(json["appointDate"]),
+        appointDate: json["appointDate"],
         shiftdtlNo: json["shiftdtlNo"],
         shift: json["shift"],
         slotSl: json["slotSl"],
@@ -195,9 +193,7 @@ class Slot {
         extraSlot: json["extraSlot"],
         slotSplited: json["slotSplited"],
         ssCreator: json["ssCreator"],
-        ssCreatedOn: json["ssCreatedOn"] == null
-            ? null
-            : DateTime.parse(json["ssCreatedOn"]),
+        ssCreatedOn: json["ssCreatedOn"],
         remarks: json["remarks"],
         appointStatus: json["appointStatus"],
         slotAppointStatus: json["slotAppointStatus"],
@@ -208,8 +204,7 @@ class Slot {
         "slotNo": slotNo,
         "doctorNo": doctorNo,
         "doctorName": doctorName,
-        "appointDate":
-            "${appointDate!.year.toString().padLeft(4, '0')}-${appointDate!.month.toString().padLeft(2, '0')}-${appointDate!.day.toString().padLeft(2, '0')}",
+        "appointDate": appointDate,
         "shiftdtlNo": shiftdtlNo,
         "shift": shift,
         "slotSl": slotSl,
@@ -219,8 +214,7 @@ class Slot {
         "extraSlot": extraSlot,
         "slotSplited": slotSplited,
         "ssCreator": ssCreator,
-        "ssCreatedOn":
-            "${ssCreatedOn!.year.toString().padLeft(4, '0')}-${ssCreatedOn!.month.toString().padLeft(2, '0')}-${ssCreatedOn!.day.toString().padLeft(2, '0')}",
+        "ssCreatedOn": ssCreatedOn,
         "remarks": remarks,
         "appointStatus": appointStatus,
         "slotAppointStatus": slotAppointStatus,

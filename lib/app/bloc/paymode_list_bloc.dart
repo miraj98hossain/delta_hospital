@@ -5,10 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 sealed class PaymodeListEvent {}
 
-final class GetPaymodeListEvent extends PaymodeListEvent {
-  final String refId;
-
-  GetPaymodeListEvent({required this.refId});
+final class PaymodeListGet extends PaymodeListEvent {
+  PaymodeListGet();
 }
 
 @immutable
@@ -31,7 +29,7 @@ final class PaymodeListError extends PaymodeListState {
 class PaymodeListBloc extends Bloc<PaymodeListEvent, PaymodeListState> {
   final AppRepository _appRepository;
   PaymodeListBloc(this._appRepository) : super(PaymodeListInitial()) {
-    on<GetPaymodeListEvent>((event, emit) async {
+    on<PaymodeListGet>((event, emit) async {
       emit(PaymodeListLoading());
       try {
         var response = await _appRepository.getPayModeList();

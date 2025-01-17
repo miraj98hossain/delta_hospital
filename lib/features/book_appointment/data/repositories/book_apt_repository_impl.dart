@@ -136,4 +136,19 @@ class BookAptRepositoryImpl implements BookAptRepository {
     }
     return response.items ?? [];
   }
+
+  @override
+  Future<int> getDoctorConsultationFee({
+    required int doctorNo,
+    required String patTypeNo,
+    required String? conTypeNo,
+  }) async {
+    var response = await remoteDataSource.getDoctorConsultationFee(
+        doctorNo: doctorNo, patTypeNo: patTypeNo, conTypeNo: conTypeNo);
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+    return response.obj ?? 0;
+  }
 }

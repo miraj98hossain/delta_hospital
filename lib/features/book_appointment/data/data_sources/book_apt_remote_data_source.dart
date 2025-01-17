@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_fee_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_info_response.dart';
@@ -44,6 +45,11 @@ abstract class BookAptRemoteDataSource {
   Future<DoctorScheduleResponse> getDoctorSchedule({
     required int doctorNo,
     required String scheduleDate,
+  });
+  Future<ConsultationFeeResponse> getDoctorConsultationFee({
+    required int doctorNo,
+    required String patTypeNo,
+    required String? conTypeNo,
   });
 }
 
@@ -200,5 +206,29 @@ class BookAptRemoteDataSourceImpl
 
     return await decodeResponse(response,
         decoder: DoctorScheduleResponse.fromJson);
+  }
+
+  @override
+  Future<ConsultationFeeResponse> getDoctorConsultationFee({
+    required int doctorNo,
+    required String patTypeNo,
+    required String? conTypeNo,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/appointment/getConsultationFee'));
+    request.body = json.encode({
+      "doctorNo": doctorNo,
+      "patTypeNo": patTypeNo,
+      "conTypeNo": conTypeNo,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: ConsultationFeeResponse.fromJson);
   }
 }
