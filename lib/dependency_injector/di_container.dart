@@ -1,7 +1,7 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
-import 'package:delta_hospital/app/data/repositories/app_repository.dart';
-import 'package:delta_hospital/app/domain/repositories/app_repository_impl.dart';
+import 'package:delta_hospital/app/domain/repositories/app_repository.dart';
+import 'package:delta_hospital/app/data/repositories/app_repository_impl.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/sembast.dart';
 import 'package:delta_hospital/features/book_appointment/data/data_sources/book_apt_remote_data_source.dart';

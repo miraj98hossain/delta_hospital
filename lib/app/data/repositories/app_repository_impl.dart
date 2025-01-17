@@ -5,7 +5,7 @@ import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
-import 'package:delta_hospital/app/data/repositories/app_repository.dart';
+import 'package:delta_hospital/app/domain/repositories/app_repository.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/core/exceptions/custom_exception.dart';
 
