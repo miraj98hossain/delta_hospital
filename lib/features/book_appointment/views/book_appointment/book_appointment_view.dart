@@ -1,5 +1,9 @@
 import 'package:collection/collection.dart';
+import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
+import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/app/data/models/app_login_response.dart';
+import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
@@ -30,8 +34,10 @@ class BookAppointmentView extends StatefulWidget {
 }
 
 class _BookAppointmentViewState extends State<BookAppointmentView> {
+  late AppUserDetails loggedAppUser;
   @override
   void initState() {
+    loggedAppUser = context.read<LoggedAppUserCubit>().state!;
     context
         .read<PatientTypeBloc>()
         .add(GetPatientTypeEvent(doctorNo: widget.doctor.doctorNo ?? 0));
@@ -147,6 +153,13 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                                   .read<VariableStateCubit<PatientType>>()
                                   .update(value);
                               _getConsultationType();
+                              if (value.patientTypeNo == '2') {
+                                context
+                                    .read<AddedPatUserListBloc>()
+                                    .add(GetAddedPatUserListEvent(
+                                      refId: loggedAppUser.phone ?? '0',
+                                    ));
+                              }
                             }
                           },
                           items: state is PatientTypeSuccess
@@ -175,23 +188,57 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Select Patient",
-                style: lightTextTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: appTheme.white,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CommonDropdownButton(
-                hintText: "Select Patient",
-                onChanged: (value) {},
-                items: List.generate(20, (index) => index),
+              BlocBuilder<VariableStateCubit<PatientType>, PatientType?>(
+                builder: (context, state) {
+                  if (state?.patientTypeNo == '2') {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 10,
+                      children: [
+                        Text(
+                          "Select Patient",
+                          style: lightTextTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: appTheme.white,
+                          ),
+                        ),
+                        SizedBox(
+                          child: BlocBuilder<AddedPatUserListBloc,
+                              AddedPatUserListState>(
+                            builder: (context, state) {
+                              return CommonDropdownButton<PatientPortalUser>(
+                                hintText: "Select Patient",
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Please select patient";
+                                  }
+                                  return null;
+                                },
+                                value: context
+                                    .watch<
+                                        VariableStateCubit<PatientPortalUser>>()
+                                    .state,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context
+                                        .read<
+                                            VariableStateCubit<
+                                                PatientPortalUser>>()
+                                        .update(value);
+                                  }
+                                },
+                                items: state is AddedPatUserListSuccess
+                                    ? state.patientPortalUserList
+                                    : [],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
               const SizedBox(
                 height: 10,

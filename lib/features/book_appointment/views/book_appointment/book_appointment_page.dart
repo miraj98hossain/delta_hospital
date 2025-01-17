@@ -1,3 +1,5 @@
+import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
+import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
@@ -28,6 +30,9 @@ class BookAppointmentPage extends StatelessWidget {
           create: (context) => ConsultationTypeBloc(getService()),
         ),
         BlocProvider(
+          create: (context) => AddedPatUserListBloc(getService()),
+        ),
+        BlocProvider(
           create: (context) => SlotBloc(getService()),
         ),
         BlocProvider(
@@ -36,6 +41,9 @@ class BookAppointmentPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<PatientType>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<PatientPortalUser>(),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<ConsultationType>(),

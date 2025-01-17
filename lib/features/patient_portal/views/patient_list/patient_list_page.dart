@@ -11,8 +11,12 @@ class PatientListPage extends StatelessWidget {
   static const String routePath = 'patient-list-page';
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AddedPatUserListBloc(getService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AddedPatUserListBloc(getService()),
+        ),
+      ],
       child: const PatientListView(),
     );
   }
