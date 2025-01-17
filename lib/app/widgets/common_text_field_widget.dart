@@ -50,6 +50,7 @@ class CommonTextFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         fillColor: appTheme.white,
         filled: true,
+        isDense: true,
         suffixIcon: suffix,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0), // Circular border
