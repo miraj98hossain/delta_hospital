@@ -1,11 +1,16 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/features/book_appointment/appointment_info.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +19,18 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/widgets/common_text_field_widget.dart';
 
 class PatientInfoView extends StatefulWidget {
-  const PatientInfoView({super.key});
-
+  const PatientInfoView(
+      {super.key,
+      required this.patientPortalUser,
+      required this.patientType,
+      required this.slot,
+      required this.consultationType,
+      required this.doctor});
+  final PatientPortalUser? patientPortalUser;
+  final PatientType patientType;
+  final Slot slot;
+  final ConsultationType consultationType;
+  final Doctor doctor;
   @override
   State<PatientInfoView> createState() => _PatientInfoViewState();
 }

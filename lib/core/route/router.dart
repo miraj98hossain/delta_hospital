@@ -139,10 +139,19 @@ class AppNavigation {
               GoRoute(
                 path: PatientInfoPage.routePath,
                 name: PatientInfoPage.routeName,
-                pageBuilder: (context, state) => getPage(
-                  child: const PatientInfoPage(),
-                  state: state,
-                ),
+                pageBuilder: (context, state) {
+                  final map = state.extra as Map<String, dynamic>;
+                  return getPage(
+                    child: PatientInfoPage(
+                      patientPortalUser: map['patient'],
+                      patientType: map['patType'],
+                      slot: map['slot'],
+                      consultationType: map['consultationType'],
+                      doctor: map['doctor'],
+                    ),
+                    state: state,
+                  );
+                },
               ),
               GoRoute(
                 path: AppointmentInfoPage.routePath,
