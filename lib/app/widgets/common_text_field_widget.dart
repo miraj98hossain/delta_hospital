@@ -15,6 +15,7 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.readOnly = false,
     this.suffix,
     this.obscureText = false,
+    this.onTap,
   });
   final String hintText;
   final TextEditingController? controller;
@@ -26,6 +27,7 @@ class CommonTextFieldWidget extends StatelessWidget {
   final bool readOnly;
   final Widget? suffix;
   final bool obscureText;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -42,6 +44,7 @@ class CommonTextFieldWidget extends StatelessWidget {
         fontSize: 12,
         color: Colors.grey,
       ),
+      onTap: onTap,
       onTapOutside: (event) {
         focusNode?.unfocus();
       },
