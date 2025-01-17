@@ -1,6 +1,6 @@
 import 'package:delta_hospital/app/bloc/his_auth_bloc.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_pat_info_by_token_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../patient_portal.dart';
@@ -17,7 +17,7 @@ class PatientPortalPage extends StatelessWidget {
           create: (context) => HisAuthBloc(getService()),
         ),
         BlocProvider(
-          create: (context) => HisPatientInfoBloc(getService()),
+          create: (context) => HisPatInfoByTokenBloc(getService()),
         ),
       ],
       child: const PatientPortalView(),

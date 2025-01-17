@@ -13,7 +13,7 @@ import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/patient_portal/pat_notes.dart';
 import 'package:delta_hospital/features/patient_portal/pat_prescription.dart';
 import 'package:delta_hospital/features/patient_portal/patient_portal.dart';
-import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_patient_info_bloc.dart';
+import 'package:delta_hospital/features/patient_portal/views/patient_portal/bloc/his_pat_info_by_token_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +30,7 @@ class PatientPortalView extends StatefulWidget {
 class _PatientPortalViewState extends State<PatientPortalView> {
   @override
   void initState() {
-    context.read<HisPatientInfoBloc>().add(GetHisPatientInfoEvent());
+    context.read<HisPatInfoByTokenBloc>().add(HisPatInfoByTokenGet());
 
     super.initState();
   }
@@ -79,12 +79,13 @@ class _PatientPortalViewState extends State<PatientPortalView> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: BlocBuilder<HisPatientInfoBloc, HisPatientInfoState>(
+                child:
+                    BlocBuilder<HisPatInfoByTokenBloc, HisPatInfoByTokenState>(
                   builder: (context, state) {
-                    if (state is HisPatientInfoLoading) {
+                    if (state is HisPatInfoByTokenLoading) {
                       return const CommonLoading();
                     }
-                    if (state is HisPatientInfoSuccess) {
+                    if (state is HisPatInfoByTokenSuccess) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
