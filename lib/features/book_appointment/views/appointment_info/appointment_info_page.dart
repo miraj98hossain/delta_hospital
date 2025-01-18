@@ -7,6 +7,7 @@ import 'package:delta_hospital/features/book_appointment/data/models/available_s
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/features/book_appointment/views/appointment_info/bloc/book_appointment_bloc.dart';
 import 'package:delta_hospital/features/book_appointment/views/appointment_info/bloc/consultation_fee_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,9 @@ class AppointmentInfoPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PaymodeListBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => BookAppointmentBloc(getService()),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<Paymode>(),

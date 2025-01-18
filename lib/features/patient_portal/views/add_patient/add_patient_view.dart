@@ -2,7 +2,6 @@ import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/app/widgets/app_snack_bar.dart';
-import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 
