@@ -1,3 +1,5 @@
+import 'package:delta_hospital/features/book_appointment/data/models/appointment.dart';
+import 'package:delta_hospital/features/book_appointment/data/models/appointment_booking_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/available_slot_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/consultation_type_response.dart';
 import 'package:delta_hospital/features/book_appointment/data/models/doctor_grid_list_response.dart';
@@ -45,5 +47,8 @@ abstract class BookAptRepository {
     required int doctorNo,
     required String patTypeNo,
     required String? conTypeNo,
+  });
+  Future<AppointmentBookingStatus> bookAppointment({
+    required Appointment appointment,
   });
 }
