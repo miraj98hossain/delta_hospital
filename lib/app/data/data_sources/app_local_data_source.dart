@@ -177,35 +177,37 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
 
   @override
   Future<void> addItemToCart({required ItemInfo item}) async {
-    List<ItemInfo> items = [];
-    items.add(item);
+    // List<ItemInfo> items = [];
+    // items.add(item);
     var store = intMapStoreFactory.store(_cartStore);
-    await store.record(0).put(_database, {
-      "items": items,
-    });
+    await store.add(_database, item.toMap());
   }
 
   @override
   Future<void> removeItemFromCart({required ItemInfo item}) async {
-    List<ItemInfo> items = [];
+    // List<ItemInfo> items = [];
     var store = intMapStoreFactory.store(_cartStore);
-    var response = await store.record(0).get(_database);
+    // var response = await store.record(0).get(_database);
 
-    items = response?['items'] as List<ItemInfo>;
-    items.remove(item);
-    await store.record(0).put(_database, {
-      "items": items,
-    });
+    // items = response?['items'] as List<ItemInfo>;
+    // items.remove(item);
+    // await store.record(0).put(_database, {
+    //   "items": items,
+    // });
+    final finder = Finder(filter: Filter.byKey(item.itemId));
+    await store.delete(_database, finder: finder);
   }
 
   @override
   Future<List<ItemInfo>> getAddedItemsOfCart() async {
-    List<ItemInfo> items = [];
+    // List<ItemInfo> items = [];
     var store = intMapStoreFactory.store(_cartStore);
-    var response = await store.record(0).get(_database);
+    // var response = await store.record(0).get(_database);
 
-    items = response?['items'] as List<ItemInfo>;
-    return items;
+    // items = response?['items'] as List<ItemInfo>;
+    // return items;
+    final items = await store.find(_database);
+    return items.map((e) => ItemInfo.fromJson(jsonEncode(e.value))).toList();
   }
 
   @override
