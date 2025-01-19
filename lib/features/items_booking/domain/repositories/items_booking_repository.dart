@@ -10,4 +10,8 @@ abstract class ItemsBookingRepository {
     int? itemTypeNo,
     int? departmentNo,
   });
+  Future<void> addItemToCart({required ItemInfo item});
+  Future<void> removeItemFromCart({required ItemInfo item});
+  Future<List<ItemInfo>> getAddedItemsOfCart();
+  Future<void> clearCart();
 }

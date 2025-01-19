@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/paymode_list_bloc.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';

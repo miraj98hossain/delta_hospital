@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/auth_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
+import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:sembast/sembast.dart';
 
 abstract class AppLocalDataSource {
@@ -29,6 +30,11 @@ abstract class AppLocalDataSource {
   });
   Future<DateTime?> getHisSessionExpiryTime();
   Future<void> clearHisSessionExpiryTime();
+
+  Future<void> addItemToCart({required ItemInfo item});
+  Future<void> removeItemFromCart({required ItemInfo item});
+  Future<List<ItemInfo>> getAddedItemsOfCart();
+  Future<void> clearCart();
 }
 
 class AppLocalDataSourceImpl implements AppLocalDataSource {
@@ -167,5 +173,44 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
       return DateTime.parse(dateTime['dateTime'] as String);
     }
     return null;
+  }
+
+  @override
+  Future<void> addItemToCart({required ItemInfo item}) async {
+    List<ItemInfo> items = [];
+    items.add(item);
+    var store = intMapStoreFactory.store(_cartStore);
+    await store.record(0).put(_database, {
+      "items": items,
+    });
+  }
+
+  @override
+  Future<void> removeItemFromCart({required ItemInfo item}) async {
+    List<ItemInfo> items = [];
+    var store = intMapStoreFactory.store(_cartStore);
+    var response = await store.record(0).get(_database);
+
+    items = response?['items'] as List<ItemInfo>;
+    items.remove(item);
+    await store.record(0).put(_database, {
+      "items": items,
+    });
+  }
+
+  @override
+  Future<List<ItemInfo>> getAddedItemsOfCart() async {
+    List<ItemInfo> items = [];
+    var store = intMapStoreFactory.store(_cartStore);
+    var response = await store.record(0).get(_database);
+
+    items = response?['items'] as List<ItemInfo>;
+    return items;
+  }
+
+  @override
+  Future<void> clearCart() async {
+    var store = intMapStoreFactory.store(_cartStore);
+    await store.delete(_database);
   }
 }

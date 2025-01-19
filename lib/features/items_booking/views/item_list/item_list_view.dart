@@ -176,13 +176,6 @@ class _ItemListViewState extends State<ItemListView> {
                                                 color: Colors.grey,
                                               ),
                                             ),
-                                            Text(
-                                              item?.itemTypeNo.toString() ?? "",
-                                              style: lightTextTheme.bodySmall!
-                                                  .copyWith(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
                                           ],
                                         ),
                                       ),
