@@ -6,6 +6,7 @@ import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
 import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
+import 'package:delta_hospital/features/items_booking/views/item_list/bloc/cart_bloc.dart';
 import 'package:delta_hospital/features/items_booking/views/item_list/bloc/item_list_grid_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class _ItemListViewState extends State<ItemListView> {
   late TextEditingController _searchController;
   @override
   void initState() {
+    context.read<CartBloc>().add(CartItemsGet());
     context.read<ItemTypeBloc>().add(GetItemTypeEvent());
     context.read<ItemGridBloc>().add(GetItemGridEvent());
     _itemsScrollController.addListener(() {
@@ -111,17 +113,27 @@ class _ItemListViewState extends State<ItemListView> {
                   onTap: () {
                     context.pushNamed(CartPage.routeName);
                   },
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: appTheme.secondary,
-                    ),
-                    child: Icon(
-                      Icons.shopping_cart,
-                      color: appTheme.white,
-                    ),
+                  child: BlocBuilder<CartBloc, CartState>(
+                    builder: (context, state) {
+                      return Badge(
+                        label: state is CartSuccess
+                            ? Text(state.cartList.length.toString())
+                            : const Text('0'),
+                        backgroundColor: Colors.red,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: appTheme.secondary,
+                          ),
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: appTheme.white,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -184,7 +196,15 @@ class _ItemListViewState extends State<ItemListView> {
                                       ),
                                       CommonElevatedButton(
                                         lable: "Add",
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (item != null) {
+                                            context.read<CartBloc>().add(
+                                                  CartItemAdd(
+                                                    itemInfo: item,
+                                                  ),
+                                                );
+                                          }
+                                        },
                                       ),
                                     ],
                                   )
