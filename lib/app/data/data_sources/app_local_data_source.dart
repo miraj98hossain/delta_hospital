@@ -194,7 +194,8 @@ class AppLocalDataSourceImpl implements AppLocalDataSource {
     // await store.record(0).put(_database, {
     //   "items": items,
     // });
-    final finder = Finder(filter: Filter.byKey(item.itemId));
+    final finder =
+        Finder(filter: Filter.equals('itemId', item.itemId), limit: 1);
     await store.delete(_database, finder: finder);
   }
 
