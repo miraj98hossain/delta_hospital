@@ -183,10 +183,14 @@ class AppNavigation {
               GoRoute(
                 path: CartPage.routePath,
                 name: CartPage.routeName,
-                pageBuilder: (context, state) => getPage(
-                  child: const CartPage(),
-                  state: state,
-                ),
+                pageBuilder: (context, state) {
+                  return getPage(
+                    child: CartPage(
+                      cartContext: state.extra as BuildContext,
+                    ),
+                    state: state,
+                  );
+                },
               ),
               GoRoute(
                 path: BookingPatientInfoPage.routePath,
