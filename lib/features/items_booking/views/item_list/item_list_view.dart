@@ -111,7 +111,8 @@ class _ItemListViewState extends State<ItemListView> {
                 ),
                 InkWell(
                   onTap: () {
-                    context.pushNamed(CartPage.routeName, extra: context);
+                    context.pushNamed(CartPage.routeName,
+                        extra: {"context": context});
                   },
                   child: BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {

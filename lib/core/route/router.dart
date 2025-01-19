@@ -184,9 +184,10 @@ class AppNavigation {
                 path: CartPage.routePath,
                 name: CartPage.routeName,
                 pageBuilder: (context, state) {
+                  final map = state.extra as Map<String, dynamic>;
                   return getPage(
                     child: CartPage(
-                      cartContext: state.extra as BuildContext,
+                      cartContext: map['context'] as BuildContext,
                     ),
                     state: state,
                   );
