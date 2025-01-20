@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';

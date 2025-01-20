@@ -1,6 +1,5 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
-import 'package:delta_hospital/core/exceptions/custom_exception.dart';
 import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
