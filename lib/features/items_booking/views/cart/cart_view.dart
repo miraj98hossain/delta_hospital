@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/widgets/app_snack_bar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
@@ -22,6 +23,7 @@ class _CartViewState extends State<CartView> {
   num totalTest = 0;
   num totalAmount = 0;
   Map<String?, List<ItemInfo>> groupedList = {};
+  List<ItemInfo> _cartList = [];
   @override
   void initState() {
     super.initState();
@@ -42,6 +44,7 @@ class _CartViewState extends State<CartView> {
                 return const CommonLoading();
               }
               if (state is CartSuccess) {
+                _cartList = state.cartList;
                 totalTest = state.cartList.length;
                 totalAmount = state.cartList.fold<num>(
                   0,
@@ -248,7 +251,17 @@ class _CartViewState extends State<CartView> {
                       lable: "Proceed",
                       backgroundColor: appTheme.secondary,
                       onPressed: () {
-                        context.pushNamed(BookingPatientInfoPage.routeName);
+                        if (_cartList.isEmpty) {
+                          AppSnackBar.showSnackBar(
+                              context: context,
+                              message: "Please add item to cart",
+                              type: SnackBarType.warning);
+                          return;
+                        }
+                        context.pushNamed(
+                          BookingPatientInfoPage.routeName,
+                          extra: _cartList,
+                        );
                       },
                     ),
                   ),
