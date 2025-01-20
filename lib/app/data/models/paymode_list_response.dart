@@ -137,4 +137,8 @@ class Paymode {
         "onlineAppointmentFlag": onlineAppointmentFlag,
         "payModeName": payModeName,
       };
+  @override
+  String toString() {
+    return payModeName ?? "";
+  }
 }
