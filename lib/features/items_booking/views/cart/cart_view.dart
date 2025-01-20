@@ -118,7 +118,7 @@ class _CartViewState extends State<CartView> {
                                           width: 5,
                                         ),
                                         Text(
-                                          "(${data.value.length})*",
+                                          "*(${data.value.length})",
                                           style: lightTextTheme.bodyMedium!
                                               .copyWith(
                                             color: appTheme.primary,
