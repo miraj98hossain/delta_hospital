@@ -9,6 +9,7 @@ import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
+import 'package:delta_hospital/features/management/views/login/mng_login_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';
@@ -127,7 +128,12 @@ class _HomeViewState extends State<HomeView> {
               lable: "Management",
               icon: ImageConstant.managementIcon,
               onTap: () {
-                context.pushNamed(ManagementDashboardPage.routeName);
+                var userDetails = context.read<LoggedHisUserCubit>().state;
+                if (userDetails != null && userDetails.jobTile == "Admin") {
+                  context.pushNamed(ManagementDashboardPage.routeName);
+                } else {
+                  context.pushNamed(MngLoginPage.routeName);
+                }
               },
             ),
           ],

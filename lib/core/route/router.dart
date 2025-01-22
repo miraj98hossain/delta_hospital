@@ -346,10 +346,10 @@ class AppNavigation {
             ),
             routes: [
               GoRoute(
-                path: DashboardLoginPage.routePath,
-                name: DashboardLoginPage.routeName,
+                path: MngLoginPage.routePath,
+                name: MngLoginPage.routeName,
                 pageBuilder: (context, state) => getPage(
-                  child: const DashboardLoginPage(),
+                  child: const MngLoginPage(),
                   state: state,
                 ),
               ),
