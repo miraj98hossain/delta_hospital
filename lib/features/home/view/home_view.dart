@@ -8,7 +8,7 @@ import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
-import 'package:delta_hospital/features/management/view/dashboard/management_dashboard_page.dart';
+import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
 import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';

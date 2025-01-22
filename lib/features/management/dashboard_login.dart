@@ -1,2 +1,2 @@
-export 'view/login/dashboard_login_page.dart';
-export 'view/login/dashboard_login_view.dart';
+export 'views/login/dashboard_login_page.dart';
+export 'views/login/dashboard_login_view.dart';
