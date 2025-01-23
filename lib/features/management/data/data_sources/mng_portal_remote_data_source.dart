@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
-import 'package:delta_hospital/features/doctor_portal/data/models/doctor_admitted_patient_list_response.dart';
-import 'package:delta_hospital/features/doctor_portal/data/models/doctor_consultaion_gridlist_response.dart';
-import 'package:delta_hospital/features/doctor_portal/data/models/doctor_shift_list_response.dart';
+
+import 'package:delta_hospital/features/management/data/models/opd_ipd_patient_report_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class MngPortalRemoteDataSource {
-  // Future<DoctorShiftListResponse> getDoctorShiftByAccessToken(
-  //     {required String token});
+  Future<OpdIpdPatientReportResponse> findOpdIpdPatientReport({
+    required String fromDate,
+    required String toDate,
+  });
 }
 
 class MngPortalRemoteDataSourceImpl
@@ -21,19 +22,25 @@ class MngPortalRemoteDataSourceImpl
       : _appConfig = appConfig;
 
   @override
-  Future<DoctorShiftListResponse> getDoctorShiftByAccessToken(
-      {required String token}) async {
-    var headers = {'Authorization': 'Bearer $token'};
+  Future<OpdIpdPatientReportResponse> findOpdIpdPatientReport({
+    required String fromDate,
+    required String toDate,
+  }) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${_appConfig.baseUrl}diagnostic-api/api/opd-consultation/shift-list'));
-
+            '${_appConfig.baseUrl}online-appointment-api/fapi/opdipdpatient/find-opd-ipd-patient'));
+    request.body = json.encode({
+      "fromDate": fromDate,
+      "toDate": toDate,
+    });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
-    return await decodeResponse(response,
-        decoder: DoctorShiftListResponse.fromJson);
+    return await decodeResponse(
+      response,
+      decoder: OpdIpdPatientReportResponse.fromJson,
+    );
   }
 }

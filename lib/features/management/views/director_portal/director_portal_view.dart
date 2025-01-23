@@ -1,6 +1,12 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/app/widgets/common_loading.dart';
+import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/management/data/models/opd_ipd_patient_report_response.dart';
+import 'package:delta_hospital/features/management/views/director_portal/bloc/patient_report_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class DirectorPortalView extends StatefulWidget {
@@ -13,6 +19,12 @@ class DirectorPortalView extends StatefulWidget {
 class _DirectorPortalViewState extends State<DirectorPortalView> {
   @override
   Widget build(BuildContext context) {
+    var selectedFrmDate = context.select(
+      (VariableStateCubit<DateTime> cubit) => cubit.state,
+    );
+    var selectedToDate = context.select(
+      (VariableStateCubit<String> cubit) => cubit.state,
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const CommonAppbar(),
@@ -69,27 +81,44 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: appTheme.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "DD/MM/YYYY",
-                              style: lightTextTheme.bodySmall!.copyWith(
-                                fontSize: 10,
+                      GestureDetector(
+                        onTap: () async {
+                          var date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            initialDate: DateTime.now(),
+                          );
+                          if (date != null && context.mounted) {
+                            context
+                                .read<VariableStateCubit<DateTime>>()
+                                .update(date);
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                selectedFrmDate
+                                        ?.toFormatedString('dd-MMM-yyyy') ??
+                                    "DD/MM/YYYY",
+                                style: lightTextTheme.bodySmall!.copyWith(
+                                  fontSize: 10,
+                                ),
                               ),
-                            ),
-                            Icon(
-                              size: 18,
-                              Icons.calendar_today_outlined,
-                              color: appTheme.primary,
-                            ),
-                          ],
+                              Icon(
+                                size: 18,
+                                Icons.calendar_today_outlined,
+                                color: appTheme.primary,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -113,27 +142,57 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: appTheme.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "DD/MM/YYYY",
-                              style: lightTextTheme.bodySmall!.copyWith(
-                                fontSize: 10,
+                      GestureDetector(
+                        onTap: () async {
+                          var date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            initialDate: DateTime.now(),
+                          );
+                          if (date != null && context.mounted) {
+                            context
+                                .read<VariableStateCubit<String>>()
+                                .update(date.toString());
+                          }
+                          if (selectedFrmDate != null &&
+                              selectedToDate != null &&
+                              context.mounted) {
+                            context.read<PatientReportBloc>().add(
+                                  PatientReportGet(
+                                    fromDate: selectedFrmDate
+                                        .toFormatedString("dd/MM/yyyy"),
+                                    toDate: DateTime.parse(selectedToDate)
+                                        .toFormatedString("dd/MM/yyyy"),
+                                  ),
+                                );
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                selectedToDate != null
+                                    ? DateTime.parse(selectedToDate)
+                                        .toFormatedString('dd-MMM-yyyy')
+                                    : "DD/MM/YYYY",
+                                style: lightTextTheme.bodySmall!.copyWith(
+                                  fontSize: 10,
+                                ),
                               ),
-                            ),
-                            Icon(
-                              size: 18,
-                              Icons.calendar_today_outlined,
-                              color: appTheme.primary,
-                            ),
-                          ],
+                              Icon(
+                                size: 18,
+                                Icons.calendar_today_outlined,
+                                color: appTheme.primary,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -145,173 +204,197 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
               height: 10,
             ),
             Expanded(
-              child: ListView.separated(
-                  itemCount: 4,
-                  separatorBuilder: (context, index) => const SizedBox(
+              child: BlocBuilder<PatientReportBloc, PatientReportState>(
+                builder: (context, state) {
+                  if (state is PatientReportLoading) {
+                    return const CommonLoading();
+                  }
+                  if (state is PatientReportSuccess) {
+                    return ListView.separated(
+                      itemCount: state.patientReportList.length,
+                      separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
                       ),
-                  itemBuilder: (context, index) => Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 15,
-                        ),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: appTheme.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        color: appTheme.skyBlue,
-                                        borderRadius: BorderRadius.circular(4),
+                      itemBuilder: (context, index) {
+                        var data = state.patientReportList[index];
+
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 15,
+                          ),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 20,
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                          color: appTheme.skyBlue,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: Icon(
+                                          Icons.bar_chart,
+                                          size: 12,
+                                          color: appTheme.primary,
+                                        ),
                                       ),
-                                      child: Icon(
-                                        Icons.bar_chart,
-                                        size: 12,
-                                        color: appTheme.primary,
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Total Patients",
-                                      style: lightTextTheme.bodySmall!.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
+                                      Text(
+                                        data.dataTypeName ?? "",
+                                        style:
+                                            lightTextTheme.bodySmall!.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  "1500",
-                                  style: lightTextTheme.bodySmall!.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        color: appTheme.skyBlue,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Icon(
-                                        Icons.male,
-                                        size: 14,
-                                        color: appTheme.primary,
-                                      ),
+                                  Text(
+                                    data.totalPatient ?? "0",
+                                    style: lightTextTheme.bodySmall!.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Male Patients",
-                                      style: lightTextTheme.bodySmall!.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  "1000",
-                                  style: lightTextTheme.bodySmall!.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
                                   ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              ProgressWidget(
+                                title: "Male Patients",
+                                value: data.malePatient ?? "0",
+                                percentage: _calculatePercentage(
+                                  data.totalPatient ?? "0",
+                                  data.malePatient ?? "0",
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            LinearProgressIndicator(
-                              minHeight: 7,
-                              value: 0.5,
-                              color: appTheme.primary,
-                              backgroundColor: appTheme.skyBlue,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        color: appTheme.skyBlue,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Icon(
-                                        Icons.female,
-                                        size: 14,
-                                        color: appTheme.primary,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Female Patients",
-                                      style: lightTextTheme.bodySmall!.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              ProgressWidget(
+                                title: "Female Patients",
+                                value: data.femalePatient ?? "0",
+                                percentage: _calculatePercentage(
+                                  data.totalPatient ?? "0",
+                                  data.femalePatient ?? "0",
                                 ),
-                                Text(
-                                  "1000",
-                                  style: lightTextTheme.bodySmall!.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              ProgressWidget(
+                                title: "Other Patients",
+                                value: data.otherPatient ?? "0",
+                                percentage: _calculatePercentage(
+                                  data.totalPatient ?? "0",
+                                  data.otherPatient ?? "0",
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            LinearProgressIndicator(
-                              minHeight: 7,
-                              value: 0.3,
-                              color: appTheme.primary,
-                              backgroundColor: appTheme.skyBlue,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ],
-                        ),
-                      )),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return Container();
+                },
+              ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  double _calculatePercentage(String totalPatient, String categoryPatient) {
+    double total = double.parse(totalPatient);
+    double categoryTotal = double.parse(categoryPatient);
+    double percentage = (categoryTotal / total);
+    return percentage;
+  }
+}
+
+class ProgressWidget extends StatelessWidget {
+  const ProgressWidget({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.percentage,
+  });
+
+  final String title;
+  final String value;
+  final double percentage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 20,
+                  width: 20,
+                  decoration: BoxDecoration(
+                    color: appTheme.skyBlue,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Icon(
+                    Icons.male,
+                    size: 14,
+                    color: appTheme.primary,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  title,
+                  style: lightTextTheme.bodySmall!.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              value,
+              style: lightTextTheme.bodySmall!.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        LinearProgressIndicator(
+          minHeight: 7,
+          value: percentage,
+          color: appTheme.primary,
+          backgroundColor: appTheme.skyBlue,
+          borderRadius: BorderRadius.circular(4),
+        ),
+      ],
     );
   }
 }

@@ -6,7 +6,6 @@ import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
-import 'package:delta_hospital/features/patient_portal/views/patient_portal/patient_portal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

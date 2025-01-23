@@ -1,5 +1,4 @@
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/session_expire_dialog.dart';
@@ -8,6 +7,8 @@ import 'package:delta_hospital/core/utils/app_modal.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 
 import 'package:delta_hospital/features/management/financial_dashboard.dart';
+import 'package:delta_hospital/features/management/views/director/director_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +56,9 @@ class _ManagementDashboardViewState extends State<ManagementDashboardView> {
               MngDashWidget(
                 lable: "Director\nPortal",
                 image: ImageConstant.directorPortal,
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(DirectorPage.routeName);
+                },
               ),
               MngDashWidget(
                 lable: "Financial\nDashboard",
