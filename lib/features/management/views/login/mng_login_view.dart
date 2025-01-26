@@ -23,6 +23,7 @@ class _MngLoginViewState extends State<MngLoginView> {
   late FocusNode _userNameFocusNode;
   late FocusNode _passwordFocusNode;
   late GlobalKey<FormState> _formKey;
+  @override
   void initState() {
     _userNameController = TextEditingController();
     _passwordController = TextEditingController();

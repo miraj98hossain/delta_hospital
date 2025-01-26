@@ -3,7 +3,6 @@ import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/features/management/data/models/opd_ipd_patient_report_response.dart';
 import 'package:delta_hospital/features/management/views/director_portal/bloc/patient_report_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

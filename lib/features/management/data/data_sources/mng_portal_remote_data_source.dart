@@ -56,7 +56,7 @@ class MngPortalRemoteDataSourceImpl
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${_appConfig.baseUrl}/online-appointment-api/fapi/financialdashboard/find-financial-dashboard'));
+            '${_appConfig.baseUrl}online-appointment-api/fapi/financialdashboard/find-financial-dashboard'));
     request.body = json.encode({"fromDate": fromDate, "toDate": toDate});
     request.headers.addAll(headers);
 
