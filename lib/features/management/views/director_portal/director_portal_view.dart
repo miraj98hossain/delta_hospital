@@ -94,6 +94,18 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                                 .read<VariableStateCubit<DateTime>>()
                                 .update(date);
                           }
+                          if (selectedFrmDate != null &&
+                              selectedToDate != null &&
+                              context.mounted) {
+                            context.read<PatientReportBloc>().add(
+                                  PatientReportGet(
+                                    fromDate: selectedFrmDate
+                                        .toFormatedString("dd/MM/yyyy"),
+                                    toDate: DateTime.parse(selectedToDate)
+                                        .toFormatedString("dd/MM/yyyy"),
+                                  ),
+                                );
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
