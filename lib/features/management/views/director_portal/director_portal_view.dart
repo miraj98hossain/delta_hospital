@@ -279,7 +279,7 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                                 title: "Male Patients",
                                 value: data.malePatient ?? "0",
                                 percentage: _calculatePercentage(
-                                  data.totalPatient ?? "0",
+                                  data.totalPatient ?? "1",
                                   data.malePatient ?? "0",
                                 ),
                               ),
@@ -290,7 +290,7 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                                 title: "Female Patients",
                                 value: data.femalePatient ?? "0",
                                 percentage: _calculatePercentage(
-                                  data.totalPatient ?? "0",
+                                  data.totalPatient ?? "1",
                                   data.femalePatient ?? "0",
                                 ),
                               ),
@@ -301,7 +301,7 @@ class _DirectorPortalViewState extends State<DirectorPortalView> {
                                 title: "Other Patients",
                                 value: data.otherPatient ?? "0",
                                 percentage: _calculatePercentage(
-                                  data.totalPatient ?? "0",
+                                  data.totalPatient ?? "1",
                                   data.otherPatient ?? "0",
                                 ),
                               ),
