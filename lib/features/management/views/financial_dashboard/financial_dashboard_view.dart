@@ -1,9 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/features/management/data/models/financial_dash_report_response.dart';
 import 'package:delta_hospital/features/management/views/financial_dashboard/bloc/financial_report_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -252,85 +252,21 @@ class _FinancialDashboardViewState extends State<FinancialDashboardView> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    Text(
-                                      data.totalCollection ?? "0",
-                                      style: lightTextTheme.bodySmall!.copyWith(
-                                        color: appTheme.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 FinancialCategory(
-                                  title: "Initial Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.initialCollection ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Due Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.dueCollection ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Refund Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.dueCollection ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Total Refund Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.totalRefund ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Actual Total  Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.actualTotalCollection ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Doctor Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.doctorCollection ?? "0"),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FinancialCategory(
-                                  title: "Net Collection",
-                                  categoryTotal: data.totalCollection ?? "0",
-                                  percentage: _calculatePercentage(
-                                      data.totalCollection ?? "1",
-                                      data.netCollection ?? "0"),
+                                  title: "Collection",
+                                  categoryTotal: data
+                                          .toUiMap()
+                                          .entries
+                                          .firstWhereOrNull((element) =>
+                                              element.value != null)
+                                          ?.value
+                                          .toString() ??
+                                      "0",
                                 ),
                               ],
                             ),
@@ -360,12 +296,10 @@ class FinancialCategory extends StatelessWidget {
     super.key,
     required this.title,
     required this.categoryTotal,
-    required this.percentage,
   });
 
   final String title;
   final String categoryTotal;
-  final double percentage;
 
   @override
   Widget build(BuildContext context) {
@@ -382,23 +316,13 @@ class FinancialCategory extends StatelessWidget {
               ),
             ),
             Text(
-              categoryTotal,
+              "$categoryTotal Tk.",
               style: lightTextTheme.bodySmall!.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ],
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        LinearProgressIndicator(
-          minHeight: 7,
-          value: percentage,
-          color: appTheme.primary,
-          backgroundColor: appTheme.skyBlue,
-          borderRadius: BorderRadius.circular(4),
         ),
       ],
     );

@@ -95,13 +95,20 @@ class FinancialDashReportResponse {
 }
 
 class FinancialReport {
-  final String? initialCollection;
-  final String? dueCollection;
-  final String? totalCollection;
-  final String? totalRefund;
-  final String? actualTotalCollection;
-  final String? doctorCollection;
-  final String? netCollection;
+  final num? initialCollection;
+  final num? dueCollection;
+  final num? totalCollection;
+  final num? totalRefund;
+  final num? actualTotalCollection;
+  final num? doctorCollection;
+  final num? netCollection;
+  final num? totalDailyCollection;
+  final num? pathologySales;
+  final num? totalExpense;
+  final num? radiologySales;
+  final num? radioTherapySales;
+  final num? pharmacySales;
+  final num? otherSales;
   final int? dataType;
   final String? dataTypeName;
 
@@ -113,18 +120,32 @@ class FinancialReport {
     this.actualTotalCollection,
     this.doctorCollection,
     this.netCollection,
+    this.totalDailyCollection,
+    this.pathologySales,
+    this.totalExpense,
+    this.radiologySales,
+    this.radioTherapySales,
+    this.pharmacySales,
+    this.otherSales,
     this.dataType,
     this.dataTypeName,
   });
 
   FinancialReport copyWith({
-    String? initialCollection,
-    String? dueCollection,
-    String? totalCollection,
-    String? totalRefund,
-    String? actualTotalCollection,
-    String? doctorCollection,
-    String? netCollection,
+    num? initialCollection,
+    num? dueCollection,
+    num? totalCollection,
+    num? totalRefund,
+    num? actualTotalCollection,
+    num? doctorCollection,
+    num? netCollection,
+    num? totalDailyCollection,
+    num? pathologySales,
+    num? totalExpense,
+    num? radiologySales,
+    num? radioTherapySales,
+    num? pharmacySales,
+    num? otherSales,
     int? dataType,
     String? dataTypeName,
   }) =>
@@ -137,6 +158,13 @@ class FinancialReport {
             actualTotalCollection ?? this.actualTotalCollection,
         doctorCollection: doctorCollection ?? this.doctorCollection,
         netCollection: netCollection ?? this.netCollection,
+        totalDailyCollection: totalDailyCollection ?? this.totalDailyCollection,
+        pathologySales: pathologySales ?? this.pathologySales,
+        totalExpense: totalExpense ?? this.totalExpense,
+        radiologySales: radiologySales ?? this.radiologySales,
+        radioTherapySales: radioTherapySales ?? this.radioTherapySales,
+        pharmacySales: pharmacySales ?? this.pharmacySales,
+        otherSales: otherSales ?? this.otherSales,
         dataType: dataType ?? this.dataType,
         dataTypeName: dataTypeName ?? this.dataTypeName,
       );
@@ -154,6 +182,13 @@ class FinancialReport {
         actualTotalCollection: json["actualTotalCollection"],
         doctorCollection: json["doctorCollection"],
         netCollection: json["netCollection"],
+        totalDailyCollection: json["totalDailyCollection"]?.toDouble(),
+        pathologySales: json["pathologySales"]?.toDouble(),
+        totalExpense: json["totalExpense"],
+        radiologySales: json["radiologySales"],
+        radioTherapySales: json["radioTherapySales"],
+        pharmacySales: json["pharmacySales"]?.toDouble(),
+        otherSales: json["otherSales"],
         dataType: json["dataType"],
         dataTypeName: json["dataTypeName"],
       );
@@ -166,7 +201,30 @@ class FinancialReport {
         "actualTotalCollection": actualTotalCollection,
         "doctorCollection": doctorCollection,
         "netCollection": netCollection,
+        "totalDailyCollection": totalDailyCollection,
+        "pathologySales": pathologySales,
+        "totalExpense": totalExpense,
+        "radiologySales": radiologySales,
+        "radioTherapySales": radioTherapySales,
+        "pharmacySales": pharmacySales,
+        "otherSales": otherSales,
         "dataType": dataType,
         "dataTypeName": dataTypeName,
+      };
+  Map<String, dynamic> toUiMap() => {
+        "initialCollection": initialCollection,
+        "dueCollection": dueCollection,
+        "totalCollection": totalCollection,
+        "totalRefund": totalRefund,
+        "actualTotalCollection": actualTotalCollection,
+        "doctorCollection": doctorCollection,
+        "netCollection": netCollection,
+        "totalDailyCollection": totalDailyCollection,
+        "pathologySales": pathologySales,
+        "totalExpense": totalExpense,
+        "radiologySales": radiologySales,
+        "radioTherapySales": radioTherapySales,
+        "pharmacySales": pharmacySales,
+        "otherSales": otherSales,
       };
 }
