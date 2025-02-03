@@ -1,11 +1,12 @@
 enum Gender {
-  male("Male"),
-  female("Female"),
-  other("Other");
+  male("Male", "M"),
+  female("Female", "F"),
+  other("Other", "O");
 
-  const Gender(this.value);
+  const Gender(this.value, this.type);
 
   final String value;
+  final String type;
   @override
   String toString() {
     return value;
