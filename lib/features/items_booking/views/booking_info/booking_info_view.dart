@@ -1,17 +1,30 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/bloc/paymode_list_bloc.dart';
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookingInfoView extends StatefulWidget {
-  const BookingInfoView({super.key});
-
+  const BookingInfoView({super.key, required this.bookingInfo});
+  final BookingInfoModel bookingInfo;
   @override
   State<BookingInfoView> createState() => _BookingInfoViewState();
 }
 
 class _BookingInfoViewState extends State<BookingInfoView> {
+  @override
+  void initState() {
+    context.read<PaymodeListBloc>().add(
+          PaymodeListGet(),
+        );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +54,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     style: lightTextTheme.bodyMedium!.copyWith(),
                   ),
                   Text(
-                    "Dr. John Doe",
+                    widget.bookingInfo.patientName ?? "",
                     style: lightTextTheme.bodyMedium!.copyWith(
                       color: appTheme.primary,
                     ),
@@ -51,7 +64,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     style: lightTextTheme.bodyMedium!.copyWith(),
                   ),
                   Text(
-                    "1000 Tk",
+                    widget.bookingInfo.totalAmt?.toString() ?? "",
                     style: lightTextTheme.bodyMedium!.copyWith(
                       color: appTheme.primary,
                     ),
@@ -71,10 +84,19 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             const SizedBox(
               height: 10,
             ),
-            CommonDropdownButton(
-              hintText: "Select Payment Method",
-              onChanged: (value) {},
-              items: List.generate(2, (index) => index),
+            BlocBuilder<PaymodeListBloc, PaymodeListState>(
+              builder: (context, state) {
+                return CommonDropdownButton<Paymode>(
+                  hintText: "Select Payment Method",
+                  value: context.watch<VariableStateCubit<Paymode>>().state,
+                  onChanged: (value) {
+                    if (value != null) {
+                      context.read<VariableStateCubit<Paymode>>().update(value);
+                    }
+                  },
+                  items: state is PaymodeListSuccess ? state.paymodeList : [],
+                );
+              },
             ),
             const SizedBox(
               height: 40,
@@ -84,7 +106,10 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               child: CommonElevatedButton(
                 lable: "Proceed",
                 backgroundColor: appTheme.secondary,
-                onPressed: () {},
+                onPressed: () {
+                  if (context.read<VariableStateCubit<Paymode>>().state !=
+                      null) {}
+                },
               ),
             ),
           ],
