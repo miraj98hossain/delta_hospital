@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
 import 'package:delta_hospital/app/bloc/his_patient_info_bloc.dart';
@@ -11,12 +13,15 @@ import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
+import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/features/items_booking/views/booking_info/booking_info_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/widgets/common_text_field_widget.dart';
 
@@ -33,7 +38,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _addressController;
-  late TextEditingController _dobController;
+
   late TextEditingController _preferredDateController;
   late TextEditingController _expectedDateController;
   late TextEditingController _visitDateController;
@@ -54,7 +59,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
     _phoneController = TextEditingController();
     _emailController = TextEditingController();
     _addressController = TextEditingController();
-    _dobController = TextEditingController();
+
     _preferredDateController = TextEditingController();
     _expectedDateController = TextEditingController();
     _visitDateController = TextEditingController();
@@ -81,7 +86,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
     _phoneController.dispose();
     _emailController.dispose();
     _addressController.dispose();
-    _dobController.dispose();
+
     _preferredDateController.dispose();
     _expectedDateController.dispose();
     _visitDateController.dispose();
@@ -98,18 +103,6 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    PatientPortalUser? selectedPatient = context.select(
-      (VariableStateCubit<PatientPortalUser> cubit) => cubit.state,
-    );
-    bool? foreignTraveller = context.select(
-      (VariableStateCubit<bool> cubit) => cubit.state,
-    );
-    // HisPatientInfo? hisPatientInfo = context.select((HisPatientInfoBloc bloc) {
-    //   if (bloc.state is HisPatientInfoSuccess) {
-    //     return (bloc.state as HisPatientInfoSuccess).patientInfo;
-    //   }
-    //   return null;
-    // });
     return Scaffold(
       appBar: const CommonAppbar(),
       body: SingleChildScrollView(
@@ -160,7 +153,9 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                       builder: (context, state) {
                         return CommonDropdownButton<PatientPortalUser>(
                           hintText: "Select Patient",
-                          value: selectedPatient,
+                          value: context
+                              .watch<VariableStateCubit<PatientPortalUser>>()
+                              .state,
                           onChanged: (value) {
                             if (value != null) {
                               context
@@ -168,7 +163,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                   .update(value);
                               context.read<HisPatientInfoBloc>().add(
                                     HisPatientInfoGet(
-                                      mrnOrPhNo: value.mrn ?? '0',
+                                      mrnOrPhNo: value.mrn ?? '',
                                     ),
                                   );
                             }
@@ -266,7 +261,12 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                     height: 10,
                                   ),
                                   IgnorePointer(
-                                    ignoring: selectedPatient != null &&
+                                    ignoring: context
+                                                    .watch<
+                                                        VariableStateCubit<
+                                                            PatientPortalUser>>()
+                                                    .state !=
+                                                null &&
                                             context
                                                     .watch<
                                                         VariableStateCubit<
@@ -357,7 +357,12 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                       ),
                                       const Spacer(),
                                       IconButton(
-                                        onPressed: selectedPatient != null &&
+                                        onPressed: context
+                                                        .watch<
+                                                            VariableStateCubit<
+                                                                PatientPortalUser>>()
+                                                        .state !=
+                                                    null &&
                                                 context
                                                         .watch<
                                                             VariableStateCubit<
@@ -503,8 +508,8 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                     keyboardType: TextInputType.emailAddress,
                                     hintText: "Patient Email Address",
                                     validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please Enter Email Address';
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your email';
                                       }
                                       return null;
                                     },
@@ -517,7 +522,12 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                             ),
                             Expanded(
                               child: IgnorePointer(
-                                ignoring: selectedPatient != null &&
+                                ignoring: context
+                                                .watch<
+                                                    VariableStateCubit<
+                                                        PatientPortalUser>>()
+                                                .state !=
+                                            null &&
                                         context
                                                 .watch<
                                                     VariableStateCubit<
@@ -673,50 +683,56 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                             color: appTheme.white,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Row(
+                        BlocBuilder<VariableStateCubit<bool>, bool?>(
+                          builder: (context, state) {
+                            return Row(
                               children: [
-                                Radio<bool>(
-                                  value: true,
-                                  groupValue: foreignTraveller,
-                                  onChanged: (value) {
-                                    if (value == null) return;
-                                    context
-                                        .read<VariableStateCubit<bool>>()
-                                        .update(value);
-                                  },
+                                Row(
+                                  children: [
+                                    Radio<bool>(
+                                      value: true,
+                                      groupValue: state,
+                                      onChanged: (value) {
+                                        if (value == null) return;
+                                        context
+                                            .read<VariableStateCubit<bool>>()
+                                            .update(value);
+                                      },
+                                    ),
+                                    Text(
+                                      "Yes",
+                                      style:
+                                          lightTextTheme.bodyMedium!.copyWith(
+                                        color: appTheme.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Yes",
-                                  style: lightTextTheme.bodyMedium!.copyWith(
-                                    color: appTheme.white,
-                                  ),
+                                const SizedBox(width: 16),
+                                Row(
+                                  children: [
+                                    Radio<bool>(
+                                      value: false,
+                                      groupValue: state,
+                                      onChanged: (value) {
+                                        if (value == null) return;
+                                        context
+                                            .read<VariableStateCubit<bool>>()
+                                            .update(value);
+                                      },
+                                    ),
+                                    Text(
+                                      "No",
+                                      style:
+                                          lightTextTheme.bodyMedium!.copyWith(
+                                        color: appTheme.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                            const SizedBox(width: 16),
-                            Row(
-                              children: [
-                                Radio<bool>(
-                                  value: false,
-                                  groupValue: foreignTraveller,
-                                  onChanged: (value) {
-                                    if (value == null) return;
-                                    context
-                                        .read<VariableStateCubit<bool>>()
-                                        .update(value);
-                                  },
-                                ),
-                                Text(
-                                  "No",
-                                  style: lightTextTheme.bodyMedium!.copyWith(
-                                    color: appTheme.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 10,
@@ -750,7 +766,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                               validator: (value) {
                                                 if ((value == null ||
                                                         value.isEmpty) &&
-                                                    foreignTraveller == true) {
+                                                    state == true) {
                                                   return "Please enter ticket no";
                                                 }
                                                 return null;
@@ -784,7 +800,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                               validator: (value) {
                                                 if ((value == null ||
                                                         value.isEmpty) &&
-                                                    foreignTraveller == true) {
+                                                    state == true) {
                                                   return "Please enter country of arrival";
                                                 }
                                                 return null;
@@ -840,7 +856,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                         validator: (value) {
                                           if ((value == null ||
                                                   value.isEmpty) &&
-                                              foreignTraveller == true) {
+                                              state == true) {
                                             return "Please enter tentative visit date";
                                           }
                                           return null;
@@ -863,46 +879,79 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                             lable: "Proceed",
                             backgroundColor: appTheme.secondary,
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {}
-                              // if (_formKey.currentState!.validate() &&
-                              //     _validate()) {
-                              //   patientInfo = patientInfo.copyWith(
-                              //     patientName: _nameController.text,
-                              //     phoneMobile: _phoneController.text,
-                              //     genderData: context
-                              //         .read<VariableStateCubit<Gender>>()
-                              //         .state!
-                              //         .value,
-                              //     dob: context
-                              //         .read<VariableStateCubit<DateTime>>()
-                              //         .state!
-                              //         .toFormatedString('yyyy-MM-dd'),
-                              //     ageYy: context
-                              //         .read<VariableStateCubit<DateTime>>()
-                              //         .state!
-                              //         .calculateAge()[0],
-                              //     ageMm: context
-                              //         .read<VariableStateCubit<DateTime>>()
-                              //         .state!
-                              //         .calculateAge()[1],
-                              //     ageDd: context
-                              //         .read<VariableStateCubit<DateTime>>()
-                              //         .state!
-                              //         .calculateAge()[2],
-                              //     address: _addressController.text,
-                              //     email: _emailController.text,
-                              //   );
-                              //   context.pushNamed(
-                              //     AppointmentInfoPage.routeName,
-                              //     extra: {
-                              //       "slot": widget.slot,
-                              //       "consultationType": widget.consultationType,
-                              //       "patType": widget.patientType,
-                              //       "doctor": widget.doctor,
-                              //       "patient": patientInfo,
-                              //     },
-                              //   );
-                              // }
+                              if (_formKey.currentState!.validate()) {
+                                var bookingInfo = BookingInfoModel(
+                                  activeStatus: 1,
+                                  foreignTraveler: context
+                                              .read<VariableStateCubit<bool>>()
+                                              .state ==
+                                          true
+                                      ? 1
+                                      : 0,
+                                  sampleCallFlag: 0,
+                                  preferredSamCollDate:
+                                      _preferredDateController.text,
+                                  expectedRepDeliDate:
+                                      _visitDateController.text,
+                                  diagItemBookingDtlList: widget.cartList,
+                                  patientName: _nameController.text,
+                                  phoneMobile: _phoneController.text,
+                                  email: _emailController.text,
+                                  address: _addressController.text,
+                                  religion: hisPatientInfo.religion,
+                                  maritalStatus: hisPatientInfo.maritalStatus,
+                                  fatherName: hisPatientInfo.fatherName,
+                                  motherName: hisPatientInfo.motherName,
+                                  spouseName: hisPatientInfo.spouseName,
+                                  nationalId: hisPatientInfo.nationalId,
+                                  passportNo: hisPatientInfo.passportNo,
+                                  salutation: hisPatientInfo.salutation,
+                                  totalAmt: () {
+                                    var amt = 0.0;
+                                    for (var element in widget.cartList) {
+                                      amt += element.salesPrice ?? 0;
+                                    }
+                                    return amt;
+                                  }.call(),
+                                  discountAmt: 0,
+                                  netTotalAmt: () {
+                                    var amt = 0.0;
+                                    for (var element in widget.cartList) {
+                                      amt += element.salesPrice ?? 0;
+                                    }
+                                    return amt;
+                                  }.call(),
+                                  fname: hisPatientInfo.fname,
+                                  lname: hisPatientInfo.lname,
+                                  gender: context
+                                      .read<VariableStateCubit<Gender>>()
+                                      .state
+                                      ?.type,
+                                  bloodGroup: context
+                                      .read<VariableStateCubit<BloodGroup>>()
+                                      .state
+                                      ?.value,
+                                  dob: context
+                                      .read<VariableStateCubit<DateTime>>()
+                                      .state
+                                      ?.toFormatedString("dd-MM-yyyy"),
+                                  ageYy: context
+                                      .read<VariableStateCubit<DateTime>>()
+                                      .state!
+                                      .calculateAge()[0],
+                                  ageMm: context
+                                      .read<VariableStateCubit<DateTime>>()
+                                      .state!
+                                      .calculateAge()[1],
+                                  ageDd: context
+                                      .read<VariableStateCubit<DateTime>>()
+                                      .state!
+                                      .calculateAge()[2],
+                                );
+
+                                context.pushNamed(BookingInfoPage.routeName,
+                                    extra: bookingInfo);
+                              }
                             },
                           ),
                         ),
