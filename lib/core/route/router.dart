@@ -1,3 +1,4 @@
+import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/on_boarding/app_registration.dart';
 import 'package:delta_hospital/features/on_boarding/app_otp_verification.dart';
@@ -210,7 +211,9 @@ class AppNavigation {
                 path: BookingInfoPage.routePath,
                 name: BookingInfoPage.routeName,
                 pageBuilder: (context, state) => getPage(
-                  child: const BookingInfoPage(),
+                  child: BookingInfoPage(
+                    bookingInfo: state.extra as BookingInfoModel,
+                  ),
                   state: state,
                 ),
               ),
