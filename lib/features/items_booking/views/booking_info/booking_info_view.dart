@@ -6,6 +6,7 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
+import 'package:delta_hospital/features/items_booking/views/booking_info/bloc/create_booking_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,16 +102,28 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             const SizedBox(
               height: 40,
             ),
-            Align(
-              alignment: Alignment.center,
-              child: CommonElevatedButton(
-                lable: "Proceed",
-                backgroundColor: appTheme.secondary,
-                onPressed: () {
-                  if (context.read<VariableStateCubit<Paymode>>().state !=
-                      null) {}
-                },
-              ),
+            BlocBuilder<CreateBookingBloc, CreateBookingState>(
+              builder: (context, state) {
+                return Align(
+                  alignment: Alignment.center,
+                  child: CommonElevatedButton(
+                    lable: state is CreateBookingLoading
+                        ? "Please Wait..."
+                        : "Proceed",
+                    backgroundColor: appTheme.secondary,
+                    onPressed: () {
+                      if (context.read<VariableStateCubit<Paymode>>().state !=
+                          null) {
+                        context.read<CreateBookingBloc>().add(
+                              CreateBooking(
+                                bookingInfoModel: widget.bookingInfo,
+                              ),
+                            );
+                      }
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -80,7 +81,7 @@ class ItemsBookingRemoteDataSourceImpl
             '${_appConfig.baseUrl}online-appointment-api/fapi/diagnostic-item-booking/create-booking'));
     request.body = json.encode(bookingInfoModel.toMap());
     request.headers.addAll(headers);
-
+    log(request.body);
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse(response, decoder: GenericResponse.fromJson);

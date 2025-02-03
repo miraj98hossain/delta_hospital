@@ -619,9 +619,11 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                       );
                                       if (selectedDate != null &&
                                           context.mounted) {
+                                        // _preferredDateController.text =
+                                        //     selectedDate
+                                        //         .toFormatedString("dd-MM-yyyy");
                                         _preferredDateController.text =
-                                            selectedDate
-                                                .toFormatedString("dd-MM-yyyy");
+                                            selectedDate.toString();
                                       }
                                     },
                                   ),
@@ -664,8 +666,10 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                       if (selectedDate != null &&
                                           context.mounted) {
                                         _expectedDateController.text =
-                                            selectedDate
-                                                .toFormatedString("dd-MM-yyyy");
+                                            selectedDate.toString();
+                                        // _expectedDateController.text =
+                                        //     selectedDate
+                                        //         .toFormatedString("dd-MM-yyyy");
                                       }
                                     },
                                   ),
@@ -888,24 +892,25 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                           true
                                       ? 1
                                       : 0,
-                                  sampleCallFlag: 0,
+                                  sampleCallFlag: 1,
                                   preferredSamCollDate:
                                       _preferredDateController.text,
                                   expectedRepDeliDate:
-                                      _visitDateController.text,
+                                      _expectedDateController.text,
                                   diagItemBookingDtlList: widget.cartList,
                                   patientName: _nameController.text,
                                   phoneMobile: _phoneController.text,
                                   email: _emailController.text,
                                   address: _addressController.text,
-                                  religion: hisPatientInfo.religion,
-                                  maritalStatus: hisPatientInfo.maritalStatus,
-                                  fatherName: hisPatientInfo.fatherName,
-                                  motherName: hisPatientInfo.motherName,
-                                  spouseName: hisPatientInfo.spouseName,
-                                  nationalId: hisPatientInfo.nationalId,
-                                  passportNo: hisPatientInfo.passportNo,
-                                  salutation: hisPatientInfo.salutation,
+                                  religion: hisPatientInfo.religion ?? "",
+                                  maritalStatus:
+                                      hisPatientInfo.maritalStatus ?? "",
+                                  fatherName: hisPatientInfo.fatherName ?? "",
+                                  motherName: hisPatientInfo.motherName ?? "",
+                                  spouseName: hisPatientInfo.spouseName ?? "",
+                                  nationalId: hisPatientInfo.nationalId ?? "",
+                                  passportNo: hisPatientInfo.passportNo ?? "",
+                                  salutation: hisPatientInfo.salutation ?? "",
                                   totalAmt: () {
                                     var amt = 0.0;
                                     for (var element in widget.cartList) {
@@ -932,9 +937,10 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                       .state
                                       ?.value,
                                   dob: context
-                                      .read<VariableStateCubit<DateTime>>()
-                                      .state
-                                      ?.toFormatedString("dd-MM-yyyy"),
+                                          .read<VariableStateCubit<DateTime>>()
+                                          .state
+                                          ?.toString() ??
+                                      "",
                                   ageYy: context
                                       .read<VariableStateCubit<DateTime>>()
                                       .state!
