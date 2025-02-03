@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/core/exceptions/api_exceptions.dart';
 import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
+import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
 import 'package:delta_hospital/features/items_booking/domain/repositories/items_booking_repository.dart';
@@ -73,5 +74,16 @@ class ItemsBookingRepositoryImpl implements ItemsBookingRepository {
   @override
   Future<void> removeItemFromCart({required ItemInfo item}) async {
     await localDataSource.removeItemFromCart(item: item);
+  }
+
+  @override
+  Future<void> createBooking({
+    required BookingInfoModel bookingInfoModel,
+  }) async {
+    var response = await remoteDataSource.createBooking(
+        bookingInfoModel: bookingInfoModel);
+    if (response.success != true) {
+      throw ApiDataException(response.message ?? "Error Occured While Booking");
+    }
   }
 }

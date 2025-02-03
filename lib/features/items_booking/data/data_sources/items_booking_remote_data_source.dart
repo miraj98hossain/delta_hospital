@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:delta_hospital/app/data/models/generic_reponse.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
+import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_type_list_response.dart';
 
@@ -13,6 +17,9 @@ abstract class ItemsBookingRemoteDataSource {
     String searchValue = '',
     int? itemTypeNo,
     int? departmentNo,
+  });
+  Future<GenericResponse> createBooking({
+    required BookingInfoModel bookingInfoModel,
   });
 }
 
@@ -61,5 +68,21 @@ class ItemsBookingRemoteDataSourceImpl
       response,
       decoder: ItemGridListResponse.fromJson,
     );
+  }
+
+  @override
+  Future<GenericResponse> createBooking(
+      {required BookingInfoModel bookingInfoModel}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/diagnostic-item-booking/create-booking'));
+    request.body = json.encode(bookingInfoModel.toMap());
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, decoder: GenericResponse.fromJson);
   }
 }
