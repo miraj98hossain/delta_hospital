@@ -8,7 +8,7 @@ import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/his_user_create_bloc.dart';
-import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/pat_relation_list_bloc.dart';
+import 'package:delta_hospital/app/bloc/pat_relation_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

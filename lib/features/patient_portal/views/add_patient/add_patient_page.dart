@@ -3,7 +3,7 @@ import 'package:delta_hospital/app/data/models/patient_relation_list_response.da
 
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/his_user_create_bloc.dart';
-import 'package:delta_hospital/features/patient_portal/views/add_patient/bloc/pat_relation_list_bloc.dart';
+import 'package:delta_hospital/app/bloc/pat_relation_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -893,10 +893,12 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                       ? 1
                                       : 0,
                                   sampleCallFlag: 1,
-                                  preferredSamCollDate:
-                                      _preferredDateController.text,
-                                  expectedRepDeliDate:
-                                      _expectedDateController.text,
+                                  preferredSamCollDate: DateTime.parse(
+                                          _preferredDateController.text)
+                                      .toFormatedString("dd-MM-yyyy"),
+                                  expectedRepDeliDate: DateTime.parse(
+                                          _expectedDateController.text)
+                                      .toFormatedString("dd-MM-yyyy"),
                                   diagItemBookingDtlList: widget.cartList,
                                   patientName: _nameController.text,
                                   phoneMobile: _phoneController.text,
@@ -939,7 +941,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                   dob: context
                                           .read<VariableStateCubit<DateTime>>()
                                           .state
-                                          ?.toString() ??
+                                          ?.toFormatedString("dd-MM-yyyy") ??
                                       "",
                                   ageYy: context
                                       .read<VariableStateCubit<DateTime>>()

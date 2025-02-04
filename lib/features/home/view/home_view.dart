@@ -117,6 +117,10 @@ class _HomeViewState extends State<HomeView> {
               icon: ImageConstant.ambulance,
             ),
             ModuleWidget(
+              lable: "Hn Registeration",
+              icon: ImageConstant.ambulance,
+            ),
+            ModuleWidget(
               lable: "Settings",
               icon: ImageConstant.settings,
             ),
