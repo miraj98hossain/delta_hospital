@@ -136,8 +136,9 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
   }
 
   @override
-  Future<Uint8List> getPrescriptionPdf(
-      {required int prescriptionId, required String? token}) async {
+  Future<Uint8List> getPrescriptionPdf({
+    required int prescriptionId,
+  }) async {
     var token = await localDataSource.getAuthResponse();
     var response = await patRemoteDataSource.getPrescriptionPdf(
       token: token?.accessToken ?? '',

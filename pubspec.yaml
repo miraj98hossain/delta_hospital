@@ -28,6 +28,7 @@ dependencies:
   collection: ^1.18.0
   flutter_localizations:
     sdk: flutter
+  pdfrx: ^1.0.101
 
 
 dev_dependencies:

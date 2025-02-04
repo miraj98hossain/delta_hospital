@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/on_boarding/app_registration.dart';
@@ -34,9 +36,11 @@ import 'package:delta_hospital/features/patient_portal/views/add_patient/add_pat
 import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/pat_medical_record_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/pat_prescription/pat_prescription_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_page.dart';
+import 'package:delta_hospital/features/patient_portal/views/pdf_viewer/pdf_viewer_page.dart';
 import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../features/book_appointment/appointment_info.dart';
 import '../../features/book_appointment/data/models/doctor_grid_list_response.dart';
 import '../../features/doctor_portal/doctor_opd_portal.dart';
@@ -287,6 +291,20 @@ class AppNavigation {
                   child: const PatientListPage(),
                   state: state,
                 ),
+              ),
+              GoRoute(
+                path: PdfViewerPage.routePath,
+                name: PdfViewerPage.routeName,
+                pageBuilder: (context, state) {
+                  var map = state.extra as Map<String, dynamic>;
+                  return getPage(
+                    child: PdfViewerPage(
+                      title: map['title'] as String,
+                      pdfData: map['pdfData'] as Uint8List,
+                    ),
+                    state: state,
+                  );
+                },
               ),
             ],
           ),
