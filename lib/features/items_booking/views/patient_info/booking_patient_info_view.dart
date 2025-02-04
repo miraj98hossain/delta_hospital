@@ -531,7 +531,7 @@ class _BookingPatientInfoViewState extends State<BookingPatientInfoView> {
                                         context
                                                 .watch<
                                                     VariableStateCubit<
-                                                        Gender>>()
+                                                        BloodGroup>>()
                                                 .state !=
                                             null
                                     ? true
