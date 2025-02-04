@@ -8,6 +8,7 @@ import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
+import 'package:delta_hospital/features/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/management/views/login/mng_login_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
@@ -119,6 +120,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Hn Registeration",
               icon: ImageConstant.ambulance,
+              onTap: () {
+                context.pushNamed(HnRegistrationPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Settings",

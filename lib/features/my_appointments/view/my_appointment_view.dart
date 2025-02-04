@@ -36,7 +36,7 @@ class _MyAppointmentViewState extends State<MyAppointmentView>
         child: Column(
           children: [
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             SizedBox(
               height: 30,

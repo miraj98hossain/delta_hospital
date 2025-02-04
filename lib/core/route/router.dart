@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:delta_hospital/features/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/features/on_boarding/app_registration.dart';
@@ -426,6 +427,14 @@ class AppNavigation {
                 ],
               ),
             ],
+          ),
+          GoRoute(
+            path: HnRegistrationPage.routePath,
+            name: HnRegistrationPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const HnRegistrationPage(),
+              state: state,
+            ),
           ),
         ],
       ),

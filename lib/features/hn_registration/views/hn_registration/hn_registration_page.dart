@@ -1,3 +1,6 @@
+import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
+import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
+import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/app/bloc/pat_relation_list_bloc.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,21 @@ class HnRegistrationPage extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               PatRelationListBloc(getService())..add(PatRelationListGet()),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<PatientRelation>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<Gender>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<BloodGroup>(),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<int>()..update(0),
+        ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<DateTime>(),
         ),
       ],
       child: const HnRegistrationView(),
