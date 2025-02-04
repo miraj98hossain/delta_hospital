@@ -7,6 +7,9 @@ import 'package:delta_hospital/core/sembast.dart';
 import 'package:delta_hospital/features/book_appointment/data/data_sources/book_apt_remote_data_source.dart';
 import 'package:delta_hospital/features/book_appointment/domain/repositories/book_apt_repository.dart';
 import 'package:delta_hospital/features/doctor_portal/domain/repositories/doc_portal_repository.dart';
+import 'package:delta_hospital/features/hn_registration/data/data_sources/hn_reg_remote_data_source.dart';
+import 'package:delta_hospital/features/hn_registration/data/repositories/hn_reg_repository_impl.dart';
+import 'package:delta_hospital/features/hn_registration/domain/repositories/hn_reg_repository.dart';
 import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
 import 'package:delta_hospital/features/items_booking/data/repositories/items_booking_repository_impl.dart';
 import 'package:delta_hospital/features/management/data/data_sources/mng_portal_remote_data_source.dart';
@@ -123,6 +126,20 @@ abstract class DIContainer {
       () => MngPortalRepositoryImpl(
         remoteDataSource: getIt<MngPortalRemoteDataSource>(),
         localDataSource: getIt<AppLocalDataSource>(),
+      ),
+    );
+    //Hn reg
+    getIt.registerLazySingleton<HnRegRemoteDataSource>(
+      () => HnRegRemoteDataSourceImpl(
+        appConfig: getIt<AppConfig>(),
+      ),
+    );
+
+    getIt.registerLazySingleton<HnRegRepository>(
+      () => HnRegRepositoryImpl(
+        hnRegRemoteDataSource: getIt<HnRegRemoteDataSource>(),
+        localDataSource: getIt<AppLocalDataSource>(),
+        appRemoteDataSource: getIt<AppRemoteDataSource>(),
       ),
     );
   }
