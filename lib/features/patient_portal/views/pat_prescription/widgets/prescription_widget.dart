@@ -1,3 +1,4 @@
+import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_prescription_gridlist_response.dart';
@@ -72,6 +73,16 @@ class PrescriptionWidget extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  CommonElevatedButton(
+                    lable: "View",
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                 ],
               ),

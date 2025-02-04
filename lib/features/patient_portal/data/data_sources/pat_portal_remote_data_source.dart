@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -35,6 +36,10 @@ abstract class PatPortalRemoteDataSource {
   });
   Future<HisPatientInfoResponse> findRegAndCreateUser({
     required String mrn,
+  });
+  Future<Uint8List> getPrescriptionPdf({
+    required int prescriptionId,
+    required String? token,
   });
 }
 
@@ -153,5 +158,25 @@ class PatPortalRemoteDataSourceImpl
 
     return await decodeResponse(response,
         decoder: HisPatientInfoResponse.fromJson);
+  }
+
+  @override
+  Future<Uint8List> getPrescriptionPdf(
+      {required int prescriptionId, required String? token}) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+
+    var request = http.Request(
+      'POST',
+      Uri.parse(
+        '${_appConfig.baseUrl}prescription-service-api/api/report/prescription?prescriptionId=$prescriptionId&pClient=ihl&pLayout=1',
+      ),
+    );
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, isFile: true);
   }
 }

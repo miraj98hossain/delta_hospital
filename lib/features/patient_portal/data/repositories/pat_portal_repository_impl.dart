@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:delta_hospital/app/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/app/data/data_sources/app_remote_data_source.dart';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
@@ -131,5 +133,19 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
     if (response.success != true) {
       throw const ApiDataException("Error Occured While Sending SMS");
     }
+  }
+
+  @override
+  Future<Uint8List> getPrescriptionPdf(
+      {required int prescriptionId, required String? token}) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await patRemoteDataSource.getPrescriptionPdf(
+      token: token?.accessToken ?? '',
+      prescriptionId: prescriptionId,
+    );
+    if (response.isEmpty) {
+      throw const ApiDataException("No Pdf Data Found");
+    }
+    return response;
   }
 }

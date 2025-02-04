@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
@@ -32,5 +34,9 @@ abstract class PatPortalRepository {
   Future<List<PatientRelation>> getPatientRelationList();
   Future<void> savePatientPortalUser({
     required AppUserDetails userDetails,
+  });
+  Future<Uint8List> getPrescriptionPdf({
+    required int prescriptionId,
+    required String? token,
   });
 }
