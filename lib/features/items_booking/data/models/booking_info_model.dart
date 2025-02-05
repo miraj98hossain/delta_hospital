@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
@@ -109,7 +110,7 @@ class BookingInfoModel extends HisPatientInfo {
         "religion": religion,
         "nationalId": nationalId,
         "passportNo": passportNo,
-        "address": address,
+        "address": "Banasree",
         "preferredSamCollDate": preferredSamCollDate,
         "expectedRepDeliDate": expectedRepDeliDate,
         "diagItemBookingDtlList": diagItemBookingDtlList == null
@@ -118,6 +119,6 @@ class BookingInfoModel extends HisPatientInfo {
         "patientName": patientName,
         "totalAmt": totalAmt,
         "discountAmt": discountAmt,
-        "netTotalAmt": netTotalAmt,
+        "netTotalAmt": netTotalAmt
       };
 }

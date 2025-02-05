@@ -1,5 +1,5 @@
-import 'package:delta_hospital/features/items_booking/data/data_sources/items_booking_remote_data_source.dart';
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
+import 'package:delta_hospital/features/items_booking/domain/repositories/items_booking_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,7 @@ final class CreateBookingError extends CreateBookingState {
 }
 
 class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
-  final ItemsBookingRemoteDataSource _itemBookingRepository;
+  final ItemsBookingRepository _itemBookingRepository;
   CreateBookingBloc(this._itemBookingRepository)
       : super(CreateBookingInitial()) {
     on<CreateBooking>((event, emit) async {
