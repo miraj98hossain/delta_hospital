@@ -149,4 +149,20 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
     }
     return response;
   }
+
+  @override
+  Future<void> previewPathReport({
+    required String token,
+    required Report report,
+  }) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await patRemoteDataSource.previewPathReport(
+      token: token?.accessToken ?? '',
+      report: report,
+    );
+    if (response.success != true) {
+      throw ApiDataException(
+          response.message ?? "Error Occured While Fetching");
+    }
+  }
 }

@@ -5,6 +5,7 @@ import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/add_note_response.dart';
+import 'package:delta_hospital/features/patient_portal/data/models/fetch_patient_pdf_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_notes_gridlist_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_prescription_gridlist_response.dart';
 import 'package:delta_hospital/features/patient_portal/data/models/patient_report_gridlist_response.dart';
@@ -40,6 +41,10 @@ abstract class PatPortalRemoteDataSource {
   Future<Uint8List> getPrescriptionPdf({
     required int prescriptionId,
     required String? token,
+  });
+  Future<FetchPatientPdfResponse> previewPathReport({
+    required String token,
+    required Report report,
   });
 }
 
@@ -178,5 +183,33 @@ class PatPortalRemoteDataSourceImpl
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse(response, isFile: true);
+  }
+
+  @override
+  Future<FetchPatientPdfResponse> previewPathReport(
+      {String? token, required Report report}) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    var request = http.Request(
+      'POST',
+      Uri.parse(
+        '${_appConfig.baseUrl}diagnostic-api/api/pat-investigation-report/fetch-patient-pdf',
+      ),
+    );
+
+    request.body = json.encode({
+      "companyNo": report.companyNo,
+      "subDir": report.invoiceNo,
+      "fileName": report.reportName,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response,
+        decoder: FetchPatientPdfResponse.fromJson);
   }
 }

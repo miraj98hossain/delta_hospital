@@ -38,4 +38,8 @@ abstract class PatPortalRepository {
   Future<Uint8List> getPrescriptionPdf({
     required int prescriptionId,
   });
+  Future<void> previewPathReport({
+    required String token,
+    required Report report,
+  });
 }
