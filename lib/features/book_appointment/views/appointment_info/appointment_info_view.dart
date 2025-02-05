@@ -66,9 +66,200 @@ class _AppointmentInfoViewState extends State<AppointmentInfoView> {
           return BlocListener<BookAppointmentBloc, BookAppointmentState>(
             listener: (context, state) {
               if (state is BookAppointmentSuccess) {
-                context.goNamed(BookAppointmentPage.routeName, extra: {
-                  "doctor": widget.doctor,
-                });
+                showModalBottomSheet(
+                  context: context,
+                  isDismissible: false,
+                  builder: (BuildContext context) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      height: MediaQuery.of(context).size.height * 0.30,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: const BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "You have successfully booked an appointment",
+                            overflow: TextOverflow.ellipsis,
+                            style: lightTextTheme.bodyMedium!.copyWith(
+                              color: appTheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 178,
+                                  margin: const EdgeInsets.only(top: 2),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.doctor.doctorName!,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color:
+                                              Color.fromARGB(255, 61, 61, 61),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        // .titleMediumBluegray600Bold,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Date: ",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Color.fromARGB(
+                                                  255,
+                                                  61,
+                                                  61,
+                                                  61,
+                                                ),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              // .titleMediumBluegray600Bold,
+                                            ),
+                                            TextSpan(
+                                              text: widget.slot.appointDate,
+                                              style: lightTextTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      const SizedBox(height: 4),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Time: ",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Color.fromARGB(
+                                                  255,
+                                                  61,
+                                                  61,
+                                                  61,
+                                                ),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              // .titleMediumBluegray600Bold,
+                                            ),
+                                            TextSpan(
+                                              text: DateTime.parse(
+                                                widget.slot.startTime!,
+                                              )
+                                                  .toLocal()
+                                                  .toFormatedString("hh:mm a"),
+                                              style: lightTextTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 87,
+                                    bottom: 4,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Text(
+                                        "Serial no",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color:
+                                              Color.fromARGB(255, 61, 61, 61),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        width: 40,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: appTheme.secondary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            widget.slot.slotSl.toString(),
+                                            style: const TextStyle(
+                                              fontSize: 13,
+                                              color: Color.fromARGB(
+                                                  255, 255, 252, 252),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: CommonElevatedButton(
+                              lable: "Okay",
+                              onPressed: () {
+                                context.goNamed(BookAppointmentPage.routeName,
+                                    extra: {
+                                      "doctor": widget.doctor,
+                                    });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
               }
             },
             child: Container(
