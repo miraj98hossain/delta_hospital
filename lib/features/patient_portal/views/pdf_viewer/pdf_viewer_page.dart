@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:delta_hospital/features/patient_portal/views/pdf_viewer/pdf_viewer_view.dart';
 import 'package:flutter/material.dart';
-import 'package:pdfrx/pdfrx.dart';
 
 class PdfViewerPage extends StatelessWidget {
   const PdfViewerPage({

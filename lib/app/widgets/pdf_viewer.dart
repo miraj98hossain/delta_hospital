@@ -129,7 +129,7 @@ class _PdfViewWidgetState extends State<PdfViewWidget> {
                 //     );
                 // }
               },
-              icon: Icon(Icons.share),
+              icon: const Icon(Icons.share),
             ),
             IconButton(
               onPressed: () {
