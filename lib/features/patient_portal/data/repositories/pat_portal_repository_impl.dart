@@ -152,7 +152,6 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
 
   @override
   Future<void> previewPathReport({
-    required String token,
     required Report report,
   }) async {
     var token = await localDataSource.getAuthResponse();
@@ -164,5 +163,43 @@ class PatPortalRepositoryImpl implements PatPortalRepository {
       throw ApiDataException(
           response.message ?? "Error Occured While Fetching");
     }
+  }
+
+  @override
+  Future<Uint8List> getNonLabFileRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+  }) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await patRemoteDataSource.getNonLabFileRptByInvoiceItemNo(
+      token: token?.accessToken ?? '',
+      itemNo: itemNo,
+      invoiceNo: invoiceNo,
+      hnId: hnId,
+    );
+    if (response.isEmpty) {
+      throw const ApiDataException("No File Found");
+    }
+    return response;
+  }
+
+  @override
+  Future<Uint8List> getLabRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+  }) async {
+    var token = await localDataSource.getAuthResponse();
+    var response = await patRemoteDataSource.getLabRptByInvoiceItemNo(
+      token: token?.accessToken ?? '',
+      itemNo: itemNo,
+      invoiceNo: invoiceNo,
+      hnId: hnId,
+    );
+    if (response.isEmpty) {
+      throw const ApiDataException("No File Found");
+    }
+    return response;
   }
 }

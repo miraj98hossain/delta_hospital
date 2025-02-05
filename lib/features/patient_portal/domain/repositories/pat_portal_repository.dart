@@ -39,7 +39,16 @@ abstract class PatPortalRepository {
     required int prescriptionId,
   });
   Future<void> previewPathReport({
-    required String token,
     required Report report,
+  });
+  Future<Uint8List> getNonLabFileRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+  });
+  Future<Uint8List> getLabRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
   });
 }

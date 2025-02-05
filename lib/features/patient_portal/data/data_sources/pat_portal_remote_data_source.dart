@@ -46,6 +46,18 @@ abstract class PatPortalRemoteDataSource {
     required String token,
     required Report report,
   });
+  Future<Uint8List> getNonLabFileRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+    required String token,
+  });
+  Future<Uint8List> getLabRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+    required String token,
+  });
 }
 
 class PatPortalRemoteDataSourceImpl
@@ -211,5 +223,59 @@ class PatPortalRemoteDataSourceImpl
 
     return await decodeResponse(response,
         decoder: FetchPatientPdfResponse.fromJson);
+  }
+
+  @override
+  Future<Uint8List> getNonLabFileRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+    required String token,
+  }) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var data = json.encode({"itemNo": itemNo, "invoiceNo": invoiceNo});
+
+    var request = http.Request(
+      'POST',
+      Uri.parse(
+        '${_appConfig.baseUrl}radiology-api/api/reports/nonLabRptByInvoiceItemNo',
+      ),
+    );
+    request.headers.addAll(headers);
+    request.body = data;
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, isFile: true);
+  }
+
+  @override
+  Future<Uint8List> getLabRptByInvoiceItemNo({
+    required String hnId,
+    required int itemNo,
+    required int invoiceNo,
+    String? token,
+  }) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var data = json.encode({"itemNo": itemNo, "invoiceNo": invoiceNo});
+
+    var request = http.Request(
+      'POST',
+      Uri.parse(
+        '${_appConfig.baseUrl}radiology-api/api/reports/labRptByInvoiceItemNo',
+      ),
+    );
+    request.headers.addAll(headers);
+    request.body = data;
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse(response, isFile: true);
   }
 }
