@@ -199,11 +199,11 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<List<PatientPortalUser>> finalPatientPortalUserByRefId({
+  Future<List<PatientPortalUser>> findPatientPortalUserByRefId({
     required String refId,
   }) async {
     var response =
-        await appRemoteDataSource.finalPatientPortalUserByRefId(refId: refId);
+        await appRemoteDataSource.findPatientPortalUserByRefId(refId: refId);
     if (response.success != true) {
       throw const ApiDataException("Error Occured While Sending SMS");
     }

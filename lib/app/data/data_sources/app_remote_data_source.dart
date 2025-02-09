@@ -42,7 +42,7 @@ abstract class AppRemoteDataSource {
   Future<GenericResponse> savePatientPortalUser({
     required AppUserDetails userDetails,
   });
-  Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
+  Future<PatientPortalListResponse> findPatientPortalUserByRefId({
     required String refId,
   });
   Future<HisPatientInfoResponse> getRegPatientInfo({
@@ -194,7 +194,7 @@ class AppRemoteDataSourceImpl
   }
 
   @override
-  Future<PatientPortalListResponse> finalPatientPortalUserByRefId({
+  Future<PatientPortalListResponse> findPatientPortalUserByRefId({
     required String refId,
   }) async {
     var request = http.Request(

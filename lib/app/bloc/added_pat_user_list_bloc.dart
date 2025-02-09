@@ -35,7 +35,7 @@ class AddedPatUserListBloc
     on<GetAddedPatUserListEvent>((event, emit) async {
       emit(AddedPatUserListLoading());
       try {
-        var response = await _appRepository.finalPatientPortalUserByRefId(
+        var response = await _appRepository.findPatientPortalUserByRefId(
             refId: event.refId);
         emit(AddedPatUserListSuccess(patientPortalUserList: response));
       } catch (e) {
