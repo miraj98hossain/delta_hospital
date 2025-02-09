@@ -1,21 +1,13 @@
 import 'dart:developer';
-
-import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
-import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/app_login_response.dart';
-
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drawer.dart';
-import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
-import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
 import 'package:delta_hospital/features/management/views/login/mng_login_page.dart';
 import 'package:delta_hospital/features/my_appointments/my_appointment.dart';
-
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_dashboard/pat_portal_dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,6 +101,18 @@ class _HomeViewState extends State<HomeView> {
               },
             ),
             ModuleWidget(
+              lable: "Management",
+              icon: ImageConstant.managementIcon,
+              onTap: () {
+                var userDetails = context.read<LoggedHisUserCubit>().state;
+                if (userDetails != null && userDetails.jobTile == "Admin") {
+                  context.pushNamed(ManagementDashboardPage.routeName);
+                } else {
+                  context.pushNamed(MngLoginPage.routeName);
+                }
+              },
+            ),
+            ModuleWidget(
               lable: "Career",
               icon: ImageConstant.career,
             ),
@@ -127,26 +131,14 @@ class _HomeViewState extends State<HomeView> {
                 context.pushNamed(HnRegistrationPage.routeName);
               },
             ),
-            ModuleWidget(
-              lable: "Settings",
-              icon: ImageConstant.settings,
-            ),
-            ModuleWidget(
-              lable: "Profile",
-              icon: ImageConstant.profile,
-            ),
-            ModuleWidget(
-              lable: "Management",
-              icon: ImageConstant.managementIcon,
-              onTap: () {
-                var userDetails = context.read<LoggedHisUserCubit>().state;
-                if (userDetails != null && userDetails.jobTile == "Admin") {
-                  context.pushNamed(ManagementDashboardPage.routeName);
-                } else {
-                  context.pushNamed(MngLoginPage.routeName);
-                }
-              },
-            ),
+            // ModuleWidget(
+            //   lable: "Settings",
+            //   icon: ImageConstant.settings,
+            // ),
+            // ModuleWidget(
+            //   lable: "Profile",
+            //   icon: ImageConstant.profile,
+            // ),
           ],
         ),
       ),
