@@ -4,6 +4,7 @@ import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
+import 'package:delta_hospital/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -99,32 +100,40 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Column(
+                Column(
                   spacing: 10,
                   children: [
                     DrawerItem(
                       title: "My Cart(0)",
                       icon: Icons.shopping_cart_outlined,
+                      onTap: () {},
                     ),
                     DrawerItem(
                       title: "Profile",
                       icon: Icons.person_2_outlined,
+                      onTap: () {
+                        context.pushNamed(ProfilePage.routeName);
+                      },
                     ),
                     DrawerItem(
                       title: "Reminder Service",
                       icon: Icons.notifications_outlined,
+                      onTap: () {},
                     ),
                     DrawerItem(
                       title: "Emergency Contact",
                       icon: Icons.support_agent_outlined,
+                      onTap: () {},
                     ),
                     DrawerItem(
                       title: "Hospital Information",
                       icon: Icons.error_outline,
+                      onTap: () {},
                     ),
                     DrawerItem(
                       title: "Privacy Policy",
                       icon: Icons.privacy_tip_outlined,
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -175,37 +184,42 @@ class DrawerItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.icon,
+    this.onTap,
   });
   final String title;
   final IconData icon;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          spacing: 10,
-          children: [
-            Icon(
-              icon,
-              color: appTheme.primary,
-            ),
-            Text(
-              title,
-              style: lightTextTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            spacing: 10,
+            children: [
+              Icon(
+                icon,
                 color: appTheme.primary,
               ),
-            ),
-          ],
-        ),
-        Icon(
-          Icons.arrow_forward_ios_rounded,
-          color: appTheme.primary,
-          size: 15,
-        ),
-      ],
+              Text(
+                title,
+                style: lightTextTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: appTheme.primary,
+                ),
+              ),
+            ],
+          ),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: appTheme.primary,
+            size: 15,
+          ),
+        ],
+      ),
     );
   }
 }
