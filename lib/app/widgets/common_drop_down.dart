@@ -9,12 +9,14 @@ class CommonDropdownButton<T> extends StatelessWidget {
     this.value,
     required this.onChanged,
     this.validator,
+    this.reset,
   });
   final String hintText;
   final List<T>? items;
   final T? value;
   final void Function(T? value) onChanged;
   final String? Function(T? value)? validator;
+  final void Function()? reset;
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
@@ -25,6 +27,18 @@ class CommonDropdownButton<T> extends StatelessWidget {
       dropdownColor: appTheme.white,
       padding: EdgeInsets.zero,
       menuMaxHeight: 250,
+      icon: value != null
+          ? GestureDetector(
+              onTap: reset,
+              child: Icon(
+                Icons.close_sharp,
+                color: appTheme.primary,
+              ),
+            )
+          : Icon(
+              Icons.arrow_drop_down,
+              color: items?.isEmpty == true ? Colors.grey : appTheme.primary,
+            ),
       decoration: const InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.all(8),
