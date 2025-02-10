@@ -100,6 +100,15 @@ class _DoctorListViewState extends State<DoctorListView> {
                     builder: (context, state) {
                       return CommonDropdownButton<Department>(
                         hintText: "Select Department",
+                        value: context
+                            .watch<VariableStateCubit<Department>>()
+                            .state,
+                        reset: () {
+                          context
+                              .read<VariableStateCubit<Department>>()
+                              .reset();
+                          _fetchDoctorList();
+                        },
                         onChanged: (value) {
                           if (value != null) {
                             context
@@ -122,6 +131,15 @@ class _DoctorListViewState extends State<DoctorListView> {
                     builder: (context, state) {
                       return CommonDropdownButton<Specialization>(
                         hintText: "Select Specialization",
+                        value: context
+                            .watch<VariableStateCubit<Specialization>>()
+                            .state,
+                        reset: () {
+                          context
+                              .read<VariableStateCubit<Specialization>>()
+                              .reset();
+                          _fetchDoctorList();
+                        },
                         onChanged: (value) {
                           if (value != null) {
                             context
