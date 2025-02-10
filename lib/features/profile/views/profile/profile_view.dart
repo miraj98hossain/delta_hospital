@@ -1,6 +1,8 @@
 import 'package:delta_hospital/app/app.dart';
+import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -38,20 +40,41 @@ class _ProfileViewState extends State<ProfileView> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(2),
-                        height: 130,
-                        width: 130,
-                        decoration: BoxDecoration(
-                          color: appTheme.primary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            shape: BoxShape.circle,
+                      Stack(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(2),
+                            height: 130,
+                            width: 130,
+                            decoration: BoxDecoration(
+                              color: appTheme.primary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: appTheme.white,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            bottom: 0,
+                            right: 10,
+                            child: Container(
+                              height: 25,
+                              width: 25,
+                              decoration: BoxDecoration(
+                                color: appTheme.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.camera_alt_outlined,
+                                color: appTheme.primary,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
@@ -84,47 +107,153 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Wrap(
-                      spacing: 80,
+                      spacing: 70,
                       runSpacing: 20,
                       children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: appTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
+                        Column(
+                          spacing: 5,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: appTheme.skyBlue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.person_add_alt_1_outlined,
+                                size: 30,
+                                color: appTheme.primary,
+                              ),
+                            ),
+                            Text(
+                              "Add \nFamily HN",
+                              textAlign: TextAlign.center,
+                              style: lightTextTheme.bodySmall!.copyWith(
+                                color: appTheme.primary,
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: appTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
+                        Column(
+                          spacing: 5,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: appTheme.skyBlue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.lock_open_sharp,
+                                size: 30,
+                                color: appTheme.primary,
+                              ),
+                            ),
+                            Text(
+                              "Change \nPassword",
+                              textAlign: TextAlign.center,
+                              style: lightTextTheme.bodySmall!.copyWith(
+                                color: appTheme.primary,
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: appTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
+                        Column(
+                          spacing: 5,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: appTheme.skyBlue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.privacy_tip_outlined,
+                                size: 30,
+                                color: appTheme.primary,
+                              ),
+                            ),
+                            Text(
+                              "Privacy \nPolicy",
+                              textAlign: TextAlign.center,
+                              style: lightTextTheme.bodySmall!.copyWith(
+                                color: appTheme.primary,
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: appTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
-                        )
+                        Column(
+                          spacing: 5,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: appTheme.skyBlue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.share_outlined,
+                                size: 30,
+                                color: appTheme.primary,
+                              ),
+                            ),
+                            Text(
+                              "Invite \nFriends",
+                              textAlign: TextAlign.center,
+                              style: lightTextTheme.bodySmall!.copyWith(
+                                color: appTheme.primary,
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 )
               ],
             ),
+          ),
+          const Spacer(),
+          BlocBuilder<AppAuthBloc, AppAuthState>(
+            builder: (context, state) {
+              if (state is AppAuthLoading) {
+                return const CircularProgressIndicator();
+              }
+              return Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  spacing: 10,
+                  children: [
+                    Text(
+                      "Logout",
+                      style: lightTextTheme.bodyMedium!.copyWith(
+                        color: appTheme.white,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        context.read<AppAuthBloc>().add(AppLogout());
+                      },
+                      child: Icon(
+                        Icons.logout,
+                        color: appTheme.white,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).viewPadding.bottom,
           ),
         ],
       ),
