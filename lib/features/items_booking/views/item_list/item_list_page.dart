@@ -28,6 +28,9 @@ class ItemListPage extends StatelessWidget {
         BlocProvider(
           create: (context) => VariableStateCubit<ItemType>(),
         ),
+        BlocProvider(
+          create: (context) => VariableStateCubit<int>()..update(10),
+        ),
       ],
       child: const ItemListView(),
     );

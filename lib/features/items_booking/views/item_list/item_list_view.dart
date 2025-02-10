@@ -29,14 +29,13 @@ class _ItemListViewState extends State<ItemListView> {
     context.read<CartBloc>().add(CartItemsGet());
     context.read<ItemTypeBloc>().add(GetItemTypeEvent());
     context.read<ItemGridBloc>().add(GetItemGridEvent());
+
     _itemsScrollController.addListener(() {
       if (_itemsScrollController.position.pixels ==
           _itemsScrollController.position.maxScrollExtent) {
-        context.read<ItemGridBloc>().add(GetItemGridEvent(
-              searchValue: _searchController.text,
-              itemTypeNo:
-                  context.read<VariableStateCubit<ItemType>>().state?.id,
-            ));
+        var length = context.read<VariableStateCubit<int>>().state!;
+        context.read<VariableStateCubit<int>>().update(length + 10);
+        _fetchItemList();
       }
     });
     _searchController = TextEditingController();
@@ -48,6 +47,16 @@ class _ItemListViewState extends State<ItemListView> {
     _itemsScrollController.dispose();
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _fetchItemList() {
+    var selectedDepartment = context.read<VariableStateCubit<ItemType>>().state;
+    var length = context.read<VariableStateCubit<int>>().state!;
+    context.read<ItemGridBloc>().add(GetItemGridEvent(
+          length: length,
+          searchValue: _searchController.text,
+          itemTypeNo: selectedDepartment?.id,
+        ));
   }
 
   @override
@@ -87,17 +96,30 @@ class _ItemListViewState extends State<ItemListView> {
                     builder: (context, state) {
                       return CommonDropdownButton<ItemType>(
                         hintText: "Select Item Type",
+                        value:
+                            context.watch<VariableStateCubit<ItemType>>().state,
+                        reset: () {
+                          context.read<VariableStateCubit<int>>().update(10);
+                          context.read<VariableStateCubit<ItemType>>().reset();
+                          context.read<ItemGridBloc>().add(
+                                GetItemGridEvent(
+                                  searchValue: _searchController.text,
+                                ),
+                              );
+                        },
                         onChanged: (value) {
                           if (value != null) {
                             context
                                 .read<VariableStateCubit<ItemType>>()
                                 .update(value);
-                            context.read<ItemGridBloc>().add(
-                                  GetItemGridEvent(
-                                    searchValue: _searchController.text,
-                                    itemTypeNo: value.id,
-                                  ),
-                                );
+                            context.read<VariableStateCubit<int>>().update(10);
+                            _fetchItemList();
+                            // context.read<ItemGridBloc>().add(
+                            //       GetItemGridEvent(
+                            //         searchValue: _searchController.text,
+                            //         itemTypeNo: value.id,
+                            //       ),
+                            //     );
                           }
                         },
                         items:

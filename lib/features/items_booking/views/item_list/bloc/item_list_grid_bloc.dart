@@ -53,10 +53,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 sealed class ItemGridEvent {}
 
 final class GetItemGridEvent extends ItemGridEvent {
+  final int length;
   final String searchValue;
   final int? itemTypeNo;
 
-  GetItemGridEvent({this.searchValue = '', this.itemTypeNo});
+  GetItemGridEvent({this.length = 10, this.searchValue = '', this.itemTypeNo});
 }
 
 class ItemGridState {
@@ -93,7 +94,7 @@ class ItemGridState {
 
 class ItemGridBloc extends Bloc<ItemGridEvent, ItemGridState> {
   final ItemsBookingRepository _itemsBookingRepository;
-  int _length = 10;
+
   ItemGridBloc(this._itemsBookingRepository)
       : super(ItemGridState(itemGridList: ItemGridList(), isInitial: true)) {
     on<GetItemGridEvent>((event, emit) async {
@@ -101,11 +102,11 @@ class ItemGridBloc extends Bloc<ItemGridEvent, ItemGridState> {
           isInitial: false, isLoading: true, isError: false, errorMessage: ''));
       try {
         final response = await _itemsBookingRepository.getItemGridList(
-          length: _length,
+          length: event.length,
           searchValue: event.searchValue,
           itemTypeNo: event.itemTypeNo,
         );
-        _length += 10;
+
         await Future.delayed(const Duration(seconds: 1), () {
           emit(state.copyWith(
             isLoading: false,
