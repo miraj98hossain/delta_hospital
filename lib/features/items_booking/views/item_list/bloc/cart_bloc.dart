@@ -14,6 +14,10 @@ final class CartItemRemove extends CartEvent {
   CartItemRemove({required this.itemInfo});
 }
 
+final class CartClear extends CartEvent {
+  CartClear();
+}
+
 final class CartItemAdd extends CartEvent {
   final ItemInfo itemInfo;
 
@@ -65,6 +69,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartLoading());
       try {
         await _itemsBookingRepository.removeItemFromCart(item: event.itemInfo);
+        var response = await _itemsBookingRepository.getAddedItemsOfCart();
+        emit(CartSuccess(cartList: response));
+      } catch (e) {
+        emit(CartError(error: e));
+      }
+    });
+    on<CartClear>((event, emit) async {
+      emit(CartLoading());
+      try {
+        await _itemsBookingRepository.clearCart();
         var response = await _itemsBookingRepository.getAddedItemsOfCart();
         emit(CartSuccess(cartList: response));
       } catch (e) {

@@ -4,6 +4,7 @@ import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/views/booking_info/bloc/create_booking_bloc.dart';
+import 'package:delta_hospital/features/items_booking/views/item_list/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +24,9 @@ class BookingInfoPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CreateBookingBloc(getService()),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(getService())..add(CartItemsGet()),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<Paymode>(),
