@@ -3,6 +3,7 @@ import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
 import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
 import 'package:delta_hospital/features/profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -104,9 +105,11 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   spacing: 10,
                   children: [
                     DrawerItem(
-                      title: "My Cart(0)",
+                      title: "My Cart",
                       icon: Icons.shopping_cart_outlined,
-                      onTap: () {},
+                      onTap: () {
+                        context.pushNamed(CartPage.routeName);
+                      },
                     ),
                     DrawerItem(
                       title: "Profile",
