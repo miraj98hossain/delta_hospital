@@ -107,6 +107,7 @@ class _DoctorListViewState extends State<DoctorListView> {
                           context
                               .read<VariableStateCubit<Department>>()
                               .reset();
+                          context.read<VariableStateCubit<int>>().update(10);
                           _fetchDoctorList();
                         },
                         onChanged: (value) {
@@ -138,6 +139,7 @@ class _DoctorListViewState extends State<DoctorListView> {
                           context
                               .read<VariableStateCubit<Specialization>>()
                               .reset();
+                          context.read<VariableStateCubit<int>>().update(10);
                           _fetchDoctorList();
                         },
                         onChanged: (value) {
