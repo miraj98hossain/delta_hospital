@@ -3,6 +3,7 @@ import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/widgets/common_appbar.dart';
 import 'package:delta_hospital/app/widgets/common_drawer.dart';
 import 'package:delta_hospital/core/utils/image_constant.dart';
+import 'package:delta_hospital/features/career/views/career_list/career_list_page.dart';
 import 'package:delta_hospital/features/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/features/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/features/management/views/dashboard/management_dashboard_page.dart';
@@ -115,6 +116,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Career",
               icon: ImageConstant.career,
+              onTap: () {
+                context.pushNamed(CareerListPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Payment",
