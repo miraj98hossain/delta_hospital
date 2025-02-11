@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:delta_hospital/features/career/career_list.dart';
+import 'package:delta_hospital/features/career/views/career_details/career_details_page.dart';
 import 'package:delta_hospital/features/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/features/items_booking/data/models/booking_info_model.dart';
 import 'package:delta_hospital/features/items_booking/data/models/item_grid_list_response.dart';
@@ -442,6 +444,24 @@ class AppNavigation {
               child: const HnRegistrationPage(),
               state: state,
             ),
+          ),
+          GoRoute(
+            path: CareerListPage.routePath,
+            name: CareerListPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const CareerListPage(),
+              state: state,
+            ),
+            routes: [
+              GoRoute(
+                path: CareerDetailsPage.routePath,
+                name: CareerDetailsPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const CareerDetailsPage(),
+                  state: state,
+                ),
+              ),
+            ],
           ),
         ],
       ),
