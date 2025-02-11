@@ -3,6 +3,7 @@ import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/data/models/app_login_response.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
+import 'package:delta_hospital/features/hospital_information/views/hospital_information/hospital_information_page.dart';
 import 'package:delta_hospital/features/items_booking/views/cart/cart_page.dart';
 import 'package:delta_hospital/features/on_boarding/views/on_boarding/on_boarding_page.dart';
 import 'package:delta_hospital/features/profile/profile.dart';
@@ -131,7 +132,9 @@ class _CommonDrawerState extends State<CommonDrawer> {
                     DrawerItem(
                       title: "Hospital Information",
                       icon: Icons.error_outline,
-                      onTap: () {},
+                      onTap: () {
+                        context.pushNamed(HospitalInformationPage.routeName);
+                      },
                     ),
                     DrawerItem(
                       title: "Privacy Policy",
