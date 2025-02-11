@@ -45,7 +45,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
-                  height: MediaQuery.of(context).size.height * 0.30,
+                  height: MediaQuery.of(context).size.height * 0.20,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -55,7 +55,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(
                         height: 10,
@@ -79,7 +79,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                         height: 10,
                       ),
                       Text(
-                        "You have successfully booked",
+                        "You have successfully booked.",
                         overflow: TextOverflow.ellipsis,
                         style: lightTextTheme.bodyMedium!.copyWith(
                           color: appTheme.primary,
