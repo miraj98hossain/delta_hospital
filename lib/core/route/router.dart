@@ -41,6 +41,7 @@ import 'package:delta_hospital/features/patient_portal/views/pat_medical_record/
 import 'package:delta_hospital/features/patient_portal/views/pat_prescription/pat_prescription_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/patient_portal_login/pat_portal_login_page.dart';
 import 'package:delta_hospital/features/patient_portal/views/pdf_viewer/pdf_viewer_page.dart';
+import 'package:delta_hospital/features/payment/payment.dart';
 import 'package:delta_hospital/features/profile/profile.dart';
 import 'package:delta_hospital/features/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -463,6 +464,14 @@ class AppNavigation {
                 ),
               ),
             ],
+          ),
+          GoRoute(
+            path: PaymentPage.routePath,
+            name: PaymentPage.routeName,
+            pageBuilder: (context, state) => getPage(
+              child: const PaymentPage(),
+              state: state,
+            ),
           ),
           GoRoute(
             path: HospitalInformationPage.routePath,

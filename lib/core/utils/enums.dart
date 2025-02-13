@@ -13,6 +13,21 @@ enum Gender {
   }
 }
 
+enum SegButton {
+  all("All", 1),
+  opd("OPD", 2),
+  ipd("IPD", 3);
+
+  const SegButton(this.value, this.type);
+
+  final String value;
+  final int type;
+  @override
+  String toString() {
+    return value;
+  }
+}
+
 enum BloodGroup {
   aPositive("A+"),
   aNegative("A-"),

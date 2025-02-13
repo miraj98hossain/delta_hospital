@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import '../../book_appointment/views/doctor_list/doctor_list_page.dart';
 import '../../doctor_portal/doctor_login.dart';
 import '../../items_booking/views/item_list/item_list_page.dart';
+import '../../payment/views/payment/payment_page.dart';
 import '../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -123,6 +124,9 @@ class _HomeViewState extends State<HomeView> {
             ModuleWidget(
               lable: "Payment",
               icon: ImageConstant.payment,
+              onTap: () {
+                context.pushNamed(PaymentPage.routeName);
+              },
             ),
             ModuleWidget(
               lable: "Ambulance Service",
