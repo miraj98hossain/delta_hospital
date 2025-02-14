@@ -480,7 +480,7 @@ class AppNavigation {
               child: const HospitalInformationPage(),
               state: state,
             ),
-            routes: [
+            routes: const [
               // GoRoute(
               //   path: CareerDetailsPage.routePath,
               //   name: CareerDetailsPage.routeName,
