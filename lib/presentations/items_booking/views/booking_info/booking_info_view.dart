@@ -1,11 +1,11 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/paymode_list_bloc.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
+import 'package:delta_hospital/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/booking_info_model.dart';
+import 'package:delta_hospital/data/models/booking_info_model.dart';
 import 'package:delta_hospital/presentations/items_booking/item_list.dart';
 import 'package:delta_hospital/presentations/items_booking/views/booking_info/bloc/create_booking_bloc.dart';
 import 'package:delta_hospital/presentations/items_booking/views/item_list/bloc/cart_bloc.dart';

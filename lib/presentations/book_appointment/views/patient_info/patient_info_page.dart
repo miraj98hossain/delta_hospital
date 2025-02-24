@@ -1,11 +1,11 @@
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/available_slot_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/consultation_type_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/doctor_grid_list_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/data/models/available_slot_response.dart';
+import 'package:delta_hospital/data/models/consultation_type_response.dart';
+import 'package:delta_hospital/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/data/models/patient_type_response.dart';
 import 'package:delta_hospital/app/bloc/his_patient_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

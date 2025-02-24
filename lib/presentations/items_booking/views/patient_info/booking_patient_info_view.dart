@@ -3,17 +3,17 @@ import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
 import 'package:delta_hospital/app/bloc/his_patient_info_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/app_login_response.dart';
-import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
-import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/data/models/app_login_response.dart';
+import 'package:delta_hospital/data/models/his_patient_info_response.dart';
+import 'package:delta_hospital/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/booking_info_model.dart';
+import 'package:delta_hospital/data/models/booking_info_model.dart';
 
-import 'package:delta_hospital/presentations/items_booking/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/presentations/items_booking/views/booking_info/booking_info_page.dart';
 
 import 'package:flutter/material.dart';

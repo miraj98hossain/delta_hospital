@@ -1,7 +1,7 @@
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/online_department_list.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/online_sepcialization_list_response.dart';
+import 'package:delta_hospital/data/models/online_department_list.dart';
+import 'package:delta_hospital/data/models/online_sepcialization_list_response.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_list/bloc/department_bloc.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_list/bloc/online_doctor_grid_bloc.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_list/bloc/specialization_bloc.dart';

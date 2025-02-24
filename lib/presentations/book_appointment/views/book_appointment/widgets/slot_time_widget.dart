@@ -2,7 +2,7 @@ import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:flutter/material.dart';
 import '../../../../../app/widgets/app_snack_bar.dart';
 import '../../../../../core/theme/app_theme.dart';
-import '../../../data/models/available_slot_response.dart';
+import '../../../../../data/models/available_slot_response.dart';
 
 class SlotTime extends StatelessWidget {
   const SlotTime({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/models/available_slot_response.dart';
-import '../../../domain/repositories/book_apt_repository.dart';
+import '../../../../../data/models/available_slot_response.dart';
+import '../../../../../domain/repositories/book_apt_repository.dart';
 
 @immutable
 sealed class SlotEvent {}

@@ -1,5 +1,5 @@
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_info/bloc/doctor_info_bloc.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_info/bloc/doctor_schedule_bloc.dart';
 import 'package:flutter/material.dart';

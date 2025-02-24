@@ -4,8 +4,8 @@ import 'package:delta_hospital/presentations/career/career_list.dart';
 import 'package:delta_hospital/presentations/career/views/career_details/career_details_page.dart';
 import 'package:delta_hospital/presentations/hn_registration/views/hn_registration/hn_registration_page.dart';
 import 'package:delta_hospital/presentations/hospital_information/hospital_information.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/booking_info_model.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/data/models/booking_info_model.dart';
+import 'package:delta_hospital/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_registration.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_otp_verification.dart';
 import 'package:delta_hospital/presentations/on_boarding/views/app_login/app_login_page.dart';
@@ -13,7 +13,7 @@ import 'package:delta_hospital/presentations/book_appointment/book_appointment.d
 import 'package:delta_hospital/presentations/book_appointment/doctor_list.dart';
 import 'package:delta_hospital/presentations/book_appointment/patient_info.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_info/doctor_info_page.dart';
-import 'package:delta_hospital/presentations/doctor_portal/data/models/doctor_shift_list_response.dart';
+import 'package:delta_hospital/data/models/doctor_shift_list_response.dart';
 import 'package:delta_hospital/presentations/doctor_portal/doctor_dash.dart';
 import 'package:delta_hospital/presentations/doctor_portal/doctor_ipd_portal.dart';
 import 'package:delta_hospital/presentations/doctor_portal/doctor_login.dart';
@@ -48,7 +48,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentations/book_appointment/appointment_info.dart';
-import '../../presentations/book_appointment/data/models/doctor_grid_list_response.dart';
+import '../../data/models/doctor_grid_list_response.dart';
 import '../../presentations/doctor_portal/doctor_opd_portal.dart';
 
 class AppNavigation {

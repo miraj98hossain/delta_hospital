@@ -1,5 +1,5 @@
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/patient_relation_list_response.dart';
+import 'package:delta_hospital/data/models/patient_relation_list_response.dart';
 import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/app/bloc/pat_relation_list_bloc.dart';

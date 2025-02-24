@@ -1,5 +1,5 @@
-import 'package:delta_hospital/presentations/hn_registration/data/models/hn_registration_fee_response.dart';
-import 'package:delta_hospital/presentations/hn_registration/domain/repositories/hn_reg_repository.dart';
+import 'package:delta_hospital/data/models/hn_registration_fee_response.dart';
+import 'package:delta_hospital/domain/repositories/hn_reg_repository.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

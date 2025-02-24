@@ -1,7 +1,7 @@
-import 'package:delta_hospital/presentations/book_appointment/data/models/online_department_list.dart';
+import 'package:delta_hospital/data/models/online_department_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/repositories/book_apt_repository.dart';
+import '../../../../../domain/repositories/book_apt_repository.dart';
 
 @immutable
 sealed class DepartmentEvent {}

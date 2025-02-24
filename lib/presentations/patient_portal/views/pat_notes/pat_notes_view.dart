@@ -1,7 +1,7 @@
 import 'package:delta_hospital/app/app.dart';
 
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/user_details_response.dart';
+import 'package:delta_hospital/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';

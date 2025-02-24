@@ -1,10 +1,10 @@
 import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
-import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/available_slot_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/consultation_type_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/doctor_grid_list_response.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/patient_type_response.dart';
+import 'package:delta_hospital/data/models/available_slot_response.dart';
+import 'package:delta_hospital/data/models/consultation_type_response.dart';
+import 'package:delta_hospital/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/data/models/patient_type_response.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/book_appointment/bloc/consultation_type_bloc.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/book_appointment/bloc/patient_type_bloc.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/book_appointment/bloc/slot_bloc.dart';

@@ -1,8 +1,8 @@
 import 'package:delta_hospital/app/bloc/paymode_list_bloc.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/paymode_list_response.dart';
+import 'package:delta_hospital/data/models/paymode_list_response.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/booking_info_model.dart';
+import 'package:delta_hospital/data/models/booking_info_model.dart';
 import 'package:delta_hospital/presentations/items_booking/views/booking_info/bloc/create_booking_bloc.dart';
 import 'package:delta_hospital/presentations/items_booking/views/item_list/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';

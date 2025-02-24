@@ -4,7 +4,7 @@ import 'package:delta_hospital/app/widgets/common_drop_down.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_text_field_widget.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/item_type_list_response.dart';
+import 'package:delta_hospital/data/models/item_type_list_response.dart';
 import 'package:delta_hospital/presentations/items_booking/views/cart/cart_page.dart';
 import 'package:delta_hospital/presentations/items_booking/views/item_list/bloc/cart_bloc.dart';
 import 'package:delta_hospital/presentations/items_booking/views/item_list/bloc/item_list_grid_bloc.dart';

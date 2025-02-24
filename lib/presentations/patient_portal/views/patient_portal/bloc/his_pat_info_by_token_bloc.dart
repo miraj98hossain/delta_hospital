@@ -1,5 +1,5 @@
-import 'package:delta_hospital/app/data/models/his_patient_info_response.dart';
-import 'package:delta_hospital/presentations/patient_portal/domain/repositories/pat_portal_repository.dart';
+import 'package:delta_hospital/data/models/his_patient_info_response.dart';
+import 'package:delta_hospital/domain/repositories/pat_portal_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

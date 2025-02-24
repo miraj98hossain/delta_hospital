@@ -3,7 +3,7 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/widgets/app_snack_bar.dart';
 import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
-import 'package:delta_hospital/presentations/items_booking/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/presentations/items_booking/patient_info.dart';
 import 'package:delta_hospital/presentations/items_booking/views/item_list/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';

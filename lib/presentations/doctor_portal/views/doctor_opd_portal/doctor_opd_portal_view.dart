@@ -2,14 +2,14 @@ import 'package:delta_hospital/app/app.dart';
 
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/variable_state_cubit.dart';
-import 'package:delta_hospital/app/data/models/user_details_response.dart';
+import 'package:delta_hospital/data/models/user_details_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 import 'package:delta_hospital/app/widgets/session_expire_dialog.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/core/utils/app_modal.dart';
-import 'package:delta_hospital/presentations/doctor_portal/data/models/doctor_consultaion_gridlist_response.dart';
-import 'package:delta_hospital/presentations/doctor_portal/data/models/doctor_shift_list_response.dart';
+import 'package:delta_hospital/data/models/doctor_consultaion_gridlist_response.dart';
+import 'package:delta_hospital/data/models/doctor_shift_list_response.dart';
 import 'package:delta_hospital/presentations/doctor_portal/doctor_opd_portal.dart';
 import 'package:delta_hospital/presentations/doctor_portal/views/doctor_opd_portal/bloc/doctor_consultation_bloc.dart';
 

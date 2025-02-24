@@ -1,5 +1,5 @@
-import 'package:delta_hospital/presentations/doctor_portal/data/models/doctor_shift_list_response.dart';
-import 'package:delta_hospital/presentations/doctor_portal/domain/repositories/doc_portal_repository.dart';
+import 'package:delta_hospital/data/models/doctor_shift_list_response.dart';
+import 'package:delta_hospital/domain/repositories/doc_portal_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

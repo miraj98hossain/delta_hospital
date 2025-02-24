@@ -1,6 +1,6 @@
 import 'package:delta_hospital/app/bloc/app_auth_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/app_login_response.dart';
+import 'package:delta_hospital/data/models/app_login_response.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/presentations/hospital_information/views/hospital_information/hospital_information_page.dart';

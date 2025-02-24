@@ -2,7 +2,7 @@ import 'package:delta_hospital/app/widgets/common_elevated_button.dart';
 import 'package:delta_hospital/core/extentions/extentations.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
-import 'package:delta_hospital/presentations/patient_portal/data/models/patient_prescription_gridlist_response.dart';
+import 'package:delta_hospital/data/models/patient_prescription_gridlist_response.dart';
 import 'package:delta_hospital/presentations/patient_portal/views/pat_prescription/bloc/prescription_pdf_bloc.dart';
 import 'package:delta_hospital/presentations/patient_portal/views/pdf_viewer/pdf_viewer_page.dart';
 import 'package:flutter/material.dart';

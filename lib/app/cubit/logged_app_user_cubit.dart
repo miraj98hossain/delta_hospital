@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:delta_hospital/app/data/models/app_login_response.dart';
+import 'package:delta_hospital/data/models/app_login_response.dart';
 
-import 'package:delta_hospital/app/domain/repositories/app_repository.dart';
+import 'package:delta_hospital/domain/repositories/app_repository.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 

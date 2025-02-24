@@ -1,5 +1,5 @@
-import 'package:delta_hospital/presentations/items_booking/data/models/item_grid_list_response.dart';
-import 'package:delta_hospital/presentations/items_booking/domain/repositories/items_booking_repository.dart';
+import 'package:delta_hospital/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/domain/repositories/items_booking_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

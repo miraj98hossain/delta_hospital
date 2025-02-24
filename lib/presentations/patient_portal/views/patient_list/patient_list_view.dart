@@ -2,8 +2,8 @@ import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/app/bloc/added_pat_user_list_bloc.dart';
 import 'package:delta_hospital/app/cubit/logged_app_user_cubit.dart';
 import 'package:delta_hospital/app/cubit/logged_his_user_cubit.dart';
-import 'package:delta_hospital/app/data/models/app_login_response.dart';
-import 'package:delta_hospital/app/data/models/patient_portal_user_list_response.dart';
+import 'package:delta_hospital/data/models/app_login_response.dart';
+import 'package:delta_hospital/data/models/patient_portal_user_list_response.dart';
 import 'package:delta_hospital/app/widgets/common_loading.dart';
 
 import 'package:delta_hospital/core/theme/app_theme.dart';

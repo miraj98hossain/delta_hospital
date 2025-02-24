@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:delta_hospital/core/extentions/extentations.dart';
-import 'package:delta_hospital/presentations/book_appointment/data/models/doctor_grid_list_response.dart';
+import 'package:delta_hospital/data/models/doctor_grid_list_response.dart';
 import 'package:delta_hospital/presentations/book_appointment/views/doctor_info/bloc/doctor_schedule_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

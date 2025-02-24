@@ -1,5 +1,5 @@
-import 'package:delta_hospital/presentations/management/data/models/opd_ipd_patient_report_response.dart';
-import 'package:delta_hospital/presentations/management/domain/repositories/mng_portal_repository.dart';
+import 'package:delta_hospital/data/models/opd_ipd_patient_report_response.dart';
+import 'package:delta_hospital/domain/repositories/mng_portal_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
