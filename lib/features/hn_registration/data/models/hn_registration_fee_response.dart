@@ -10,7 +10,7 @@ class HnRegistrationFeeResponse {
   final dynamic id;
   final dynamic model;
   final dynamic items;
-  final RegistrationFee? obj;
+  final HnRegistrationFee? obj;
   final dynamic count;
 
   HnRegistrationFeeResponse({
@@ -37,7 +37,7 @@ class HnRegistrationFeeResponse {
     dynamic id,
     dynamic model,
     dynamic items,
-    RegistrationFee? obj,
+    HnRegistrationFee? obj,
     dynamic count,
   }) =>
       HnRegistrationFeeResponse(
@@ -70,7 +70,8 @@ class HnRegistrationFeeResponse {
         id: json["id"],
         model: json["model"],
         items: json["items"],
-        obj: json["obj"] == null ? null : RegistrationFee.fromMap(json["obj"]),
+        obj:
+            json["obj"] == null ? null : HnRegistrationFee.fromMap(json["obj"]),
         count: json["count"],
       );
 
@@ -89,14 +90,14 @@ class HnRegistrationFeeResponse {
       };
 }
 
-class RegistrationFee {
+class HnRegistrationFee {
   final int? itemNo;
   final String? itemId;
   final String? itemName;
   final int? buNo;
   final int? salesPrice;
 
-  RegistrationFee({
+  HnRegistrationFee({
     this.itemNo,
     this.itemId,
     this.itemName,
@@ -104,14 +105,14 @@ class RegistrationFee {
     this.salesPrice,
   });
 
-  RegistrationFee copyWith({
+  HnRegistrationFee copyWith({
     int? itemNo,
     String? itemId,
     String? itemName,
     int? buNo,
     int? salesPrice,
   }) =>
-      RegistrationFee(
+      HnRegistrationFee(
         itemNo: itemNo ?? this.itemNo,
         itemId: itemId ?? this.itemId,
         itemName: itemName ?? this.itemName,
@@ -119,12 +120,13 @@ class RegistrationFee {
         salesPrice: salesPrice ?? this.salesPrice,
       );
 
-  factory RegistrationFee.fromJson(String str) =>
-      RegistrationFee.fromMap(json.decode(str));
+  factory HnRegistrationFee.fromJson(String str) =>
+      HnRegistrationFee.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory RegistrationFee.fromMap(Map<String, dynamic> json) => RegistrationFee(
+  factory HnRegistrationFee.fromMap(Map<String, dynamic> json) =>
+      HnRegistrationFee(
         itemNo: json["itemNo"],
         itemId: json["itemId"],
         itemName: json["itemName"],

@@ -20,13 +20,13 @@ class HnRegRepositoryImpl implements HnRegRepository {
   });
 
   @override
-  Future<RegistrationFee> getHnRegistrationFee() async {
+  Future<HnRegistrationFee> getHnRegistrationFee() async {
     var response = await hnRegRemoteDataSource.getHnRegistrationFee();
     if (response.success != true) {
       throw ApiDataException(
           response.message ?? "Error Occured While Fetching");
     }
-    return response.obj ?? RegistrationFee();
+    return response.obj ?? HnRegistrationFee();
   }
 
   @override

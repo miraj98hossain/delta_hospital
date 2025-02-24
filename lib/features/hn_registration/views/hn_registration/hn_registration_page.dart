@@ -3,6 +3,7 @@ import 'package:delta_hospital/app/data/models/patient_relation_list_response.da
 import 'package:delta_hospital/core/utils/enums.dart';
 import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:delta_hospital/app/bloc/pat_relation_list_bloc.dart';
+import 'package:delta_hospital/features/hn_registration/views/hn_registration/bloc/hn_reg_fee_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,9 @@ class HnRegistrationPage extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               PatRelationListBloc(getService())..add(PatRelationListGet()),
+        ),
+        BlocProvider(
+          create: (context) => HnRegFeeBloc(getService())..add(HnRegFeeGet()),
         ),
         BlocProvider(
           create: (context) => VariableStateCubit<PatientRelation>(),
