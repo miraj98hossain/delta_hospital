@@ -1,11 +1,15 @@
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
+import 'package:delta_hospital/features/hn_registration/data/models/hn_registration.dart';
+import 'package:delta_hospital/features/hn_registration/data/models/hn_registration_fee_response.dart';
+import 'package:delta_hospital/features/hn_registration/data/models/hn_registration_response.dart';
 
 import 'package:http/http.dart' as http;
 
 abstract class HnRegRemoteDataSource {
-  // Future<HisPatientInfoResponse> getPatientInfoByAccessToken(
-  //     {required String token});
+  Future<HnRegistrationFeeResponse> getHnRegistrationFee();
+  Future<HnRegistrationResponse> registerHn(
+      {required HnRegistration hnRegistration});
 }
 
 class HnRegRemoteDataSourceImpl
@@ -16,19 +20,32 @@ class HnRegRemoteDataSourceImpl
   HnRegRemoteDataSourceImpl({required AppConfig appConfig})
       : _appConfig = appConfig;
 
-  // @override
-  // Future<HisPatientInfoResponse> getPatientInfoByAccessToken(
-  //     {required String token}) async {
-  //   var headers = {'Authorization': 'Bearer $token'};
-  //   var request = http.Request(
-  //       'POST',
-  //       Uri.parse(
-  //           '${_appConfig.baseUrl}diagnostic-api/api/pat-investigation-report/find-hospitalNumber'));
+  @override
+  Future<HnRegistrationFeeResponse> getHnRegistrationFee() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/mrnregistration/find-card-reg-fee'));
 
-  //   request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    return await decodeResponse<HnRegistrationFeeResponse>(response,
+        decoder: HnRegistrationFeeResponse.fromJson);
+  }
 
-  //   http.StreamedResponse response = await request.send();
-  //   return await decodeResponse(response,
-  //       decoder: HisPatientInfoResponse.fromJson);
-  // }
+  @override
+  Future<HnRegistrationResponse> registerHn(
+      {required HnRegistration hnRegistration}) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${_appConfig.baseUrl}online-appointment-api/fapi/mrnregistration/save-card'));
+    request.body = hnRegistration.toJson();
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    return await decodeResponse<HnRegistrationResponse>(response,
+        decoder: HnRegistrationResponse.fromJson);
+  }
 }
