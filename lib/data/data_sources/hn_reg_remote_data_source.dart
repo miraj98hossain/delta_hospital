@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:delta_hospital/core/app_config.dart';
 import 'package:delta_hospital/core/services/decoder_service_mixin.dart';
 import 'package:delta_hospital/data/models/hn_registration.dart';
@@ -42,7 +44,7 @@ class HnRegRemoteDataSourceImpl
             '${_appConfig.baseUrl}online-appointment-api/fapi/mrnregistration/save-card'));
     request.body = hnRegistration.toJson();
     request.headers.addAll(headers);
-
+    log(request.body);
     http.StreamedResponse response = await request.send();
 
     return await decodeResponse<HnRegistrationResponse>(response,

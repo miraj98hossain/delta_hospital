@@ -3,7 +3,7 @@ import 'dart:convert';
 class HnRegistration {
   final String? salutation;
   final String? firstName;
-  final String? lastname;
+  final String? lastName;
   final String? gender;
   final String? phone;
   final String? dob;
@@ -13,7 +13,7 @@ class HnRegistration {
   final String? address;
   final String? email;
   final int? payFlag;
-  final int? payAmount;
+  final num? payAmount;
   final int? regNo;
   final int? companyNo;
   final String? pgVendorName;
@@ -22,7 +22,7 @@ class HnRegistration {
   HnRegistration({
     this.salutation,
     this.firstName,
-    this.lastname,
+    this.lastName,
     this.gender,
     this.phone,
     this.dob,
@@ -52,7 +52,7 @@ class HnRegistration {
     String? address,
     String? email,
     int? payFlag,
-    int? payAmount,
+    num? payAmount,
     int? regNo,
     int? companyNo,
     String? pgVendorName,
@@ -61,7 +61,7 @@ class HnRegistration {
       HnRegistration(
         salutation: salutation ?? this.salutation,
         firstName: firstName ?? this.firstName,
-        lastname: lastname ?? this.lastname,
+        lastName: lastname ?? this.lastName,
         gender: gender ?? this.gender,
         phone: phone ?? this.phone,
         dob: dob ?? this.dob,
@@ -86,7 +86,7 @@ class HnRegistration {
   factory HnRegistration.fromMap(Map<String, dynamic> json) => HnRegistration(
         salutation: json["salutation"],
         firstName: json["firstName"],
-        lastname: json["lastname"],
+        lastName: json["lastname"],
         gender: json["gender"],
         phone: json["phone"],
         dob: json["dob"],
@@ -106,7 +106,7 @@ class HnRegistration {
   Map<String, dynamic> toMap() => {
         "salutation": salutation,
         "firstName": firstName,
-        "lastname": lastname,
+        "lastname": lastName,
         "gender": gender,
         "phone": phone,
         "dob": dob,

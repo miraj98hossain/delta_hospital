@@ -95,7 +95,7 @@ class HnRegistrationFee {
   final String? itemId;
   final String? itemName;
   final int? buNo;
-  final int? salesPrice;
+  final num? salesPrice;
 
   HnRegistrationFee({
     this.itemNo,
@@ -110,7 +110,7 @@ class HnRegistrationFee {
     String? itemId,
     String? itemName,
     int? buNo,
-    int? salesPrice,
+    num? salesPrice,
   }) =>
       HnRegistrationFee(
         itemNo: itemNo ?? this.itemNo,

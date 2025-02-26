@@ -1,4 +1,3 @@
-import 'package:delta_hospital/data/models/hn_registration_fee_response.dart';
 import 'package:delta_hospital/domain/repositories/hn_reg_repository.dart';
 
 import 'package:flutter/material.dart';
@@ -10,34 +9,22 @@ sealed class HnRegFeeEvent {}
 final class HnRegFeeGet extends HnRegFeeEvent {}
 
 @immutable
-sealed class HnRegFeeState {}
+class HnRegFeeState {
+  final num regFee;
 
-final class HnRegFeeInitial extends HnRegFeeState {}
-
-final class HnRegFeeSuccess extends HnRegFeeState {
-  final HnRegistrationFee hnRegistrationFee;
-  HnRegFeeSuccess({required this.hnRegistrationFee});
+  const HnRegFeeState({required this.regFee});
 }
-
-final class HnRegFeeError extends HnRegFeeState {
-  final Object error;
-
-  HnRegFeeError({required this.error});
-}
-
-final class HnRegFeeLoading extends HnRegFeeState {}
 
 class HnRegFeeBloc extends Bloc<HnRegFeeEvent, HnRegFeeState> {
   final HnRegRepository hnRegRepository;
-  HnRegFeeBloc(this.hnRegRepository) : super(HnRegFeeInitial()) {
+  HnRegFeeBloc(this.hnRegRepository) : super(const HnRegFeeState(regFee: 0)) {
     on<HnRegFeeGet>((event, emit) async {
-      emit(HnRegFeeLoading());
       try {
         var response = await hnRegRepository.getHnRegistrationFee();
 
-        emit(HnRegFeeSuccess(hnRegistrationFee: response));
+        emit(HnRegFeeState(regFee: response.salesPrice ?? 0));
       } catch (e) {
-        emit(HnRegFeeError(error: e));
+        emit(const HnRegFeeState(regFee: 0));
       }
     });
   }
