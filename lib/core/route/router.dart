@@ -8,6 +8,8 @@ import 'package:delta_hospital/presentations/hospital_information/hospital_infor
 import 'package:delta_hospital/data/models/booking_info_model.dart';
 import 'package:delta_hospital/data/models/item_grid_list_response.dart';
 import 'package:delta_hospital/presentations/hospital_information/our_packages_details.dart';
+import 'package:delta_hospital/presentations/hospital_information/views/new_offer/offer_details/offer_details_page.dart';
+import 'package:delta_hospital/presentations/hospital_information/views/new_offer/offer_list/offer_list_page.dart';
 import 'package:delta_hospital/presentations/hospital_information/views/our_packages/package_list/package_list_page.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_registration.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_otp_verification.dart';
@@ -499,6 +501,24 @@ class AppNavigation {
                 name: PackageDetailsPage.routeName,
                 pageBuilder: (context, state) => getPage(
                   child: PackageDetailsPage(
+                    lookUpDetails: state.extra as LookUpDetails,
+                  ),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: OfferListPage.routePath,
+                name: OfferListPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const OfferListPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: OfferDetailsPage.routePath,
+                name: OfferDetailsPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: OfferDetailsPage(
                     lookUpDetails: state.extra as LookUpDetails,
                   ),
                   state: state,
