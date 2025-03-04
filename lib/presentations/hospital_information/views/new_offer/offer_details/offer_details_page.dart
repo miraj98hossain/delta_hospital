@@ -1,7 +1,7 @@
 import 'package:delta_hospital/data/models/lookup_response.dart';
 import 'package:flutter/material.dart';
 
-import 'offer_details_view.dart';
+import '../../../new_offer_details.dart';
 
 class OfferDetailsPage extends StatelessWidget {
   const OfferDetailsPage({super.key, required this.lookUpDetails});

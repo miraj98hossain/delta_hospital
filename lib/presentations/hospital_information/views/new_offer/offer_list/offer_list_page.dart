@@ -3,7 +3,7 @@ import 'package:delta_hospital/dependency_injector/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'offer_list_view.dart';
+import '../../../new_offer_list.dart';
 
 class OfferListPage extends StatelessWidget {
   const OfferListPage({super.key});
