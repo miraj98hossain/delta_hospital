@@ -1,6 +1,7 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
 import 'package:delta_hospital/presentations/hospital_information/our_packages_details.dart';
+import 'package:delta_hospital/presentations/hospital_information/views/new_offer/offer_list/offer_list_page.dart';
 import 'package:delta_hospital/presentations/hospital_information/views/our_packages/package_list/package_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -47,7 +48,9 @@ class _HospitalInformationViewState extends State<HospitalInformationView> {
             ),
             HospitalMenuWidget(
               title: "New Offers",
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(OfferListPage.routeName);
+              },
             ),
           ],
         ),

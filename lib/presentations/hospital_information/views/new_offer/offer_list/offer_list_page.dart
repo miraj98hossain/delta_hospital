@@ -13,7 +13,7 @@ class OfferListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          LookUpBloc(getService())..add(LookUpGet(lookupNo: 9)),
+          LookUpBloc(getService())..add(LookUpGet(lookupNo: 3)),
       child: const OfferListView(),
     );
   }
