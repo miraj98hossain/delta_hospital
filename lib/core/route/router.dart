@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:delta_hospital/data/models/lookup_response.dart';
 import 'package:delta_hospital/presentations/career/career_list.dart';
 import 'package:delta_hospital/presentations/career/views/career_details/career_details_page.dart';
 import 'package:delta_hospital/presentations/hn_registration/views/hn_registration/hn_registration_page.dart';
@@ -459,7 +460,9 @@ class AppNavigation {
                 path: CareerDetailsPage.routePath,
                 name: CareerDetailsPage.routeName,
                 pageBuilder: (context, state) => getPage(
-                  child: const CareerDetailsPage(),
+                  child: CareerDetailsPage(
+                    lookUpDetails: state.extra as LookUpDetails,
+                  ),
                   state: state,
                 ),
               ),
