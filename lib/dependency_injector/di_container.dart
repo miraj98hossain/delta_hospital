@@ -1,5 +1,7 @@
 import 'package:delta_hospital/data/data_sources/app_local_data_source.dart';
 import 'package:delta_hospital/data/data_sources/app_remote_data_source.dart';
+import 'package:delta_hospital/data/data_sources/hospital_info_remote_data_source.dart';
+import 'package:delta_hospital/data/repositories/hospital_info_repository_impl.dart';
 import 'package:delta_hospital/domain/repositories/app_repository.dart';
 import 'package:delta_hospital/data/repositories/app_repository_impl.dart';
 import 'package:delta_hospital/core/app_config.dart';
@@ -14,6 +16,7 @@ import 'package:delta_hospital/data/data_sources/items_booking_remote_data_sourc
 import 'package:delta_hospital/data/repositories/items_booking_repository_impl.dart';
 import 'package:delta_hospital/data/data_sources/mng_portal_remote_data_source.dart';
 import 'package:delta_hospital/data/repositories/mng_portal_repository_impl.dart';
+import 'package:delta_hospital/domain/repositories/hospital_info_repository.dart';
 import 'package:delta_hospital/domain/repositories/mng_portal_repository.dart';
 import 'package:delta_hospital/data/data_sources/pat_portal_remote_data_source.dart';
 import 'package:delta_hospital/data/repositories/pat_portal_repository_impl.dart';
@@ -140,6 +143,18 @@ abstract class DIContainer {
         hnRegRemoteDataSource: getIt<HnRegRemoteDataSource>(),
         localDataSource: getIt<AppLocalDataSource>(),
         appRemoteDataSource: getIt<AppRemoteDataSource>(),
+      ),
+    );
+    //Hospital info
+    getIt.registerLazySingleton<HospitalInfoRemoteDataSource>(
+      () => HospitalInfoRemoteDataSourceImpl(
+        appConfig: getIt<AppConfig>(),
+      ),
+    );
+
+    getIt.registerLazySingleton<HospitalInfoRepository>(
+      () => HospitalInfoRepositoryImpl(
+        hospitalInfoRemoteDataSource: getIt<HospitalInfoRemoteDataSource>(),
       ),
     );
   }
