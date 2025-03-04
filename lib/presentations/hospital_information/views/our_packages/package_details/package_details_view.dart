@@ -80,25 +80,6 @@ class _PackageDetailsViewState extends State<PackageDetailsView> {
                   ],
                 ),
               ),
-              Row(
-                spacing: 15,
-                children: [
-                  Expanded(
-                    child: CommonElevatedButton(
-                      onPressed: () {},
-                      backgroundColor: appTheme.secondary,
-                      lable: "Apply By BD Jobs",
-                    ),
-                  ),
-                  Expanded(
-                    child: CommonElevatedButton(
-                      onPressed: () {},
-                      backgroundColor: appTheme.secondary,
-                      lable: "Apply By Email",
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),

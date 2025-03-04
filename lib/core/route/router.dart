@@ -7,6 +7,8 @@ import 'package:delta_hospital/presentations/hn_registration/views/hn_registrati
 import 'package:delta_hospital/presentations/hospital_information/hospital_information.dart';
 import 'package:delta_hospital/data/models/booking_info_model.dart';
 import 'package:delta_hospital/data/models/item_grid_list_response.dart';
+import 'package:delta_hospital/presentations/hospital_information/our_packages_details.dart';
+import 'package:delta_hospital/presentations/hospital_information/views/our_packages/package_list/package_list_page.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_registration.dart';
 import 'package:delta_hospital/presentations/on_boarding/app_otp_verification.dart';
 import 'package:delta_hospital/presentations/on_boarding/views/app_login/app_login_page.dart';
@@ -483,15 +485,25 @@ class AppNavigation {
               child: const HospitalInformationPage(),
               state: state,
             ),
-            routes: const [
-              // GoRoute(
-              //   path: CareerDetailsPage.routePath,
-              //   name: CareerDetailsPage.routeName,
-              //   pageBuilder: (context, state) => getPage(
-              //     child: const CareerDetailsPage(),
-              //     state: state,
-              //   ),
-              // ),
+            routes: [
+              GoRoute(
+                path: PackageListPage.routePath,
+                name: PackageListPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: const PackageListPage(),
+                  state: state,
+                ),
+              ),
+              GoRoute(
+                path: PackageDetailsPage.routePath,
+                name: PackageDetailsPage.routeName,
+                pageBuilder: (context, state) => getPage(
+                  child: PackageDetailsPage(
+                    lookUpDetails: state.extra as LookUpDetails,
+                  ),
+                  state: state,
+                ),
+              ),
             ],
           ),
         ],

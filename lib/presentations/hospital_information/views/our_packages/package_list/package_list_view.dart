@@ -28,7 +28,7 @@ class _PackageListViewState extends State<PackageListView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Recent Job Openings",
+              "Active Packages",
               style: lightTextTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.w600,
                 color: appTheme.white,

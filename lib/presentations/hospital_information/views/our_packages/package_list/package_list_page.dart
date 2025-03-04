@@ -13,7 +13,7 @@ class PackageListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          LookUpBloc(getService())..add(LookUpGet(lookupNo: 1)),
+          LookUpBloc(getService())..add(LookUpGet(lookupNo: 9)),
       child: const PackageListView(),
     );
   }

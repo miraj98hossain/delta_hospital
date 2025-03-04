@@ -1,6 +1,9 @@
 import 'package:delta_hospital/app/app.dart';
 import 'package:delta_hospital/core/theme/app_theme.dart';
+import 'package:delta_hospital/presentations/hospital_information/our_packages_details.dart';
+import 'package:delta_hospital/presentations/hospital_information/views/our_packages/package_list/package_list_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HospitalInformationView extends StatefulWidget {
   const HospitalInformationView({super.key});
@@ -34,7 +37,9 @@ class _HospitalInformationViewState extends State<HospitalInformationView> {
             ),
             HospitalMenuWidget(
               title: "Our Packages",
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(PackageListPage.routeName);
+              },
             ),
             HospitalMenuWidget(
               title: "Health Checkup",
