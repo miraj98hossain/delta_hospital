@@ -28,7 +28,7 @@ class _OfferListViewState extends State<OfferListView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Active Packages",
+              "Active Offers",
               style: lightTextTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.w600,
                 color: appTheme.white,
