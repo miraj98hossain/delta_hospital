@@ -29,6 +29,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   pdfrx: ^1.0.101
+  flutter_widget_from_html: ^0.16.0
 
 
 dev_dependencies:
